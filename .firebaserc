@@ -1,0 +1,20 @@
+{
+  "projects": {
+    "default": "covid-speech"
+  },
+  "targets": {
+    "covid-speech": {
+        "hosting": {
+          "base": [
+            "covid-speech"
+          ],
+          "collect": [
+            "covid-speech-collect"
+          ],
+          "test": [
+            "covid-speech-test"
+          ]
+        }
+    }
+  }
+}

@@ -1,1 +1,129 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'assets/fonts/content_font.css';
+@import 'assets/fonts/header_font.css';
+@import 'assets/fonts/material_icons.css';
+
+@text_biggest_size: 48px;
+@text_bigger_size: 32px;
+@text_big_size: 24px;
+@text_normal_size: 16px;
+@text_small_size: 14px;
+@text_smaller_size: 12px;
+@text_smallest_size: 10px;
+
+@color_border: #eeeeee;
+@color_dark: #444444;
+@color_dark_border: #cccccc;
+@color_link: #777777;
+@color_light: #999999;
+@color_very_light: #eeeeee;
+
+@border_line: 1px solid @color_border;
+@dark_border_line: 1px solid @color_dark_border;
+
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+html, a {
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* Heading starts */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Quicksand', sans-serif;
+}
+h1 {
+  font-size: 64px;
+  margin-bottom: 20px;
+}
+h2 { font-size: 48px; }
+h3 { font-size: 32px; }
+h4 { font-size: 24px; }
+h5 { font-size: 16px; }
+h6 { font-size: 12px; }
+
+@media(max-width: 768px) {
+  h1 {
+    font-size: 48px;
+    margin-bottom: 15px;
+  }
+  h2 { font-size: 32px; }
+  h3 { font-size: 24px; }
+  h4 { font-size: 16px; }
+  h5 { font-size: 14px; }
+  h6 { font-size: 12px; }
+}
+
+a {
+  color: @color_link;
+  text-decoration: none;
+}
+a:hover {
+  color: @color_dark;
+}
+/* Heading ends */
+
+/* General Material Classes starts */
+.mat-icon {
+  height: auto!important;
+  width: auto!important;;
+}
+
+/* General Material Classes ends */
+
+/* Container class starts */
+.component-container {
+  padding: 0 15%;
+  font-size: @text_normal_size;
+}
+.content-container, .nav-container {
+  padding: 10px;
+}
+.footer-container {
+  border-top: @border_line;
+  //min-height: 250px;
+}
+.nav-container {
+  border-bottom: @border_line;
+}
+
+@media(max-width: 768px) {
+  .component-container {
+    padding: 0 5px;
+  }
+}
+/* Container class ends */
+
+/* Color classes starts */
+.color-dark {
+  color: @color_dark;
+}
+.color-link {
+  color: @color_link;
+}
+/* Color classes ends */
+
+/* General classes starts*/
+.bold-text { font-weight: bold; }
+.border {
+  border-top: @border_line;
+}
+.border-dark {
+  border-top: @dark_border_line;
+}
+.button {
+  border: @dark_border_line;
+  color: @color_dark;
+  padding: 6px 19px;
+}
+.button-dark {
+  background-color: @color_dark;
+  color: @color_very_light;
+  padding: 7px 20px;
+}
+.button, .button-dark { margin: 7px; }
+.button, .button-dark, .pointer { cursor: pointer; }
+.small-text { font-size: @text_small_size; }
+/* General classes ends*/
