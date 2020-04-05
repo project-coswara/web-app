@@ -1,3 +1,5 @@
+
+
 @import 'assets/fonts/content_font.css';
 @import 'assets/fonts/header_font.css';
 @import 'assets/fonts/material_icons.css';
@@ -41,8 +43,12 @@ h1 {
 h2 { font-size: 48px; }
 h3 { font-size: 32px; }
 h4 { font-size: 24px; }
-h5 { font-size: 16px; }
+h5 { font-size: 18px; }
 h6 { font-size: 12px; }
+
+//* {
+//  outline: 1px solid red;
+//}
 
 @media(max-width: 768px) {
   h1 {
@@ -51,8 +57,8 @@ h6 { font-size: 12px; }
   }
   h2 { font-size: 32px; }
   h3 { font-size: 24px; }
-  h4 { font-size: 16px; }
-  h5 { font-size: 14px; }
+  h4 { font-size: 18px; }
+  h5 { font-size: 16px; }
   h6 { font-size: 12px; }
 }
 
@@ -70,7 +76,9 @@ a:hover {
   height: auto!important;
   width: auto!important;;
 }
-
+.mat-tab-body-content {
+  padding: 10px 5px!important;
+}
 /* General Material Classes ends */
 
 /* Container class starts */
@@ -91,7 +99,7 @@ a:hover {
 
 @media(max-width: 768px) {
   .component-container {
-    padding: 0 5px;
+    padding: 0;
   }
 }
 /* Container class ends */

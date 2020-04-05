@@ -1,5 +1,6 @@
-<div fxLayout="column" fxFill>
-    <cs-content>
-        CoVidSpeech Collect will be up and running soon!
+<div fxLayout="column" fxLayoutAlign="center center" fxFill>
+    <mat-progress-spinner *ngIf="!is_loaded" [diameter]="80" mode="indeterminate"></mat-progress-spinner>
+    <cs-content *ngIf="is_loaded" fxLayout="column" fxFill>
+        <router-outlet></router-outlet>
     </cs-content>
 </div>

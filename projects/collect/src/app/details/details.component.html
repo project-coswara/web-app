@@ -1,0 +1,123 @@
+<div class="component-container">
+    <h4>We need some information to continue!</h4>
+    <mat-tab-group [dynamicHeight]="true" [selectedIndex]="selectedIndex" (selectedIndexChange)="selectedIndex = $event">
+        <mat-tab label="Disclaimer">
+            <p>Welcome to Covid-dhwani.
+            This project aims at data collection and diagnostic tools using speech and breathing sounds for healthy subjects and patients with respiratory diseases.
+            This study builds on other previous studies which have reported a high level of sensitivity for identifying respiratory illness from the human voice.
+            Any tools with statistical significance in disease detection will also be implemented as part of this app at a later date.
+            </p>
+            <p>The project is planned for submission to ICMR (Indian council of Medical Research) for approval.
+            The app will ask for some health details as well as some speech and breathing sounds from the user.
+            The data collected will be used for research purposes and will be shared with the research community for developing quick tools for Covid diagnostics.
+            The participation in this study is purely voluntary and the details collected will not contain any personally identifiable information.
+            </p>
+            By clicking start you will proceed to data and stimuli collection, accepting our terms and conditions.
+            <div class="tab-footer" fxLayout="row" fxLayoutAlign="end center">
+                <div class="button-dark" (click)="selectedIndex = selectedIndex + 1">START</div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Meta Data">
+            <div class="form" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="0" fxFlex>
+                <mat-form-field fxFlex="30" fxFlex.xs="47">
+                    <mat-label>Age</mat-label>
+                    <input type="number" [formControl]="forms.personal.controls.age" matInput>
+                </mat-form-field>
+                <div fxFlex="5"></div>
+                <mat-form-field fxFlex="29" fxFlex.xs="47">
+                    <mat-label>Gender</mat-label>
+                    <mat-select [(value)]="forms.personal.controls.gender">
+                        <mat-option *ngFor="let g of option_values.gender" [value]="g.id">
+                            {{g.value}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div fxFlex fxHide.xs></div>
+            </div>
+            <div class="form" fxLayout="row wrap" fxLayoutAlign="start center" fxFlex>
+                <div fxFlex="5" fxHide.xs></div>
+                <h5 class="tab-sub-title" fxFlex="100">Location</h5>
+                <mat-form-field fxFlex="30" fxFlex.xs>
+                    <mat-label>Country</mat-label>
+                    <input type="text" [formControl]="forms.current_address.controls.country" matInput>
+                </mat-form-field>
+                <div fxFlex="5" fxHide.xs></div>
+                <mat-form-field fxFlex="29" fxFlex.xs>
+                    <mat-label>State/Province</mat-label>
+                    <input type="text" [formControl]="forms.current_address.controls.state" matInput>
+                </mat-form-field>
+                <div fxFlex="5" fxHide.xs></div>
+                <mat-form-field fxFlex="30" fxFlex.xs>
+                    <mat-label>Locality/District</mat-label>
+                    <input type="text" [formControl]="forms.current_address.controls.locality" matInput>
+                </mat-form-field>
+            </div>
+            <div class="tab-footer" fxLayout="row" fxLayoutAlign="end center">
+                <div class="button" (click)="selectedIndex = selectedIndex - 1">PREVIOUS</div>
+                <div fxFlex></div>
+                <div class="button-dark" (click)="selectedIndex = selectedIndex + 1">NEXT</div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Heath Status">
+            <div class="form" fxLayout="row wrap" fxLayoutAlign="start center">
+                <mat-form-field fxFlex="75" fxFlex.xs>
+                    <mat-label>Current Status</mat-label>
+                    <mat-select [(value)]="forms.health.controls.status">
+                        <mat-option *ngFor="let hs of option_values.health_status" [value]="hs.id">
+                            {{hs.value}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div class="tab-gap" fxFlex="100"></div>
+                <h5 class="tab-sub-title" fxFlex="100">Respiratory Conditions</h5>
+                <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex="100">
+                    <div class="illness-box" *ngFor="let cb of option_values.illness.resp" fxFlex="24" fxFlex.xs="100">
+                        <mat-checkbox >{{cb.name}}</mat-checkbox>
+                    </div>
+                </div>
+                <div class="tab-gap" fxFlex="100"></div>
+                <h5 class="tab-sub-title" fxFlex="100">Heart Conditions</h5>
+                <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex="100">
+                    <div class="illness-box" *ngFor="let cb of option_values.illness.heart" fxFlex="24" fxFlex.xs="100">
+                        <mat-checkbox >{{cb.name}}</mat-checkbox>
+                    </div>
+                </div>
+                <div class="tab-gap" fxFlex="100"></div>
+                <h5 class="tab-sub-title" fxFlex="100">Other Conditions</h5>
+                <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex="100">
+                    <div class="illness-box" *ngFor="let cb of option_values.illness.others" fxFlex="24" fxFlex.xs="100">
+                        <mat-checkbox >{{cb.name}}</mat-checkbox>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-footer" fxLayout="row" fxLayoutAlign="end center">
+                <div class="button" (click)="selectedIndex = selectedIndex - 1">PREVIOUS</div>
+                <div fxFlex></div>
+                <div class="button-dark" (click)="selectedIndex = selectedIndex + 1">NEXT</div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Travel History">
+            <div class="form" fxLayout="row wrap" fxLayoutAlign="start center">
+                <div fxLayout="row wrap" fxLayoutAlign="center start" fxFlex="50" fxFlex.xs="100" fxFill>
+                    <h5 class="tab-sub-title" fxFlex="100">Have you travelled outside the country recently?</h5>
+                    <mat-radio-group class="radio-group" [(ngModel)]="travelled" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex="100">
+                        <mat-radio-button class="illness-box" value="yes" fxFlex="12" fxFlex.xs="100">Yes</mat-radio-button>
+                        <mat-radio-button class="illness-box" value="no" fxFlex="12" fxFlex.xs="100">No</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="tab-gap" fxFlex="0" fxFlex.xs="100"></div>
+                <mat-form-field *ngIf="travelled == 'yes'" fxFlex="30" fxFlex.xs="100">
+                    <mat-label>Date of return</mat-label>
+                    <input matInput [matDatepicker]="picker">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="tab-footer" fxLayout="row" fxLayoutAlign="end center">
+                <div class="button" (click)="selectedIndex = selectedIndex - 1">PREVIOUS</div>
+                <div fxFlex></div>
+                <div class="button-dark" (click)="submit_meta_data()">SUBMIT</div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>

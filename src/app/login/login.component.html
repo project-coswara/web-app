@@ -1,0 +1,9 @@
+<div class="content-container" fxLayout="column" fxLayoutAlign="center center">
+    <div class="login" fxLayout="column" fxLayoutAlign="start center">
+        <h3 class="heading">login<span class="color-dark"> | CoVidSpeech</span></h3>
+        <div fxLayout="column" fxLayoutAlign="center center" fxFlex>
+            <mat-progress-spinner *ngIf="login_loader" [diameter]="50" mode="indeterminate"></mat-progress-spinner>
+            <div *ngIf="!login_loader" class="button-dark" (click)="loginAnonymously()">Continue as Guest</div>
+        </div>
+    </div>
+</div>

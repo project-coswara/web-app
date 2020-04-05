@@ -1,0 +1,29 @@
+@import '../../styles.less';
+
+.login {
+  border: @border_line;
+  min-height: 450px;
+  padding: 20px;
+}
+.login .form {
+  width: 100%;
+}
+.login .heading {
+  margin: 15px 0 25px;
+}
+.login .info {
+  font-size: @text_small_size;
+  margin: 7px 0;
+}
+.login .actions .button-dark {
+  margin: 0;
+}
+.login .actions, .login .info {
+  width: 100%;
+}
+
+@media(max-width: 768px) {
+  .login {
+    min-width: 100%;
+  }
+}
