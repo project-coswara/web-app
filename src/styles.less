@@ -28,23 +28,23 @@ html, body {
   margin: 0;
 }
 
-html, a {
-  font-family: 'Open Sans', sans-serif;
+*:not(.mat-icon) {
+  font-size: 16px;
 }
 
 /* Heading starts */
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Quicksand', sans-serif;
+h1, h2, h3, h4, h5, h6, .button, .button-dark {
+  font-family: 'Quicksand', sans-serif!important;
 }
 h1 {
-  font-size: 64px;
+  font-size: 64px!important;
   margin-bottom: 20px;
 }
-h2 { font-size: 48px; }
-h3 { font-size: 32px; }
-h4 { font-size: 24px; }
-h5 { font-size: 18px; }
-h6 { font-size: 12px; }
+h2 { font-size: 48px!important; }
+h3 { font-size: 32px!important; }
+h4 { font-size: 24px!important; }
+h5 { font-size: 18px!important; }
+h6 { font-size: 12px!important; }
 
 //* {
 //  outline: 1px solid red;
@@ -52,14 +52,18 @@ h6 { font-size: 12px; }
 
 @media(max-width: 768px) {
   h1 {
-    font-size: 48px;
+    font-size: 48px!important;
     margin-bottom: 15px;
   }
-  h2 { font-size: 32px; }
-  h3 { font-size: 24px; }
-  h4 { font-size: 18px; }
-  h5 { font-size: 16px; }
-  h6 { font-size: 12px; }
+  h2 { font-size: 32px!important; }
+  h3 { font-size: 24px!important; }
+  h4 { font-size: 18px!important; }
+  h5 { font-size: 16px!important; }
+  h6 { font-size: 12px!important; }
+}
+
+*:not(.mat-icon) {
+  font-family: 'Open Sans', sans-serif;
 }
 
 a {

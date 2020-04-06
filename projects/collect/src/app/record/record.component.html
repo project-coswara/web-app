@@ -1,3 +1,35 @@
 <div class="component-container" >
-    The recording part happens here!
+    <div class="page">
+        <div class="title-group" fxLayout="row" fxLayoutAlign="start center">
+            <h4 class="title">{{currentTitle}}</h4>
+            <div fxFlex="5" fxFlex.xs></div>
+            <div *ngIf="!isSamplePlaying" class="button" (click)="playSampleAudio()">PLAY SAMPLE</div>
+            <div *ngIf="isSamplePlaying" class="button button-dark" (click)="stopSampleAudio()">STOP PLAYING</div>
+        </div>
+        <mat-vertical-stepper [selectedIndex]="selectedStep" [linear]="true" #stepper>
+            <mat-step *ngFor="let step_id of recordSteps">
+                <ng-template matStepLabel>Recording {{step_id + 1}}</ng-template>
+                <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutAlign.xs="center start">
+                    <div fxLayout="row wrap" fxLayoutAlign="start center">
+                        <div *ngIf="!isRecoding && !isUploading" class="button" (click)="startRecording();">START RECORDING</div>
+                        <div *ngIf="isRecoding && !isUploading" class="button button-dark" (click)="stopRecording()">STOP RECORDING</div>
+                    </div>
+                    <div *ngIf="isRecoding && !isUploading" fxFlex="10" fxHide.xs></div>
+<!--                    <div *ngIf="isRecoding && !isUploading" class="recording" fxLayout="row wrap" fxLayoutAlign="start center">-->
+<!--                        <div class="symbol"></div>-->
+<!--                        <div class="content">RECORDING</div>-->
+<!--                    </div>-->
+                    <div *ngIf="!isRecoding && isUploading" class="upload" fxLayout="row wrap" fxLayoutAlign="start center">
+                        <mat-progress-spinner [diameter]="30" mode="indeterminate"></mat-progress-spinner>
+                        <div class="content">
+                            Uploading! Please wait...
+                        </div>
+                    </div>
+                </div>
+            </mat-step>
+        </mat-vertical-stepper>
+    </div>
+    <div class="page-footer" fxLayout="column" fxLayoutAlign="start center">
+        <div class="button button-dark" (click)="stepper.reset(); this.stopSampleAudio(); goToNextPage(currentPage)">{{currentPage < pageOrder.length - 1 ? 'NEXT PAGE' : 'FINISH'}}</div>
+    </div>
 </div>

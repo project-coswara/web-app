@@ -19,13 +19,16 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import { RecordComponent } from './record/record.component';
+import {MatStepperModule} from "@angular/material/stepper";
+import { ThanksComponent } from './thanks/thanks.component';
 
 @NgModule({
   declarations: [
     CollectAppComponent,
     HomeComponent,
     DetailsComponent,
-    RecordComponent
+    RecordComponent,
+    ThanksComponent
   ],
     imports: [
         BrowserModule,
@@ -44,7 +47,8 @@ import { RecordComponent } from './record/record.component';
         MatRadioModule,
         FormsModule,
         MatDatepickerModule,
-        MatNativeDateModule
+        MatNativeDateModule,
+        MatStepperModule
     ],
   providers: [],
   bootstrap: [CollectAppComponent]

@@ -17,8 +17,8 @@
                 <div class="button-dark" (click)="selectedIndex = selectedIndex + 1">START</div>
             </div>
         </mat-tab>
-        <mat-tab label="Meta Data">
-            <div class="form" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="0" fxFlex>
+        <mat-tab label="Metadata" fxLayout="row wrap">
+            <div class="form" fxLayout="row wrap" fxLayoutAlign="start center" fxFlex>
                 <mat-form-field fxFlex="30" fxFlex.xs="47">
                     <mat-label>Age</mat-label>
                     <input type="number" [formControl]="forms.personal.controls.age" matInput>
@@ -32,8 +32,16 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-                <div fxFlex fxHide.xs></div>
             </div>
+            <div class="tab-content-spacer" fxFlex></div>
+            <div class="form" fxLayout="row wrap" fxLayoutAlign="center start" fxFlex>
+                <h5 class="tab-sub-title" fxFlex="100">Are you proficient in English?</h5>
+                <mat-radio-group class="radio-group" [(ngModel)]="english_proficient" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex="100">
+                    <mat-radio-button class="tab-check-box" value="yes" fxFlex="13" fxFlex.xs="25">Yes</mat-radio-button>
+                    <mat-radio-button class="tab-check-box" value="no" fxFlex="13" fxFlex.xs="25">No</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="tab-content-spacer" fxFlex></div>
             <div class="form" fxLayout="row wrap" fxLayoutAlign="start center" fxFlex>
                 <div fxFlex="5" fxHide.xs></div>
                 <h5 class="tab-sub-title" fxFlex="100">Location</h5>
@@ -58,7 +66,7 @@
                 <div class="button-dark" (click)="selectedIndex = selectedIndex + 1">NEXT</div>
             </div>
         </mat-tab>
-        <mat-tab label="Heath Status">
+        <mat-tab label="Health Status">
             <div class="form" fxLayout="row wrap" fxLayoutAlign="start center">
                 <mat-form-field fxFlex="75" fxFlex.xs>
                     <mat-label>Current Status</mat-label>
@@ -68,24 +76,24 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-                <div class="tab-gap" fxFlex="100"></div>
+                <div class="tab-content-spacer" fxFlex="100"></div>
                 <h5 class="tab-sub-title" fxFlex="100">Respiratory Conditions</h5>
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex="100">
-                    <div class="illness-box" *ngFor="let cb of option_values.illness.resp" fxFlex="24" fxFlex.xs="100">
+                    <div class="tab-check-box" *ngFor="let cb of option_values.illness.resp" fxFlex="24" fxFlex.xs="100">
                         <mat-checkbox >{{cb.name}}</mat-checkbox>
                     </div>
                 </div>
-                <div class="tab-gap" fxFlex="100"></div>
+                <div class="tab-content-spacer" fxFlex="100"></div>
                 <h5 class="tab-sub-title" fxFlex="100">Heart Conditions</h5>
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex="100">
-                    <div class="illness-box" *ngFor="let cb of option_values.illness.heart" fxFlex="24" fxFlex.xs="100">
+                    <div class="tab-check-box" *ngFor="let cb of option_values.illness.heart" fxFlex="24" fxFlex.xs="100">
                         <mat-checkbox >{{cb.name}}</mat-checkbox>
                     </div>
                 </div>
-                <div class="tab-gap" fxFlex="100"></div>
+                <div class="tab-content-spacer" fxFlex="100"></div>
                 <h5 class="tab-sub-title" fxFlex="100">Other Conditions</h5>
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex="100">
-                    <div class="illness-box" *ngFor="let cb of option_values.illness.others" fxFlex="24" fxFlex.xs="100">
+                    <div class="tab-check-box" *ngFor="let cb of option_values.illness.others" fxFlex="24" fxFlex.xs="100">
                         <mat-checkbox >{{cb.name}}</mat-checkbox>
                     </div>
                 </div>
@@ -101,11 +109,11 @@
                 <div fxLayout="row wrap" fxLayoutAlign="center start" fxFlex="50" fxFlex.xs="100" fxFill>
                     <h5 class="tab-sub-title" fxFlex="100">Have you travelled outside the country recently?</h5>
                     <mat-radio-group class="radio-group" [(ngModel)]="travelled" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex="100">
-                        <mat-radio-button class="illness-box" value="yes" fxFlex="12" fxFlex.xs="100">Yes</mat-radio-button>
-                        <mat-radio-button class="illness-box" value="no" fxFlex="12" fxFlex.xs="100">No</mat-radio-button>
+                        <mat-radio-button class="tab-check-box" value="yes" fxFlex="25" fxFlex.xs="25">Yes</mat-radio-button>
+                        <mat-radio-button class="tab-check-box" value="no" fxFlex="25" fxFlex.xs="25">No</mat-radio-button>
                     </mat-radio-group>
                 </div>
-                <div class="tab-gap" fxFlex="0" fxFlex.xs="100"></div>
+                <div class="tab-content-spacer" fxFlex="0" fxFlex.xs="100"></div>
                 <mat-form-field *ngIf="travelled == 'yes'" fxFlex="30" fxFlex.xs="100">
                     <mat-label>Date of return</mat-label>
                     <input matInput [matDatepicker]="picker">

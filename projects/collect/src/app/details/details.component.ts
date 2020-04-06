@@ -12,6 +12,7 @@ import { values } from "../../../../../src/environments/environment";
 
 export class DetailsComponent implements OnInit {
   selectedIndex = 0;
+  english_proficient = 'yes';
   travelled = 'no';
   forms = {
     'personal': new FormGroup({
@@ -36,7 +37,7 @@ export class DetailsComponent implements OnInit {
   }
 
   submit_meta_data = function () {
-    this.router.navigateByUrl('/record').then(r => {
+    this.router.navigateByUrl('/record/breathing-slow').then(r => {
       console.debug('Redirecting to record page!');
     });
   }

@@ -26,7 +26,6 @@ export class CollectAppComponent implements OnInit {
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
         firebase.database().ref('USERS').child(user.uid).once('value').then(function (dataSnapshot) {
-          console.log(dataSnapshot.val());
           if(dataSnapshot.val() == null || !dataSnapshot.val()['ad']) {
             app_root.router.navigateByUrl('/details').then(r => {
               console.debug('Redirecting to details page!');
