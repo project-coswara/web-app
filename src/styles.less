@@ -7,18 +7,21 @@
 @text_biggest_size: 48px;
 @text_bigger_size: 32px;
 @text_big_size: 24px;
+@text_normal_big_size: 18px;
 @text_normal_size: 16px;
 @text_small_size: 14px;
 @text_smaller_size: 12px;
 @text_smallest_size: 10px;
 
 @color_border: #eeeeee;
-@color_dark: #444444;
+@color_dark: #424242;
 @color_dark_border: #cccccc;
 @color_link: #777777;
 @color_light: #999999;
 @color_very_light: #eeeeee;
+@color_light_border: #f3f3f3;
 
+@light_border_line: 1px solid @color_light_border;
 @border_line: 1px solid @color_border;
 @dark_border_line: 1px solid @color_dark_border;
 
@@ -28,8 +31,16 @@ html, body {
   margin: 0;
 }
 
+//* {
+//  user-select: none;
+//}
+
 *:not(.mat-icon) {
   font-size: 16px;
+}
+
+*:focus {
+  outline: none;
 }
 
 /* Heading starts */
@@ -45,10 +56,6 @@ h3 { font-size: 32px!important; }
 h4 { font-size: 24px!important; }
 h5 { font-size: 18px!important; }
 h6 { font-size: 12px!important; }
-
-//* {
-//  outline: 1px solid red;
-//}
 
 @media(max-width: 768px) {
   h1 {
@@ -76,13 +83,14 @@ a:hover {
 /* Heading ends */
 
 /* General Material Classes starts */
+.mat-checkbox-layout .mat-checkbox-label, .mat-radio-label-content { white-space: initial!important; }
 .mat-icon {
   height: auto!important;
   width: auto!important;;
 }
-.mat-tab-body-content {
-  padding: 10px 5px!important;
-}
+.mat-tab-nav-bar, .mat-tab-header { border-bottom: @border_line; }
+.mat-tab-body-content { padding: 10px 5px!important; }
+.mat-error { font-size: @text_smaller_size; }
 /* General Material Classes ends */
 
 /* Container class starts */
@@ -95,7 +103,6 @@ a:hover {
 }
 .footer-container {
   border-top: @border_line;
-  //min-height: 250px;
 }
 .nav-container {
   border-bottom: @border_line;
@@ -125,17 +132,21 @@ a:hover {
 .border-dark {
   border-top: @dark_border_line;
 }
+.button, .pointer { cursor: pointer; }
 .button {
   border: @dark_border_line;
   color: @color_dark;
+  margin: 7px;
   padding: 6px 19px;
+  text-align: center;
+  user-select: none;
 }
-.button-dark {
+.button.button-dark {
   background-color: @color_dark;
   color: @color_very_light;
   padding: 7px 20px;
 }
-.button, .button-dark { margin: 7px; }
-.button, .button-dark, .pointer { cursor: pointer; }
+.button.disabled { cursor: default; opacity: 0.6; }
 .small-text { font-size: @text_small_size; }
+.smaller-text { font-size: @text_smaller_size; }
 /* General classes ends*/

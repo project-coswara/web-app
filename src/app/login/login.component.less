@@ -2,28 +2,31 @@
 
 .login {
   border: @border_line;
+  margin-top: 20px;
   min-height: 450px;
-  padding: 20px;
-}
-.login .form {
-  width: 100%;
+  padding: 15px;
 }
 .login .heading {
   margin: 15px 0 25px;
 }
-.login .info {
-  font-size: @text_small_size;
-  margin: 7px 0;
+.login .heading h3 {
+  font-weight: normal;
 }
-.login .actions .button-dark {
-  margin: 0;
+.login .heading .sub-heading {
+  margin-right: 5px;
 }
-.login .actions, .login .info {
-  width: 100%;
+.login .button {
+  font-size: @text_normal_big_size;
+  padding: 10px 0;
+}
+.login .button-container {
+  margin-bottom: 45px;
 }
 
 @media(max-width: 768px) {
   .login {
     min-width: 100%;
+    margin-top: 0;
+    padding: 5px;
   }
 }
