@@ -9,7 +9,7 @@ import { ThanksComponent } from "./thanks/thanks.component";
 const routes: Routes = [
   { path: '', component: DetailsComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'record/:stage', component: RecordComponent },
+  { path: 'record', component: RecordComponent },
   { path: 'thank-you', component: ThanksComponent },
 ];
 

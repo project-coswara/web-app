@@ -1,83 +1,97 @@
-import { ChangeDetectorRef, Component, NgZone, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, Validators } from "@angular/forms";
 import { MatStepper } from "@angular/material/stepper";
+import { Router } from "@angular/router";
 
 import * as RecordRTC from 'recordrtc'
+
 import * as firebase from 'firebase/app';
+import 'firebase/firestore';
 import 'firebase/storage';
+
+import { UserDataService } from "../../../../../src/app/user-data.service";
 
 @Component({
   selector: 'cs-record-record',
   templateUrl: './record.component.html',
   styleUrls: ['./record.component.less']
 })
-export class RecordComponent implements OnInit {
-  userId: string;
-  stage: string;
-  currentTitle: string;
-  sampleAudio: any;
-  selectedStep: number = 0;
-  @ViewChild('stepper', {static: false}) private audioStepper: MatStepper;
-  isSamplePlaying: Boolean = false;
-  isRecoding: Boolean = false;
-  isUploading: Boolean = false;
 
+export class RecordComponent implements AfterViewInit, OnInit {
+  userData = null;
+  sampleAudio = null;
+  recordedAudio = null;
+  stepLoader: boolean = true;
+  recordState:number = 1;
   titleDict = {
     'breathing-slow': 'Breathing (slow)',
     'breathing-fast': 'Breathing (fast)',
     'cough-shallow': 'Cough (shallow)',
     'cough-heavy': 'Cough (heavy)',
-    'speech-short': 'Speech (short)',
-    'speech-long': 'Speech (long)',
+    'vowel-a': 'Vowel /a/',
+    'vowel-e': 'Vowel /e/',
+    'vowel-o': 'Vowel /o/',
     'counting-normal': 'Counting (normal)',
     'counting-fast': 'Counting (fast)',
+    'done': 'Finished'
   };
-
-  countsDict = {
-    'breathing-slow': 5,
-    'breathing-fast': 5,
-    'cough-shallow': 5,
-    'cough-heavy': 5,
-    'speech-short': 3,
-    'speech-long': 3,
-    'counting-normal': 2,
-    'counting-fast': 2,
+  formControls = {
+    'breathing-slow': new FormControl(null, [Validators.required]),
+    'breathing-fast': new FormControl(null, [Validators.required]),
+    'cough-shallow': new FormControl(null, [Validators.required]),
+    'cough-heavy': new FormControl(null, [Validators.required]),
+    'vowel-a': new FormControl(null, [Validators.required]),
+    'vowel-e': new FormControl(null, [Validators.required]),
+    'vowel-o': new FormControl(null, [Validators.required]),
+    'counting-normal': new FormControl(null, [Validators.required]),
+    'counting-fast': new FormControl(null, [Validators.required]),
+    'done': new FormControl(null, [Validators.required])
   };
+  recordStages = Object.keys(this.titleDict);
+  selectedStageIndex: number = 0;
+  userMetaData = null;
 
-  pageOrder = Object.keys(this.titleDict);
-  currentPage = 0;
-  recordSteps = [];
+  @ViewChild('stepper', {static: false}) private stepper: MatStepper;
 
-  constructor(private changeRef: ChangeDetectorRef, private ngZone: NgZone, private router: Router, private route: ActivatedRoute) {
-    route.params.subscribe(val => {
-      this.stage = val.stage;
-      this.currentTitle = this.titleDict[val.stage];
-      this.currentPage = this.pageOrder.indexOf(val.stage);
-      this.selectedStep = 0;
-      this.recordSteps = Array.from(Array(this.countsDict[val.stage]).keys());
-      this.sampleAudio = new Audio();
-      this.sampleAudio.src = '../../assets/samples/male/' + val.stage +'.wav';
-      this.sampleAudio.load();
+  constructor(private router: Router, private userDataService: UserDataService) {
+    this.userDataService.getUserData().subscribe(userData => {
+      this.userData = userData;
+    });
 
-      this.sampleAudio.addEventListener("ended", () => {
-        this.isSamplePlaying = false;
-      });
-
-      if(this.audioStepper) {
-        this.audioStepper.reset();
+    this.userDataService.getMetaData().subscribe(metaData => {
+      if (metaData && metaData['cS']) {
+        this.userMetaData = metaData;
+        let nextIndex = this.recordStages.indexOf(metaData['cS']) + 1;
+        if (nextIndex >= this.recordStages.length - 1) {
+          this.goToThankYouPage();
+        } else {
+          this.selectedStageIndex = nextIndex;
+        }
+      } else {
+        this.userMetaData = {
+          'aMD': true,
+          'uT': 'anonymous'
+        };
       }
+      this.stepLoader = false;
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.markStepsCompleted(Array.from(Array(this.selectedStageIndex).keys()));
+    this.setSampleAudio(this.recordStages[this.selectedStageIndex]);
+    this.stepper.selectionChange.subscribe((changeData) => {
+      this.recordState = 1;
+      this.stopSamplePlaying();
+      this.stopRecording();
+      this.stopPlaying();
+      this.markStepsCompleted(Array.from(Array(changeData.selectedIndex).keys()));
+      this.setSampleAudio(this.recordStages[changeData.selectedIndex]);
     });
   }
 
   ngOnInit() {
-    let record_root = this;
-
-    firebase.auth().onAuthStateChanged(function (user) {
-      if (user) {
-        record_root.userId = user.uid;
-      }
-    });
-
+    let recordRoot = this;
     navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
       let recorder = RecordRTC(stream, {
         disableLogs: true,
@@ -88,70 +102,102 @@ export class RecordComponent implements OnInit {
       });
 
       this.startRecording = function() {
-        record_root.isRecoding = true;
-        recorder.startRecording();
-        record_root.changeRef.detectChanges();
+        recorder.startRecording()
       };
 
       this.stopRecording = function () {
-        recorder.stopRecording(function () {
+        recorder.stopRecording(() => {
           const blob = recorder.getBlob();
           const metadata = {contentType: 'audio/wav',};
           recorder.reset();
-          record_root.isRecoding = false;
-          record_root.isUploading = true;
-          record_root.changeRef.detectChanges();
-          firebase.storage()
-              .ref()
-              .child('collect')
-              .child(record_root.userId)
-              .child(record_root.stage)
-              .child('sample' + (record_root.selectedStep + 1) + '.wav')
-              .put(blob, metadata).then(function () {
-                console.debug(record_root.stage + ': Step ' + record_root.selectedStep + ' - Audio uploaded');
-                record_root.isUploading = false;
-                if(record_root.selectedStep == record_root.recordSteps.length - 1) {
-                  record_root.goToNextPage(record_root.currentPage);
-                  record_root.selectedStep = 0;
-                } else {
-                  record_root.audioStepper.selected.editable = false;
-                  record_root.audioStepper.selected.completed = true;
-                  // record_root.audioStepper.next();
-                  record_root.selectedStep += 1
-                }
-                record_root.changeRef.detectChanges();
+          this.recordedAudio = new Audio();
+          this.recordedAudio.src = URL.createObjectURL(blob);
+          this.recordedAudio.load();
+          this.recordedAudio.addEventListener("ended", () => {
+            this.recordState = 3;
+          });
+          this.uploadAudio = function (stageId) {
+            if (this.userData) {
+              firebase.storage().ref().child('AUDIO_DATA').child(this.userData.uid).child(stageId + '.wav')
+                  .put(blob, metadata).then(function () {
+                    firebase.firestore().collection('USERS').doc(recordRoot.userData.uid)
+                        .update({
+                          'cS': stageId
+                        }).then();
+                    recordRoot.stepper.selected.completed = true;
+                    recordRoot.stepper.selected.editable = false;
+                    recordRoot.stepper.next();
+                    recordRoot.userMetaData['cS'] = stageId;
+                    if (recordRoot.recordStages[recordRoot.recordStages.length - 2] == stageId) {
+                      firebase.firestore().collection('USERS').doc(recordRoot.userData.uid)
+                          .update({
+                            'cS': 'done'
+                          }).then();
+                      recordRoot.userMetaData['cS'] = 'done';
+                      recordRoot.userDataService.sendMetaData(recordRoot.userMetaData);
+                      recordRoot.goToThankYouPage();
+                    } else {
+                      recordRoot.stepper.next();
+                    }
               }).catch(function (error) {
                 console.error(error)
               });
+            }
+          }
         });
       }
     });
   }
 
-  startRecording() {
-    console.log('Recorder not initialized');
+  goToThankYouPage() {
+    this.router.navigate(['thank-you']).then();
   }
 
-  stopRecording() {
-    console.log('Recorder not initialized');
+  markStepsCompleted(steps) {
+    this.stepper.steps.forEach((item, index) => {
+      if (steps.indexOf(index) != -1) {
+        item.completed = true;
+        item.editable = false;
+      }
+    })
   }
 
-  playSampleAudio() {
-    this.isSamplePlaying = true;
-    this.sampleAudio.play();
-  }
-
-  stopSampleAudio() {
-    this.sampleAudio.pause();
-    this.sampleAudio.currentTime = 0;
-    this.isSamplePlaying = false;
-  }
-
-  goToNextPage(currentPageIndex) {
-    let routeParams = ['thank-you'];
-    if(currentPageIndex < this.pageOrder.length - 1) {
-      routeParams = ['record', this.pageOrder[currentPageIndex + 1]];
+  setSampleAudio(stageId) {
+    if (stageId != 'done') {
+      this.sampleAudio = new Audio();
+      this.sampleAudio.src = '../../assets/samples/male/' + stageId +'.mp3';
+      this.sampleAudio.load();
+      this.sampleAudio.addEventListener("ended", () => {
+        this.recordState = 1;
+      });
     }
-    this.ngZone.run(() => this.router.navigate(routeParams)).then();
   }
+
+  startPlaying() {
+    this.recordedAudio.play()
+  }
+
+  startRecording() { }
+
+  startSamplePlaying() {
+    this.sampleAudio.play()
+  }
+
+  stopPlaying() {
+    if (this.recordedAudio) {
+      this.recordedAudio.pause();
+      this.recordedAudio.currentTime = 0;
+    }
+  }
+
+  stopRecording() { }
+
+  stopSamplePlaying() {
+    if (this.sampleAudio) {
+      this.sampleAudio.pause();
+      this.sampleAudio.currentTime = 0;
+    }
+  }
+
+  uploadAudio(stageId) { }
 }

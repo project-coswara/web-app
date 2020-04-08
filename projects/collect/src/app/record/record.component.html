@@ -1,35 +1,29 @@
-<div class="component-container" >
-    <div class="page">
-        <div class="title-group" fxLayout="row" fxLayoutAlign="start center">
-            <h4 class="title">{{currentTitle}}</h4>
-            <div fxFlex="5" fxFlex.xs></div>
-            <div *ngIf="!isSamplePlaying" class="button" (click)="playSampleAudio()">PLAY SAMPLE</div>
-            <div *ngIf="isSamplePlaying" class="button button-dark" (click)="stopSampleAudio()">STOP PLAYING</div>
-        </div>
-        <mat-vertical-stepper [selectedIndex]="selectedStep" [linear]="true" #stepper>
-            <mat-step *ngFor="let step_id of recordSteps">
-                <ng-template matStepLabel>Recording {{step_id + 1}}</ng-template>
-                <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutAlign.xs="center start">
-                    <div fxLayout="row wrap" fxLayoutAlign="start center">
-                        <div *ngIf="!isRecoding && !isUploading" class="button" (click)="startRecording();">START RECORDING</div>
-                        <div *ngIf="isRecoding && !isUploading" class="button button-dark" (click)="stopRecording()">STOP RECORDING</div>
-                    </div>
-                    <div *ngIf="isRecoding && !isUploading" fxFlex="10" fxHide.xs></div>
-<!--                    <div *ngIf="isRecoding && !isUploading" class="recording" fxLayout="row wrap" fxLayoutAlign="start center">-->
-<!--                        <div class="symbol"></div>-->
-<!--                        <div class="content">RECORDING</div>-->
-<!--                    </div>-->
-                    <div *ngIf="!isRecoding && isUploading" class="upload" fxLayout="row wrap" fxLayoutAlign="start center">
-                        <mat-progress-spinner [diameter]="30" mode="indeterminate"></mat-progress-spinner>
-                        <div class="content">
-                            Uploading! Please wait...
-                        </div>
+<div class="component-container">
+    <div *ngIf="stepLoader" fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
+        <mat-progress-spinner [diameter]="50" mode="indeterminate"></mat-progress-spinner>
+    </div>
+    <div [ngStyle]="stepLoader ? { 'display': 'none' } : {}">
+<!--        <h4>{{this.recordStages.length - this.selectedStageIndex}} more steps to go!</h4>-->
+        <mat-vertical-stepper [selectedIndex]="selectedStageIndex" [linear]="true" #stepper>
+            <mat-step *ngFor="let stageId of recordStages" [stepControl]="formControls[stageId]">
+                <ng-template matStepLabel>{{titleDict[stageId]}}</ng-template>
+                <div *ngIf="stageId != 'done'" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutAlign.xs="center start">
+                    <div *ngIf="recordState < 2" class="button" (click)="recordState = 2; stopSamplePlaying(); startRecording();">START RECORDING</div>
+                    <div *ngIf="recordState == 2" class="button button-dark" (click)="recordState = 3; stopRecording();">STOP RECORDING</div>
+                    <div *ngIf="recordState > 0 && recordState < 2" class="button" (click)="recordState = 0; startSamplePlaying();">PLAY SAMPLE</div>
+                    <div *ngIf="recordState == 0" class="button button-dark" (click)="stopSamplePlaying(); recordState = 1;">STOP PLAYING</div>
+                    <div *ngIf="recordState > 2 && recordState < 4" class="button" (click)="recordState = 4; startPlaying();">PLAY</div>
+                    <div *ngIf="recordState == 4" class="button button-dark" (click)="stopPlaying(); recordState = 3;">STOP</div>
+                    <div *ngIf="recordState > 2 && recordState < 4" class="button" (click)="recordState = 5; uploadAudio(stageId);">UPLOAD</div>
+                    <div *ngIf="recordState > 2 && recordState < 4" class="button" (click)="recordState = 1">RECORD AGAIN</div>
+                </div>
+                <div *ngIf="recordState == 5" class="upload" fxLayout="row wrap" fxLayoutAlign="start center">
+                    <mat-progress-spinner [diameter]="30" mode="indeterminate"></mat-progress-spinner>
+                    <div class="content">
+                        Uploading! Please wait...
                     </div>
                 </div>
             </mat-step>
         </mat-vertical-stepper>
-    </div>
-    <div class="page-footer" fxLayout="column" fxLayoutAlign="start center">
-        <div class="button button-dark" (click)="stepper.reset(); this.stopSampleAudio(); goToNextPage(currentPage)">{{currentPage < pageOrder.length - 1 ? 'NEXT PAGE' : 'FINISH'}}</div>
     </div>
 </div>

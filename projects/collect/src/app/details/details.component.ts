@@ -17,25 +17,23 @@ import { UserDataService } from "../../../../../src/app/user-data.service";
 export class DetailsComponent implements OnInit {
   selectedIndex = 0;
   disableMetaData: boolean = true;
-  finishedMetaData: boolean = true;
+  finishedMetaData: boolean = false;
   submitLoader: boolean = false;
   userData = null;
   formControls = {
     age: new FormControl(null,[Validators.required, Validators.min(0), Validators.max(140)]),
     gender: new FormControl(null,[Validators.required]),
     englishProficient: new FormControl('y', [Validators.required]),
-    country: new FormControl('India', [Validators.required]),
+    country: new FormControl(null, [Validators.required]),
     state: new FormControl(null, [Validators.required]),
-    locality: new FormControl(null, [Validators.required]),
+    locality: new FormControl(null),
     currentStatus: new FormControl('healthy', [Validators.required]),
     smoker: new FormControl(false),
     asthma: new FormControl(false),
     cld: new FormControl(false),
     ht: new FormControl(false),
     ihd: new FormControl(false),
-    diabetes: new FormControl(false),
-    allergies: new FormControl(false),
-    ckd: new FormControl(false)
+    diabetes: new FormControl(false)
   };
   formGroups = {
     metadata: new FormGroup({
@@ -53,9 +51,7 @@ export class DetailsComponent implements OnInit {
       cld: this.formControls.cld,
       ht: this.formControls.ht,
       ihd: this.formControls.ihd,
-      diabetes: this.formControls.diabetes,
-      allergies: this.formControls.allergies,
-      ckd: this.formControls.ckd
+      diabetes: this.formControls.diabetes
     })
   };
   optionList = {
@@ -75,14 +71,21 @@ export class DetailsComponent implements OnInit {
     this.userDataService.getMetaData().subscribe(metaData => {
       if (metaData) {
         this.finishedMetaData = metaData['aMD'];
+        if (metaData['cS'] == 'done') {
+          this.goToThankYouPage()
+        }
       }
     });
   }
 
-  ngOnInit() { this.getStates(); }
+  ngOnInit() { }
 
   goToRecordPage() {
-    this.router.navigateByUrl('/record/breathing-slow').then();
+    this.router.navigateByUrl('/record').then();
+  }
+
+  goToThankYouPage() {
+    this.router.navigate(['thank-you']).then();
   }
 
   submitData() {
@@ -94,9 +97,11 @@ export class DetailsComponent implements OnInit {
         'g': this.formControls.gender.value,
         'ep': this.formControls.englishProficient.value,
         'l_c': this.formControls.country.value,
-        'l_s': this.formControls.state.value,
-        'l_l': this.formControls.locality.value
+        'l_s': this.formControls.state.value
       };
+      if(detailsRoot.formControls.locality.value) {
+        userMetaData['l_l'] = detailsRoot.formControls.locality.value;
+      }
       let userHealthData = { 'covid_status': this.formControls.currentStatus.value };
       for( let key in this.optionList.healthConditionList) {
         this.optionList.healthConditionList[key].forEach(function (item, index) {
@@ -105,6 +110,10 @@ export class DetailsComponent implements OnInit {
           }
         })
       }
+      let appMetaData = {
+        'aMD': true,
+        'uT': 'anonymous'
+      };
       let db = firebase.firestore();
       let firebaseBatch = db.batch();
       firebaseBatch.set(
@@ -117,12 +126,10 @@ export class DetailsComponent implements OnInit {
       );
       firebaseBatch.set(
           db.collection('USERS').doc(detailsRoot.userData.uid),
-          {
-            'aMD': true,
-            'uT': 'anonymous'
-          }
+          appMetaData
       );
       firebaseBatch.commit().then(function () {
+        detailsRoot.userDataService.sendMetaData(appMetaData);
         detailsRoot.goToRecordPage();
       });
     }

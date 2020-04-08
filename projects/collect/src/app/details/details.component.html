@@ -13,7 +13,7 @@
             </p>
             <span *ngIf="disableMetaData && !finishedMetaData">By clicking start you will proceed to data and stimuli collection, accepting our
             </span><span *ngIf="!disableMetaData || finishedMetaData">You have accepted our </span>
-            <a href="http://covid-speech.web.app/terms" target="_blank">terms and conditions</a>.
+            <a href="https://project-prana.web.app/terms" target="_blank">terms and conditions</a>.
             <div class="tab-footer" fxLayout="row" fxLayoutAlign="end center">
                 <div *ngIf="disableMetaData && !finishedMetaData" class="button button-dark" (click)="disableMetaData = false; selectedIndex = selectedIndex + 1">START</div>
                 <div *ngIf="!disableMetaData && !finishedMetaData" class="button button-dark" (click)="disableMetaData = false; selectedIndex = selectedIndex + 1">NEXT</div>
@@ -74,8 +74,7 @@
                 <div fxFlex="5" fxHide.xs></div>
                 <mat-form-field fxFlex="30" fxFlex.xs>
                     <mat-label>Locality/District</mat-label>
-                    <input type="text" [formControl]="formControls.locality" matInput required>
-                    <mat-error *ngIf="formControls.locality.hasError('required')">Required</mat-error>
+                    <input type="text" [formControl]="formControls.locality" matInput>
                 </mat-form-field>
                 <div fxLayout="row" fxLayoutAlign="end center" fxFlexFill>
                     <span class="smaller-text">All fields marked (*) are mandatory</span>
@@ -101,22 +100,14 @@
                     </mat-radio-group>
                 </div>
                 <div class="tab-content-spacer" fxFlex="100"></div>
-                <h5 class="tab-sub-title" fxFlex="100">Respiratory Conditions</h5>
+                <h5 class="tab-sub-title" fxFlex="100">Health Conditions</h5>
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex="100">
                     <div class="tab-check-box" *ngFor="let cb of optionList.healthConditionList.resp" fxFlex="24" fxFlex.xs="100">
                         <mat-checkbox [formControl]="formControls[cb.id]">{{cb.name}}</mat-checkbox>
                     </div>
-                </div>
-                <div class="tab-content-spacer" fxFlex="100"></div>
-                <h5 class="tab-sub-title" fxFlex="100">Heart Conditions</h5>
-                <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex="100">
                     <div class="tab-check-box" *ngFor="let cb of optionList.healthConditionList.heart" fxFlex="24" fxFlex.xs="100">
                         <mat-checkbox [formControl]="formControls[cb.id]">{{cb.name}}</mat-checkbox>
                     </div>
-                </div>
-                <div class="tab-content-spacer" fxFlex="100"></div>
-                <h5 class="tab-sub-title" fxFlex="100">Other Conditions</h5>
-                <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex="100">
                     <div class="tab-check-box" *ngFor="let cb of optionList.healthConditionList.others" fxFlex="24" fxFlex.xs="100">
                         <mat-checkbox [formControl]="formControls[cb.id]">{{cb.name}}</mat-checkbox>
                     </div>

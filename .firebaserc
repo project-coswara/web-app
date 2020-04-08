@@ -1,18 +1,18 @@
 {
   "projects": {
-    "default": "covid-speech"
+    "default": "project-prana"
   },
   "targets": {
-    "covid-speech": {
+    "project-prana": {
         "hosting": {
           "base": [
-            "covid-speech"
+            "project-prana"
           ],
           "collect": [
-            "covid-speech-collect"
+            "project-prana-collect"
           ],
           "test": [
-            "covid-speech-test"
+            "project-prana-test"
           ]
         }
     }
