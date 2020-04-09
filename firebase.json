@@ -16,6 +16,10 @@
     ],
     "rewrites": [
       {
+        "source": "google2b23ded11c58555f.html",
+        "destination": "/assets/google2b23ded11c58555f.html"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }

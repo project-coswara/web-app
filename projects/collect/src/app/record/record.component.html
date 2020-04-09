@@ -3,12 +3,16 @@
         <mat-progress-spinner [diameter]="50" mode="indeterminate"></mat-progress-spinner>
     </div>
     <div [ngStyle]="stepLoader ? { 'display': 'none' } : {}">
+        <div class="info-box" fxLayout="row" fxLayoutAlign="start center">
+            <mat-icon class="material-icons">info</mat-icon>
+            Please make sure you are in a quiet environment and keep your device around 20cm from your face
+        </div>
 <!--        <h4>{{this.recordStages.length - this.selectedStageIndex}} more steps to go!</h4>-->
         <mat-vertical-stepper [selectedIndex]="selectedStageIndex" [linear]="true" #stepper>
             <mat-step *ngFor="let stageId of recordStages" [stepControl]="formControls[stageId]">
                 <ng-template matStepLabel>{{titleDict[stageId]}}</ng-template>
                 <div *ngIf="instructionDict[stageId] && recordState < 5" class="inst">{{instructionDict[stageId]}}</div>
-                <div *ngIf="stageId != 'done'" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutAlign.xs="center start">
+                <div *ngIf="stageId != 'done'" class="step-buttons" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutAlign.xs="center start">
                     <div *ngIf="recordState < 2" class="button" (click)="recordState = 2; stopSamplePlaying(); startRecording();">START RECORDING</div>
                     <div *ngIf="recordState == 2" class="button button-dark" (click)="recordState = 3; stopRecording();">STOP RECORDING</div>
                     <div *ngIf="recordState > 0 && recordState < 2" class="button" (click)="recordState = 0; startSamplePlaying();">PLAY SAMPLE</div>

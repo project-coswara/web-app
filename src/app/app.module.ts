@@ -11,6 +11,11 @@ import { LoginComponent } from "./login/login.component";
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { UserDataService } from "./user-data.service";
+import { HomeComponent } from './home/home.component';
+import { TermsComponent } from './terms/terms.component';
+import { AboutComponent } from './about/about.component';
+import { TeamComponent } from './team/team.component';
+import { ContactComponent } from './contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +23,12 @@ import { UserDataService } from "./user-data.service";
     ContentComponent,
     LoginComponent,
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    HomeComponent,
+    TermsComponent,
+    AboutComponent,
+    TeamComponent,
+    ContactComponent
   ],
   imports: [
     BrowserAnimationsModule,

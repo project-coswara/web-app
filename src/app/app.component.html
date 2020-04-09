@@ -1,6 +1,9 @@
-<div fxLayout="column" fxFill>
+<div *ngIf="!appLoader" fxLayout="column" fxFill>
     <cs-navbar></cs-navbar>
-    <cs-content>
-        Project Prana will be up and running soon!
+    <cs-content fxLayout="column" fxFlex>
+        <router-outlet></router-outlet>
     </cs-content>
+</div>
+<div *ngIf="appLoader" class="content-container" fxLayout="column" fxLayoutAlign="center center" fxFill>
+    <mat-progress-spinner [diameter]="80" mode="indeterminate"></mat-progress-spinner>
 </div>

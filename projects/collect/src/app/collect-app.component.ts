@@ -15,13 +15,12 @@ import { UserDataService } from "../../../../src/app/user-data.service";
 })
 
 export class CollectAppComponent implements OnInit {
-  appLoader = false;
+  appLoader = true;
 
   constructor(private router: Router, private userDataService: UserDataService) { }
 
   ngOnInit() {
     let appRoot = this;
-    // appRoot.appLoader = true;
     firebase.initializeApp(firebaseConfig);
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
@@ -30,13 +29,13 @@ export class CollectAppComponent implements OnInit {
           if (doc.exists) {
             appRoot.userDataService.sendMetaData(doc.data())
           }
-          appRoot.appLoader = true;
+          appRoot.appLoader = false;
         })
       } else {
         appRoot.userDataService.sendUserData(null);
         appRoot.userDataService.sendMetaData(null);
         appRoot.router.navigate(['login']).then();
-        appRoot.appLoader = true;
+        appRoot.appLoader = false;
       }
     });
   }

@@ -20,6 +20,7 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 import { RecordComponent } from './record/record.component';
 import { MatStepperModule } from "@angular/material/stepper";
 import { ThanksComponent } from './thanks/thanks.component';
+import {MatIconModule} from "@angular/material/icon";
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { ThanksComponent } from './thanks/thanks.component';
         FormsModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        MatStepperModule
+        MatStepperModule,
+        MatIconModule
     ],
   providers: [],
   bootstrap: [CollectAppComponent]
