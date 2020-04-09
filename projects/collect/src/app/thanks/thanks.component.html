@@ -18,4 +18,20 @@
             <a href="https://www.cogknit.com/" target="_blank"><img src="../../assets/logo/cogknit.png" height="50px" width="auto" alt="cogknit"/></a>
         </div>
     </div>
+    <div class="feedback" fxLayout="column" fxLayoutAlign="start start" fxFill>
+        <h4>Let us know your comments</h4>
+        <mat-form-field *ngIf="!showFeedbackLoader && showFeedbackBox" class="full-width">
+            <mat-label>Feedback</mat-label>
+            <textarea [formControl]="feedbackControl" matInput rows="10"></textarea>
+        </mat-form-field>
+        <div *ngIf="!showFeedbackLoader && showFeedbackBox && feedbackControl.valid" class="thank-you-footer" fxLayout="row" fxLayoutAlign="end center">
+            <div class="button" (click)="sendFeedback()">SEND FEEDBACK</div>
+        </div>
+        <div *ngIf="showFeedbackLoader">
+            <mat-progress-spinner [diameter]="50" mode="indeterminate"></mat-progress-spinner>
+        </div>
+        <div *ngIf="!showFeedbackBox">
+            Thank you for your feedback!
+        </div>
+    </div>
 </div>
