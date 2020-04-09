@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  title: 'prana'
+  title: 'prana',
+  version: '0.1-beta'
 };
 
 export const firebaseConfig = {

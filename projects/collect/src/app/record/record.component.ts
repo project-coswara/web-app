@@ -10,6 +10,8 @@ import 'firebase/firestore';
 import 'firebase/storage';
 
 import { UserDataService } from "../../../../../src/app/user-data.service";
+import { environment } from "../../../../../src/environments/environment";
+import {error} from "@angular/compiler/src/util";
 
 @Component({
   selector: 'cs-record-record',
@@ -21,11 +23,12 @@ export class RecordComponent implements AfterViewInit, OnInit {
   userData = null;
   sampleAudio = null;
   recordedAudio = null;
+  recorder = null;
   stepLoader: boolean = true;
   recordState:number = 1;
   titleDict = {
     'breathing-slow': 'Breathing (slow)',
-    'breathing-fast': 'Breathing (fast)',
+    'breathing-fast': 'Breathing (deep)',
     'cough-shallow': 'Cough (shallow)',
     'cough-heavy': 'Cough (heavy)',
     'vowel-a': 'Vowel /a/',
@@ -34,6 +37,18 @@ export class RecordComponent implements AfterViewInit, OnInit {
     'counting-normal': 'Counting (normal)',
     'counting-fast': 'Counting (fast)',
     'done': 'Finished'
+  };
+  instructionDict = {
+    'breathing-slow': 'Breathe slowly 5 times close to the microphone',
+    'breathing-fast': 'Breathe deeply 5 times close to the microphone',
+    'cough-shallow': 'Cough mildly 3 times close to the microphone',
+    'cough-heavy': 'Cough deeply 3 times close to the microphone',
+    'vowel-a': 'Say /a/ as in \'made\' and sustain as long as possible',
+    'vowel-e': 'Say /e/ as in \'beet\' and sustain as long as possible',
+    'vowel-o': 'Say /o/ as in \'cool\' and sustain as long as possible',
+    'counting-normal': 'Count from 1 to 20',
+    'counting-fast': 'Count from 1 to 20 faster',
+    'done': 'Thank you for your participation!'
   };
   formControls = {
     'breathing-slow': new FormControl(null, [Validators.required]),
@@ -70,7 +85,8 @@ export class RecordComponent implements AfterViewInit, OnInit {
       } else {
         this.userMetaData = {
           'aMD': true,
-          'uT': 'anonymous'
+          'uT': 'anonymous',
+          'fUV': environment.version
         };
       }
       this.stepLoader = false;
@@ -92,21 +108,24 @@ export class RecordComponent implements AfterViewInit, OnInit {
 
   ngOnInit() {
     let recordRoot = this;
+
     navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
       let recorder = RecordRTC(stream, {
         disableLogs: true,
         type: 'audio',
-        mimeType: 'audio/wav',
-        audioBitsPerSecond: 128000,
-        sampleRate: 96000
+        numberOfAudioChannels: 1,
+        recorderType: RecordRTC.StereoAudioRecorder,
+        desiredSampleRate: 16000
       });
 
       this.startRecording = function() {
+        recorder.microphone = stream;
         recorder.startRecording()
       };
 
       this.stopRecording = function () {
         recorder.stopRecording(() => {
+          recorder.microphone.stop();
           const blob = recorder.getBlob();
           const metadata = {contentType: 'audio/wav',};
           recorder.reset();
@@ -120,32 +139,42 @@ export class RecordComponent implements AfterViewInit, OnInit {
             if (this.userData) {
               firebase.storage().ref().child('AUDIO_DATA').child(this.userData.uid).child(stageId + '.wav')
                   .put(blob, metadata).then(function () {
+                    let cSD = new Date().toISOString();
                     firebase.firestore().collection('USERS').doc(recordRoot.userData.uid)
                         .update({
-                          'cS': stageId
+                          'cS': stageId,
+                          'cSD': cSD,
+                          'lUV': environment.version
                         }).then();
                     recordRoot.stepper.selected.completed = true;
                     recordRoot.stepper.selected.editable = false;
                     recordRoot.stepper.next();
                     recordRoot.userMetaData['cS'] = stageId;
+                    recordRoot.userMetaData['cSD'] = new Date().toISOString();
+                    recordRoot.userMetaData['lUV'] = environment.version;
                     if (recordRoot.recordStages[recordRoot.recordStages.length - 2] == stageId) {
                       firebase.firestore().collection('USERS').doc(recordRoot.userData.uid)
                           .update({
-                            'cS': 'done'
+                            'cS': 'done',
+                            'cSD': cSD
                           }).then();
                       recordRoot.userMetaData['cS'] = 'done';
+                      recordRoot.userMetaData['cSD'] = cSD;
+                      recordRoot.userMetaData['lUV'] = environment.version;
                       recordRoot.userDataService.sendMetaData(recordRoot.userMetaData);
                       recordRoot.goToThankYouPage();
                     } else {
                       recordRoot.stepper.next();
                     }
-              }).catch(function (error) {
-                console.error(error)
-              });
+              })
             }
           }
         });
       }
+    }).catch((error) => {
+      alert('Need microphone permissions to proceed!');
+      this.router.navigate(['']).then();
+      console.error(error);
     });
   }
 

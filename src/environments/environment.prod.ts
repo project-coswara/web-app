@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
-  title: 'prana'
+  title: 'prana',
+  version: '0.1-beta'
 };
 
 export const firebaseConfig = {

@@ -5,7 +5,7 @@ import { Router } from "@angular/router";
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 
-import { general_option_list, health_option_list } from "../../../../../src/environments/environment";
+import { environment, general_option_list, health_option_list } from "../../../../../src/environments/environment";
 import { UserDataService } from "../../../../../src/app/user-data.service";
 
 @Component({
@@ -112,7 +112,9 @@ export class DetailsComponent implements OnInit {
       }
       let appMetaData = {
         'aMD': true,
-        'uT': 'anonymous'
+        'uT': 'anonymous',
+        'mDD': new Date().toISOString(),
+        'fUV': environment.version
       };
       let db = firebase.firestore();
       let firebaseBatch = db.batch();

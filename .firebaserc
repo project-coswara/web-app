@@ -2,19 +2,19 @@
   "projects": {
     "default": "project-prana"
   },
-  "targets": {
-    "project-prana": {
-        "hosting": {
-          "base": [
-            "project-prana"
-          ],
-          "collect": [
-            "project-prana-collect"
-          ],
-          "test": [
-            "project-prana-test"
-          ]
-        }
-    }
-  }
+ "targets": {
+   "project-prana": {
+     "hosting": {
+       "base": [
+         "project-prana"
+       ],
+       "collect": [
+         "project-prana-collect"
+       ],
+       "test": [
+         "project-prana-test"
+       ]
+     }
+   }
+ }
 }
