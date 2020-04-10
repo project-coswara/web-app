@@ -10,7 +10,8 @@
     "e2e": "ng e2e",
     "deploy": "ng build --prod CoVidSpeech && ng build --prod collect && firebase deploy --only hosting:base,hosting:collect",
     "deploy-base": "ng build --prod CoVidSpeech && firebase deploy --only hosting:base",
-    "deploy-collect": "ng build --prod collect && firebase deploy --only hosting:collect"
+    "deploy-collect": "ng build --prod collect && firebase deploy --only hosting:collect",
+    "deploy-collect-dev": "ng build --prod collect && firebase deploy --only hosting:collect-dev"
   },
   "private": true,
   "dependencies": {
