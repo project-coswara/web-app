@@ -34,8 +34,10 @@ export class CollectAppComponent implements OnInit {
       } else {
         appRoot.userDataService.sendUserData(null);
         appRoot.userDataService.sendMetaData(null);
-        appRoot.router.navigate(['login']).then();
-        appRoot.appLoader = false;
+        firebase.auth().signInAnonymously().then(function (userCredential) {
+          appRoot.appLoader = false;
+          appRoot.router.navigate(['']).then();
+        });
       }
     });
   }
