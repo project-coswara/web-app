@@ -81,7 +81,7 @@ export class DetailsComponent implements OnInit {
   ngOnInit() { }
 
   goToRecordPage() {
-    this.router.navigateByUrl('/record').then();
+    this.router.navigate(['record']).then();
   }
 
   goToThankYouPage() {
