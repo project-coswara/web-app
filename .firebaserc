@@ -11,6 +11,9 @@
        "collect": [
          "project-coswara-collect"
        ],
+       "collect-dev": [
+         "project-coswara-collect-dev"
+       ],
        "test": [
          "project-coswara-test"
        ]
