@@ -27,7 +27,7 @@ export class DetailsComponent implements OnInit {
     country: new FormControl(null, [Validators.required]),
     state: new FormControl(null, [Validators.required]),
     locality: new FormControl(null),
-    currentStatus: new FormControl('healthy', [Validators.required]),
+    currentStatus: new FormControl(null, [Validators.required]),
     smoker: new FormControl(false),
     asthma: new FormControl(false),
     cld: new FormControl(false),

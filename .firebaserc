@@ -1,18 +1,18 @@
 {
   "projects": {
-    "default": "project-prana"
+    "default": "project-coswara"
   },
  "targets": {
-   "project-prana": {
+   "project-coswara": {
      "hosting": {
        "base": [
-         "project-prana"
+         "project-coswara"
        ],
        "collect": [
-         "project-prana-collect"
+         "project-coswara-collect"
        ],
        "test": [
-         "project-prana-test"
+         "project-coswara-test"
        ]
      }
    }

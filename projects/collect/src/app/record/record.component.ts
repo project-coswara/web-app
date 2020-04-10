@@ -119,7 +119,13 @@ export class RecordComponent implements AfterViewInit, OnInit {
       });
 
       this.startRecording = function() {
-        recorder.startRecording()
+        recorder.startRecording();
+        setTimeout(()=> {
+          if (this.recordState == 2) {
+            this.recordState = 3;
+            this.stopRecording();
+          }
+        }, 30000);
       };
 
       this.stopRecording = function () {
@@ -160,7 +166,6 @@ export class RecordComponent implements AfterViewInit, OnInit {
                       recordRoot.userMetaData['cSD'] = cSD;
                       recordRoot.userMetaData['lUV'] = environment.version;
                       recordRoot.userDataService.sendMetaData(recordRoot.userMetaData);
-                      recorder.microphone.stop();
                       recordRoot.goToThankYouPage();
                     } else {
                       recordRoot.stepper.next();

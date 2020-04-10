@@ -4,19 +4,19 @@
 
 export const environment = {
   production: false,
-  title: 'prana',
-  version: '0.2-beta'
+  title: 'coswara',
+  version: 0.1
 };
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyCUeUhqY8fGU7Uvcsf7sfeWfaWqRWzU5kI",
-  authDomain: "project-prana.firebaseapp.com",
-  databaseURL: "https://project-prana.firebaseio.com",
-  projectId: "project-prana",
-  storageBucket: "project-prana.appspot.com",
-  messagingSenderId: "413422879004",
-  appId: "1:413422879004:web:808c864b94e3fbb15e3ad9",
-  measurementId: "G-RD8LS35D7G"
+  apiKey: "AIzaSyBrn-GzdCeMBPptk-_Ml3PpXtgbmAP6KZA",
+  authDomain: "project-coswara.firebaseapp.com",
+  databaseURL: "https://project-coswara.firebaseio.com",
+  projectId: "project-coswara",
+  storageBucket: "project-coswara.appspot.com",
+  messagingSenderId: "70066812418",
+  appId: "1:70066812418:web:5deaf3fd2189a19e63d91b",
+  measurementId: "G-MCWN0Q7MX0"
 };
 
 export const general_option_list = {
