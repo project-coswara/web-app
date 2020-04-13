@@ -11,6 +11,7 @@ import 'firebase/storage';
 
 import { UserDataService } from "../../../../../src/app/user-data.service";
 import { environment } from "../../../../../src/environments/environment";
+import {error} from "@angular/compiler/src/util";
 
 @Component({
   selector: 'cs-record-record',
@@ -128,19 +129,19 @@ export class RecordComponent implements AfterViewInit, OnInit {
 
         this.startRecording = function () {
           this.recorder.startRecording();
-          this.timeoutVar = setTimeout(() => {
-            if (this.recordState == 2) {
-              this.recordState = 3;
-              this.stopRecording();
-            }
-          }, 30000);
+          // this.timeoutVar = setTimeout(() => {
+          //   if (this.recordState == 2) {
+          //     this.recordState = 3;
+          //     this.stopRecording();
+          //   }
+          // }, 30000);
         }
 
         this.stopRecording = function () {
-          clearTimeout(this.timeoutVar);
+          // clearTimeout(this.timeoutVar);
           this.recorder.stopRecording(() => {
             const blob = this.recorder.getBlob();
-            const metadata = {contentType: 'audio/wav',};
+            const metadata = {contentType: 'audio/wav'};
             this.recorder.reset();
             this.recordedAudio = new Audio();
             this.recordedAudio.src = URL.createObjectURL(blob);
@@ -158,8 +159,10 @@ export class RecordComponent implements AfterViewInit, OnInit {
                     .put(blob, metadata);
                 upload_task.on('state_changed', snapshot => {
                   this.uploadProgress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                  console.log((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
                 })
+                this.cancelUpload = function() {
+                  upload_task.cancel();
+                }
                 upload_task.then(function () {
                   let cSD = new Date().toISOString();
                   firebase.firestore().collection('USERS').doc(recordRoot.userData.uid)
@@ -188,6 +191,12 @@ export class RecordComponent implements AfterViewInit, OnInit {
                   } else {
                     recordRoot.stepper.next();
                   }
+                }).catch((error) => {
+                  console.error(error)
+                  if (error.code != 'storage/canceled') {
+                    alert('Upload failed! Retry again');
+                  }
+                  recordRoot.recordState = 3;
                 })
               }
             }
@@ -202,6 +211,8 @@ export class RecordComponent implements AfterViewInit, OnInit {
       alert('This browser does not support audio recording. Please open it in Chrome/Safari/FireFox.')
     }
   }
+
+  cancelUpload() { }
 
   goToThankYouPage() {
     this.router.navigate(['thank-you']).then();

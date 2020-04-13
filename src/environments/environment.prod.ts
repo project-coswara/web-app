@@ -43,6 +43,9 @@ export const health_option_list = {
   }],
   conditions: {
     resp: [{
+      id: 'fever',
+      name: 'Fever'
+    }, {
       id: 'smoker',
       name: 'Smoker'
     }, {
