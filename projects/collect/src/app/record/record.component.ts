@@ -11,7 +11,6 @@ import 'firebase/storage';
 
 import { UserDataService } from "../../../../../src/app/user-data.service";
 import { environment } from "../../../../../src/environments/environment";
-import {error} from "@angular/compiler/src/util";
 
 @Component({
   selector: 'cs-record-record',
@@ -25,7 +24,7 @@ export class RecordComponent implements AfterViewInit, OnInit {
   recordedAudio = null;
   recorder = null;
   stepLoader: boolean = true;
-  recordState:number = 1;
+  recordState:number = -1;
   titleDict = {
     'breathing-shallow': 'Breathing (shallow)',
     'breathing-deep': 'Breathing (deep)',
@@ -39,10 +38,10 @@ export class RecordComponent implements AfterViewInit, OnInit {
     'done': 'Finished'
   };
   instructionDict = {
-    'breathing-shallow': 'Breathe fast 5 times close to the microphone',
-    'breathing-deep': 'Breathe deeply 5 times close to the microphone',
-    'cough-shallow': 'Cough mildly 3 times close to the microphone',
-    'cough-heavy': 'Cough deeply 3 times close to the microphone',
+    'breathing-shallow': 'Breathe fast 5 times',
+    'breathing-deep': 'Breathe deeply 5 times',
+    'cough-shallow': 'Cough mildly 3 times',
+    'cough-heavy': 'Cough deeply 3 times',
     'vowel-a': 'Say /a/ as in \'made\' and sustain as long as possible',
     'vowel-e': 'Say /e/ as in \'beet\' and sustain as long as possible',
     'vowel-o': 'Say /o/ as in \'cool\' and sustain as long as possible',
@@ -65,6 +64,8 @@ export class RecordComponent implements AfterViewInit, OnInit {
   recordStages = Object.keys(this.titleDict);
   selectedStageIndex: number = 0;
   userMetaData = null;
+  uploadProgress = 0;
+  timeoutVar = null;
 
   @ViewChild('stepper', {static: false}) private stepper: MatStepper;
 
@@ -97,89 +98,109 @@ export class RecordComponent implements AfterViewInit, OnInit {
     this.markStepsCompleted(Array.from(Array(this.selectedStageIndex).keys()));
     this.setSampleAudio(this.recordStages[this.selectedStageIndex]);
     this.stepper.selectionChange.subscribe((changeData) => {
-      this.recordState = 1;
+      this.uploadProgress = 0;
       this.stopSamplePlaying();
       this.stopRecording();
       this.stopPlaying();
+      this.initRecord();
       this.markStepsCompleted(Array.from(Array(changeData.selectedIndex).keys()));
       this.setSampleAudio(this.recordStages[changeData.selectedIndex]);
     });
   }
 
   ngOnInit() {
+    this.initRecord();
+  }
+
+  initRecord() {
     let recordRoot = this;
+    this.recordState = -1;
+    if (navigator.getUserMedia) {
+      navigator.mediaDevices.getUserMedia({audio: true}).then(stream => {
+        this.recordState = 1;
+        this.recorder = RecordRTC(stream, {
+          disableLogs: true,
+          type: 'audio',
+          numberOfAudioChannels: 1,
+          recorderType: RecordRTC.StereoAudioRecorder,
+          desiredSampleRate: 16000
+        });
 
-    navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-      let recorder = RecordRTC(stream, {
-        disableLogs: true,
-        type: 'audio',
-        numberOfAudioChannels: 1,
-        recorderType: RecordRTC.StereoAudioRecorder,
-        desiredSampleRate: 16000
-      });
+        this.startRecording = function () {
+          this.recorder.startRecording();
+          this.timeoutVar = setTimeout(() => {
+            if (this.recordState == 2) {
+              this.recordState = 3;
+              this.stopRecording();
+            }
+          }, 30000);
+        }
 
-      this.startRecording = function() {
-        recorder.startRecording();
-        setTimeout(()=> {
-          if (this.recordState == 2) {
-            this.recordState = 3;
-            this.stopRecording();
-          }
-        }, 30000);
-      };
-
-      this.stopRecording = function () {
-        recorder.stopRecording(() => {
-          const blob = recorder.getBlob();
-          const metadata = {contentType: 'audio/wav',};
-          recorder.reset();
-          this.recordedAudio = new Audio();
-          this.recordedAudio.src = URL.createObjectURL(blob);
-          this.recordedAudio.load();
-          this.recordedAudio.addEventListener("ended", () => {
-            this.recordState = 3;
-          });
-          this.uploadAudio = function (stageId) {
-            if (this.userData) {
-              firebase.storage().ref().child('AUDIO_DATA').child(this.userData.uid).child(stageId + '.wav')
-                  .put(blob, metadata).then(function () {
-                    let cSD = new Date().toISOString();
+        this.stopRecording = function () {
+          clearTimeout(this.timeoutVar);
+          this.recorder.stopRecording(() => {
+            const blob = this.recorder.getBlob();
+            const metadata = {contentType: 'audio/wav',};
+            this.recorder.reset();
+            this.recordedAudio = new Audio();
+            this.recordedAudio.src = URL.createObjectURL(blob);
+            this.recordedAudio.load();
+            this.recordedAudio.addEventListener("ended", () => {
+              this.recordState = 3;
+            });
+            this.uploadAudio = function (stageId) {
+              if (this.userData) {
+                this.uploadProgress = 0;
+                let upload_task = firebase.storage().ref()
+                    .child('AUDIO_DATA')
+                    .child(this.userData.uid)
+                    .child(stageId + '.wav')
+                    .put(blob, metadata);
+                upload_task.on('state_changed', snapshot => {
+                  this.uploadProgress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                  console.log((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+                })
+                upload_task.then(function () {
+                  let cSD = new Date().toISOString();
+                  firebase.firestore().collection('USERS').doc(recordRoot.userData.uid)
+                      .update({
+                        'cS': stageId,
+                        'cSD': cSD,
+                        'lUV': environment.version
+                      }).then();
+                  recordRoot.stepper.selected.completed = true;
+                  recordRoot.stepper.selected.editable = false;
+                  recordRoot.stepper.next();
+                  recordRoot.userMetaData['cS'] = stageId;
+                  recordRoot.userMetaData['cSD'] = new Date().toISOString();
+                  recordRoot.userMetaData['lUV'] = environment.version;
+                  if (recordRoot.recordStages[recordRoot.recordStages.length - 2] == stageId) {
                     firebase.firestore().collection('USERS').doc(recordRoot.userData.uid)
                         .update({
-                          'cS': stageId,
-                          'cSD': cSD,
-                          'lUV': environment.version
+                          'cS': 'done',
+                          'cSD': cSD
                         }).then();
-                    recordRoot.stepper.selected.completed = true;
-                    recordRoot.stepper.selected.editable = false;
-                    recordRoot.stepper.next();
-                    recordRoot.userMetaData['cS'] = stageId;
-                    recordRoot.userMetaData['cSD'] = new Date().toISOString();
+                    recordRoot.userMetaData['cS'] = 'done';
+                    recordRoot.userMetaData['cSD'] = cSD;
                     recordRoot.userMetaData['lUV'] = environment.version;
-                    if (recordRoot.recordStages[recordRoot.recordStages.length - 2] == stageId) {
-                      firebase.firestore().collection('USERS').doc(recordRoot.userData.uid)
-                          .update({
-                            'cS': 'done',
-                            'cSD': cSD
-                          }).then();
-                      recordRoot.userMetaData['cS'] = 'done';
-                      recordRoot.userMetaData['cSD'] = cSD;
-                      recordRoot.userMetaData['lUV'] = environment.version;
-                      recordRoot.userDataService.sendMetaData(recordRoot.userMetaData);
-                      recordRoot.goToThankYouPage();
-                    } else {
-                      recordRoot.stepper.next();
-                    }
-              })
+                    recordRoot.userDataService.sendMetaData(recordRoot.userMetaData);
+                    recordRoot.goToThankYouPage();
+                  } else {
+                    recordRoot.stepper.next();
+                  }
+                })
+              }
             }
-          }
-        });
-      }
-    }).catch((error) => {
-      alert('Need microphone permissions to proceed!');
-      this.router.navigate(['']).then();
-      console.error(error);
-    });
+          });
+        }
+      }).catch((error) => {
+        alert('Need microphone permissions to proceed!');
+        this.router.navigate(['']).then();
+        console.error(error);
+      });
+    } else {
+      alert('This browser does not support audio recording. Please open it in Chrome/Safari/FireFox.')
+    }
   }
 
   goToThankYouPage() {
@@ -210,7 +231,9 @@ export class RecordComponent implements AfterViewInit, OnInit {
     this.recordedAudio.play()
   }
 
-  startRecording() { }
+  startRecording() {
+
+  }
 
   startSamplePlaying() {
     this.sampleAudio.play()
@@ -223,7 +246,8 @@ export class RecordComponent implements AfterViewInit, OnInit {
     }
   }
 
-  stopRecording() { }
+  stopRecording() {
+  }
 
   stopSamplePlaying() {
     if (this.sampleAudio) {

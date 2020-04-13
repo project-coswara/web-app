@@ -7,12 +7,13 @@
             <mat-icon class="material-icons">info</mat-icon>
             Please make sure you are in a quiet environment and keep your device around 20cm from your face
         </div>
+<!--        {{userData.uid}}-->
 <!--        <h4>{{this.recordStages.length - this.selectedStageIndex}} more steps to go!</h4>-->
         <mat-vertical-stepper [selectedIndex]="selectedStageIndex" [linear]="true" #stepper>
             <mat-step *ngFor="let stageId of recordStages" [stepControl]="formControls[stageId]">
                 <ng-template matStepLabel>{{titleDict[stageId]}}</ng-template>
-                <div *ngIf="instructionDict[stageId] && recordState < 5" class="inst">{{instructionDict[stageId]}}</div>
-                <div *ngIf="stageId != 'done'" class="step-buttons" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutAlign.xs="center start">
+                <div *ngIf="instructionDict[stageId] && recordState >= 0 && recordState < 5" class="inst">{{instructionDict[stageId]}}</div>
+                <div *ngIf="stageId != 'done' && recordState != -1" class="step-buttons" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutAlign.xs="center start">
                     <div *ngIf="recordState < 2" class="button" (click)="recordState = 2; stopSamplePlaying(); startRecording();">START RECORDING</div>
                     <div *ngIf="recordState == 2" class="button button-dark" (click)="recordState = 3; stopRecording();">STOP RECORDING</div>
                     <div *ngIf="recordState > 0 && recordState < 2" class="button" (click)="recordState = 0; startSamplePlaying();">PLAY SAMPLE</div>
@@ -20,7 +21,13 @@
                     <div *ngIf="recordState > 2 && recordState < 4" class="button" (click)="recordState = 4; startPlaying();">PLAY</div>
                     <div *ngIf="recordState == 4" class="button button-dark" (click)="stopPlaying(); recordState = 3;">STOP</div>
                     <div *ngIf="recordState > 2 && recordState < 4" class="button" (click)="recordState = 5; uploadAudio(stageId);">UPLOAD</div>
-                    <div *ngIf="recordState > 2 && recordState < 4" class="button" (click)="recordState = 1">RECORD AGAIN</div>
+                    <div *ngIf="recordState > 2 && recordState < 4" class="button" (click)="initRecord();">RECORD AGAIN</div>
+                </div>
+                <div *ngIf="recordState == -1" class="upload" fxLayout="row wrap" fxLayoutAlign="start center">
+                    <mat-progress-spinner [diameter]="30" mode="indeterminate"></mat-progress-spinner>
+                    <div class="content">
+                        Initialising! Please wait...
+                    </div>
                 </div>
                 <div *ngIf="recordState == 5" class="upload" fxLayout="row wrap" fxLayoutAlign="start center">
                     <mat-progress-spinner [diameter]="30" mode="indeterminate"></mat-progress-spinner>
