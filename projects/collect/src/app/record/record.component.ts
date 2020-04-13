@@ -27,8 +27,8 @@ export class RecordComponent implements AfterViewInit, OnInit {
   stepLoader: boolean = true;
   recordState:number = 1;
   titleDict = {
-    'breathing-slow': 'Breathing (slow)',
-    'breathing-fast': 'Breathing (deep)',
+    'breathing-shallow': 'Breathing (shallow)',
+    'breathing-deep': 'Breathing (deep)',
     'cough-shallow': 'Cough (shallow)',
     'cough-heavy': 'Cough (heavy)',
     'vowel-a': 'Vowel /a/',
@@ -39,8 +39,8 @@ export class RecordComponent implements AfterViewInit, OnInit {
     'done': 'Finished'
   };
   instructionDict = {
-    'breathing-slow': 'Breathe slowly 5 times close to the microphone',
-    'breathing-fast': 'Breathe deeply 5 times close to the microphone',
+    'breathing-shallow': 'Breathe fast 5 times close to the microphone',
+    'breathing-deep': 'Breathe deeply 5 times close to the microphone',
     'cough-shallow': 'Cough mildly 3 times close to the microphone',
     'cough-heavy': 'Cough deeply 3 times close to the microphone',
     'vowel-a': 'Say /a/ as in \'made\' and sustain as long as possible',
@@ -51,8 +51,8 @@ export class RecordComponent implements AfterViewInit, OnInit {
     'done': 'Thank you for your participation!'
   };
   formControls = {
-    'breathing-slow': new FormControl(null, [Validators.required]),
-    'breathing-fast': new FormControl(null, [Validators.required]),
+    'breathing-shallow': new FormControl(null, [Validators.required]),
+    'breathing-deep': new FormControl(null, [Validators.required]),
     'cough-shallow': new FormControl(null, [Validators.required]),
     'cough-heavy': new FormControl(null, [Validators.required]),
     'vowel-a': new FormControl(null, [Validators.required]),

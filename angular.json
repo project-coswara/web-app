@@ -43,7 +43,7 @@
             "tsConfig": "tsconfig.app.json",
             "aot": false,
             "assets": [
-              "src/favicon.ico",
+              "src/favicon.png",
               "src/assets",
               "src/assets/google2b23ded11c58555f.html"
             ],
@@ -139,7 +139,7 @@
             "tsConfig": "projects/test/tsconfig.app.json",
             "aot": false,
             "assets": [
-              "projects/test/src/favicon.ico",
+              "projects/test/src/favicon.png",
               "projects/test/src/assets"
             ],
             "styles": [
@@ -234,7 +234,7 @@
             "tsConfig": "projects/collect/tsconfig.app.json",
             "aot": false,
             "assets": [
-              "projects/collect/src/favicon.ico",
+              "projects/collect/src/favicon.png",
               "projects/collect/src/assets"
             ],
             "styles": [

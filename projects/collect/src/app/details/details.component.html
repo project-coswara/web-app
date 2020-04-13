@@ -11,11 +11,11 @@
             The data collected will be used for research purposes and will be shared with the research community for developing quick tools for Covid diagnostics.
             The participation in this study is purely voluntary and the details collected will not contain any personally identifiable information.
             </p>
-            <p>The entire recording and data collection should take about 5 minutes only.
+            <p>The entire recording and data collection should take about 7 minutes only.
                 Please keep the microphone close to your mouth during the recording and perform the data recording in a quiet environment.</p>
             <span *ngIf="disableMetaData && !finishedMetaData">By clicking start you will proceed to data and stimuli collection, accepting our
             </span><span *ngIf="!disableMetaData || finishedMetaData">You have accepted our </span>
-            <a href="https://project-coswara.web.app/terms" target="_blank">terms and conditions</a>.
+            <a href="https://coswara.iisc.ac.in/terms" target="_blank">terms and conditions</a>.
             <p>For any questions, please contact <a href="mailto:sriramg@iisc.ac.in">sriramg@iisc.ac.in</a></p>
             <div class="tab-footer" fxLayout="row" fxLayoutAlign="end center">
                 <div *ngIf="disableMetaData && !finishedMetaData" class="button button-dark" (click)="disableMetaData = false; selectedIndex = selectedIndex + 1">START</div>
@@ -29,8 +29,7 @@
                     <mat-label>Age</mat-label>
                     <input type="number" [formControl]="formControls.age" matInput required>
                     <mat-error *ngIf="formControls.age.hasError('required')">Required</mat-error>
-                    <mat-error *ngIf="formControls.age.hasError('min')">Doesn't look like valid ag</mat-error>
-                    <mat-error *ngIf="formControls.age.hasError('max')">Doesn't look like valid age</mat-error>
+                    <mat-error *ngIf="formControls.age.hasError('min') || formControls.age.hasError('max')">Doesn't look like valid age</mat-error>
                 </mat-form-field>
                 <div fxFlex="3" fxFlex.xs="5"></div>
                 <mat-form-field fxFlex="17" fxFlex.xs="67">
