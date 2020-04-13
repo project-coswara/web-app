@@ -28,6 +28,7 @@ export class DetailsComponent implements OnInit {
     state: new FormControl(null, [Validators.required]),
     locality: new FormControl(null),
     currentStatus: new FormControl(null, [Validators.required]),
+    fever: new FormControl(false),
     smoker: new FormControl(false),
     asthma: new FormControl(false),
     cld: new FormControl(false),
@@ -46,6 +47,7 @@ export class DetailsComponent implements OnInit {
     }),
     healthStatus: new FormGroup({
       currentStatus: this.formControls.currentStatus,
+      fever: this.formControls.fever,
       smoker: this.formControls.smoker,
       asthma: this.formControls.asthma,
       cld: this.formControls.cld,
