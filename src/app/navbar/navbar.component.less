@@ -1,6 +1,23 @@
+@import "../../styles";
+
 .title {
   cursor: pointer;
   font-weight: normal;
   margin: 0;
   width: auto!important;
+}
+
+.tab {
+  cursor: pointer;
+  text-align: center;
+  padding: 10px;
+  user-select: none;
+  width: 60px;
+}
+.tab:hover {
+  background-color: @color_lightest;
+  opacity: 0.9;
+}
+.tab.selected {
+  background-color: @color_lightest;
 }

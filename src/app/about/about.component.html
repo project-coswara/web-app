@@ -1,52 +1,27 @@
 <div class="component-container">
-    <h3 class="title">about</h3>
+    <h3 class="page-title">about the project</h3>
     <div class="content">
         <p>
             The word <b>Coswara</b> is  an amalgamation of Co (from corona) and Swara (sound in sanskrit). The project is being pursued in three stages:
         </p>
-        <ul>
-            <li>
-                <p>
-                    <b>Data collection:</b> We aim at creating a dataset composed of voice samples from healthy individuals, and those with COVID-19 infection. The data is collected using a web and mobile application. Voice samples collected include breathing sounds (fast and slow), cough sounds (deep and shallow), phonation of sustained vowels (/a/ as in made, /i/,/o/), and counting numbers at slow and fast pace.
-                    Metadata information collected includes the participant's age, gender, location (country, state/province), current health status (healthy / exposed / cured / infected) and the presence of comorbidities (pre-existing medical conditions).
-                    No personally identifiable information is collected, and the data collection respects the privacy of the contributors. 
-                    The data is also anonymized during storage itself. 
-                    The web application can be accessed at https://coswara.iisc.ac.in/
-                </p>
-            </li>
-            <li>
-                <p>
-                    <b>Modeling:</b> The collected data will be analysed using signal processing and machine learning techniques.
-                    The goal is to build mathematical models aiding identification of ‘infection prints’ from voice samples. This stage is a work-in-progress while we create the dataset. 
-                    We also aim at releasing the collected dataset in a structured form openly via a Github platform.
-                    This is to pool effort from the larger research community to contribute in making point-of-care diagnosis a reality soon.
-                </p>
-            </li>
-            <li>
-                <p><b>Diagnosis tool:</b> We aim to release the diagnosis tool as a web/mobile application. Similar to the dataset creation stage, the application requests for recording the voice samples, and preferably provides a score indicating the probability of COVID-19 infection.
-                    The final deployment of the tool is subject to validation with clinical findings, and authorization/approval from competent authorities.
-                </p>
-            </li>
-        </ul>
-        <br>
-        <!-- <p align="center">A basic flowchart of the project is given below:</p>
-        <div>
-        <img src="assets/images/about_diagram.png" alt="About" width="900" height="400"/>
-    </div> -->
-    <div class="home-footer" fxLayout="row wrap" fxLayout.xs="column">
-        <!-- <a class="button button-dark" href="https://record.coswara.iisc.ac.in" target="_blank">PROCEED TO COLLECTION PAGE</a> -->
-        <a class="button button-dark" [routerLink]="'/team'">MEET THE TEAM</a>
-        <a class="button" [routerLink]="'/home'">HOME</a>
-    </div>
-        <!-- <p>Project Coswara aims at designing point-of-care diagnosis for respiratory infections.
-            The focus is on making the diagnosis in seconds, without having to walk to the clinic, and inexpensive.
-            Towards this, we propose using human breath and voice.
-            Respiratory infection affects lungs, and this impacts air flow through the vocal tract while we speak.
-            The result is a temporary change in the voice quality.
-            We all have noticed this in our own voice or that of our dear ones, especially in the flu season.
-        </p> -->
-<!--        <h4 class="title">project implementation</h4>-->
-<!--        <h5 class="title">data collection</h5>-->
-        <!-- <p></p> -->
+        <h5 class="sub-title">Data Collection</h5>
+        <p>
+            We aim at creating a dataset composed of voice samples from healthy individuals, and those with COVID-19 infection. The data is collected using a web and mobile application. Voice samples collected include breathing sounds (fast and slow), cough sounds (deep and shallow), phonation of sustained vowels (/a/ as in made, /i/,/o/), and counting numbers at slow and fast pace.
+            Metadata information collected includes the participant's age, gender, location (country, state/province), current health status (healthy / exposed / cured / infected) and the presence of comorbidities (pre-existing medical conditions).
+            No personally identifiable information is collected, and the data collection respects the privacy of the contributors.
+            The data is also anonymized during storage itself.
+        </p>
+        <h5 class="sub-title">Modeling</h5>
+        <p>
+            The collected data will be analysed using signal processing and machine learning techniques.
+            The goal is to build mathematical models aiding identification of ‘infection prints’ from voice samples. This stage is a work-in-progress while we create the dataset.
+            We also aim at releasing the collected dataset in a structured form openly via a Github platform.
+            This is to pool effort from the larger research community to contribute in making point-of-care diagnosis a reality soon.
+        </p>
+        <h5 class="sub-title">Diagnostic Tool</h5>
+        <p>
+            We aim to release the diagnosis tool as a web/mobile application. Similar to the dataset creation stage, the application requests for recording the voice samples, and preferably provides a score indicating the probability of COVID-19 infection.
+            The final deployment of the tool is subject to validation with clinical findings, and authorization/approval from competent authorities.
+        </p>
     </div>
 </div>

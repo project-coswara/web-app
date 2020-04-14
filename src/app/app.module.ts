@@ -17,6 +17,8 @@ import { AboutComponent } from './about/about.component';
 import { TeamComponent } from './team/team.component';
 import { ContactComponent } from './contact/contact.component';
 import { PermissionsComponent } from './permissions/permissions.component';
+import {MatMenuModule} from "@angular/material/menu";
+import {MatIconModule} from "@angular/material/icon";
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { PermissionsComponent } from './permissions/permissions.component';
     BrowserModule,
     AppRoutingModule,
     FlexLayoutModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatMenuModule,
+    MatIconModule
   ],
   providers: [
       UserDataService

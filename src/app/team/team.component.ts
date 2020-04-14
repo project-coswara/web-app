@@ -10,19 +10,19 @@ export class TeamComponent implements OnInit {
     'id': 'sriram',
     'name': 'Dr. Sriram Ganapathy',
     'designation': 'Assistant Professor',
-    'institution': 'IISc'
+    'institution': 'IISc Bangalore'
   }, {
     'id': 'pkg',
     'name': 'Dr. Prasanta Kumar Ghosh',
     'designation': 'Associate Professor',
-    'institution': 'IISc'
+    'institution': 'IISc Bangalore'
   }]
 
   peopleList = [{
     'id': 'anandmoghan',
     'name': 'Anand',
     'designation': 'Alumni',
-    'institution': 'IISc'
+    'institution': 'IISc Bangalore'
   }, {
     'id': 'anuroop',
     'name': 'Anuroop',
@@ -32,12 +32,12 @@ export class TeamComponent implements OnInit {
     'id': 'neeraj',
     'name': 'Neeraj',
     'designation': 'Alumni',
-    'institution': 'IISc'
+    'institution': 'IISc Bangalore'
   }, {
     'id': 'prashant',
     'name': 'Prashant',
     'designation': 'Research Assistant',
-    'institution': 'IISc'
+    'institution': 'IISc Bangalore'
   }, {
     'id': 'shahbaz',
     'name': 'Shahbaz',
@@ -47,12 +47,12 @@ export class TeamComponent implements OnInit {
     'id': 'shreyas',
     'name': 'Shreyas',
     'designation': 'PhD Scholar',
-    'institution': 'IISc'
+    'institution': 'IISc Bangalore'
   }, {
     'id': 'srikanth',
     'name': 'Srikanth',
     'designation': 'Post Doc',
-    'institution': 'IISc'
+    'institution': 'IISc Bangalore'
   }]
 
   constructor() { }

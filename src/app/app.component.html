@@ -1,5 +1,5 @@
 <div *ngIf="!appLoader" fxLayout="column" fxFill>
-    <cs-navbar></cs-navbar>
+    <cs-navbar [tabs]="tabsList"></cs-navbar>
     <cs-content fxLayout="column" fxFlex>
         <router-outlet></router-outlet>
     </cs-content>
