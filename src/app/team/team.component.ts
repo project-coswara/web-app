@@ -24,43 +24,51 @@ export class TeamComponent implements OnInit {
 
   peopleList = [{
     'id': 'anandmoghan',
-    'name': 'Anand',
-    'designation': 'Alumni',
+    'name': 'Anand Mohan',
+    'designation': 'MTech (Artificial Intelligence)',
     'institution': 'IISc Bangalore',
     'areas': 'Speech Recognition',
     'image': 'anand.jpeg'
   }, {
     'id': 'anuroop',
-    'name': 'Anuroop',
+    'name': 'Anuroop Iyengar',
     'designation': 'CEO',
-    'institution': 'Cogknit'
+    'institution': 'Cogknit Semantics',
+    'image': 'anuroop.jpg'
   }, {
     'id': 'neeraj',
-    'name': 'Neeraj',
-    'designation': 'Alumni',
-    'institution': 'IISc Bangalore',
+    'name': 'Dr. Neeraj Sharma',
+    'designation': 'Postdoctoral Fellow',
+    'institution': 'CMU, USA',
+    'areas': 'Auditory Neuroscience, Signal Processing',
     'image': 'neeraj.jpeg'
   }, {
     'id': 'prashant',
-    'name': 'Prashant',
+    'name': 'Prashant K',
     'designation': 'Research Assistant',
     'institution': 'IISc Bangalore',
+    'areas': 'Speaker Recognition',
     'image': 'prashant.jpeg'
   }, {
     'id': 'shahbaz',
-    'name': 'Shahbaz',
+    'name': 'Shahbaz Sultan',
     'designation': 'Developer',
-    'institution': 'Cogknit'
+    'institution': 'Cogknit Semantics',
+    'image': 'shahbaz.jpg'
   }, {
     'id': 'shreyas',
-    'name': 'Shreyas',
+    'name': 'Shreyas Ramoji',
     'designation': 'PhD Scholar',
-    'institution': 'IISc Bangalore'
+    'institution': 'IISc Bangalore',
+    'areas': 'Speaker Recognition, Machine Learning',
+    'image': 'shreyas.jpg'
   }, {
     'id': 'srikanth',
-    'name': 'Srikanth',
-    'designation': 'Post Doc',
-    'institution': 'IISc Bangalore'
+    'name': 'Dr. Srikanth Raj',
+    'designation': 'Postdoctoral Fellow',
+    'institution': 'IISc Bangalore',
+    'areas': 'Signal Processing, Speech Recognition',
+    'image': 'srikanth.png'
   }]
 
   constructor() { }
