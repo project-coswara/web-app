@@ -18,6 +18,7 @@
   height: 150px;
   margin-bottom: 10px;
   width: 150px;
+  filter: grayscale(100%);
 }
 .people .name {
   font-size: @text_normal_size;
@@ -29,10 +30,18 @@
 .people .institution {
   font-size: @text_smaller_size;
 }
+.people .areas {
+  font-size: @text_small_size;
+  text-align: center;
+}
 
 @media(max-width: 768px) {
   .mentors {
     margin-bottom: 10px;
     padding-bottom: 10px;
+  }
+  .mentors .people {
+    padding: 0;
+    margin: 10px 0;
   }
 }

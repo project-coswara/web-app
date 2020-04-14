@@ -10,19 +10,23 @@ export class TeamComponent implements OnInit {
     'id': 'sriram',
     'name': 'Dr. Sriram Ganapathy',
     'designation': 'Assistant Professor',
-    'institution': 'IISc Bangalore'
+    'institution': 'IISc Bangalore',
+    'areas': 'Speech Recognition, Deep Learning, Neuroscience'
   }, {
     'id': 'pkg',
     'name': 'Dr. Prasanta Kumar Ghosh',
     'designation': 'Associate Professor',
-    'institution': 'IISc Bangalore'
+    'institution': 'IISc Bangalore',
+    'areas': 'Speech Production, Articulation, Speech Disorders'
   }]
 
   peopleList = [{
     'id': 'anandmoghan',
     'name': 'Anand',
     'designation': 'Alumni',
-    'institution': 'IISc Bangalore'
+    'institution': 'IISc Bangalore',
+    'areas': 'Speech Recognition',
+    'image': 'anand.jpeg'
   }, {
     'id': 'anuroop',
     'name': 'Anuroop',
@@ -32,12 +36,14 @@ export class TeamComponent implements OnInit {
     'id': 'neeraj',
     'name': 'Neeraj',
     'designation': 'Alumni',
-    'institution': 'IISc Bangalore'
+    'institution': 'IISc Bangalore',
+    'image': 'neeraj.jpeg'
   }, {
     'id': 'prashant',
     'name': 'Prashant',
     'designation': 'Research Assistant',
-    'institution': 'IISc Bangalore'
+    'institution': 'IISc Bangalore',
+    'image': 'prashant.jpeg'
   }, {
     'id': 'shahbaz',
     'name': 'Shahbaz',

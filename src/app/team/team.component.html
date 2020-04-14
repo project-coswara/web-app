@@ -3,8 +3,10 @@
     <div class="mentors">
         <div class="people-set" fxLayout="row wrap" fxLayoutAlign="center center">
             <div class="people" *ngFor="let mentor of mentorsList" fxLayout="column" fxLayoutAlign="center center">
-                <div class="image" [ngStyle]="{'background-image': 'url(\'../../../assets/team/default.jpeg\')'}"></div>
+                <div *ngIf="!mentor.image" class="image" [ngStyle]="{'background-image': 'url(\'../../../assets/team/default.jpeg\')'}"></div>
+                <div *ngIf="mentor.image" class="image" [ngStyle]="{'background-image': 'url(\'../../../assets/team/' + mentor.image + '\')'}"></div>
                 <h5 class="name">{{mentor.name}}</h5>
+                <div *ngIf="mentor.areas" class="areas">{{mentor.areas}}</div>
                 <div class="designation">{{mentor.designation}}</div>
                 <div class="institution">{{mentor.institution}}</div>
             </div>
@@ -12,8 +14,10 @@
     </div>
     <div class="people-set" fxLayout="row wrap" fxLayoutAlign="center center">
         <div class="people" *ngFor="let people of peopleList" fxLayout="column" fxLayoutAlign="center center" fxFlex="33" fxFlex.xs="100">
-            <div class="image" [ngStyle]="{'background-image': 'url(\'../../../assets/team/default.jpeg\')'}"></div>
+            <div *ngIf="!people.image" class="image" [ngStyle]="{'background-image': 'url(\'../../../assets/team/default.jpeg\')'}"></div>
+            <div *ngIf="people.image" class="image" [ngStyle]="{'background-image': 'url(\'../../../assets/team/' + people.image + '\')'}"></div>
             <h5 class="name">{{people.name}}</h5>
+            <div *ngIf="people.areas" class="areas">{{people.areas}}</div>
             <div class="designation">{{people.designation}}</div>
             <div class="institution">{{people.institution}}</div>
         </div>
