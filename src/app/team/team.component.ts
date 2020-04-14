@@ -11,13 +11,15 @@ export class TeamComponent implements OnInit {
     'name': 'Dr. Sriram Ganapathy',
     'designation': 'Assistant Professor',
     'institution': 'IISc Bangalore',
-    'areas': 'Speech Recognition, Deep Learning, Neuroscience'
+    'areas': 'Speech Recognition, Deep Learning, Neuroscience',
+    'image': 'sriram.jpg'
   }, {
     'id': 'pkg',
     'name': 'Dr. Prasanta Kumar Ghosh',
     'designation': 'Associate Professor',
     'institution': 'IISc Bangalore',
-    'areas': 'Speech Production, Articulation, Speech Disorders'
+    'areas': 'Speech Production, Articulation, Speech Disorders',
+    'image': 'pkg.jpg'
   }]
 
   peopleList = [{
