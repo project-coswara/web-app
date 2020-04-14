@@ -6,7 +6,7 @@ import { MatTabsModule } from "@angular/material/tabs";
 
 import { AppModule } from "../../../../src/app/app.module";
 import { CollectAppRoutingModule } from './collect-app-routing.module';
-import { CollectAppComponent } from './collect-app.component';
+import { BrowserNoteDialogComponent, CollectAppComponent } from './collect-app.component';
 import { DetailsComponent } from './details/details.component';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -20,10 +20,12 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 import { RecordComponent } from './record/record.component';
 import { MatStepperModule } from "@angular/material/stepper";
 import { ThanksComponent } from './thanks/thanks.component';
-import {MatIconModule} from "@angular/material/icon";
+import { MatIconModule } from "@angular/material/icon";
+import { MatDialogModule } from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
+    BrowserNoteDialogComponent,
     CollectAppComponent,
     DetailsComponent,
     RecordComponent,
@@ -48,8 +50,10 @@ import {MatIconModule} from "@angular/material/icon";
         MatDatepickerModule,
         MatNativeDateModule,
         MatStepperModule,
-        MatIconModule
+        MatIconModule,
+        MatDialogModule
     ],
+  entryComponents: [BrowserNoteDialogComponent],
   providers: [],
   bootstrap: [CollectAppComponent]
 })

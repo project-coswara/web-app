@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
   title: 'coswara',
-  version: 1.1
+  version: 1.2
 };
 
 export const firebaseConfig = {

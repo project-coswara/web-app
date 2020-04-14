@@ -2,22 +2,22 @@
   "projects": {
     "default": "project-coswara"
   },
- "targets": {
-   "project-coswara": {
-     "hosting": {
-       "base": [
-         "project-coswara"
-       ],
-       "collect": [
-         "project-coswara-collect"
-       ],
-       "collect-dev": [
-         "project-coswara-collect-dev"
-       ],
-       "test": [
-         "project-coswara-test"
-       ]
-     }
-   }
- }
+  "targets": {
+    "project-coswara": {
+      "hosting": {
+        "base": [
+          "project-coswara"
+        ],
+        "collect": [
+          "project-coswara-collect"
+        ],
+        "collect-dev": [
+          "project-coswara-collect-dev"
+        ],
+        "test": [
+          "project-coswara-test"
+        ]
+      }
+    }
+  }
 }

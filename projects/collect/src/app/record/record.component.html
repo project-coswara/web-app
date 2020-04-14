@@ -2,13 +2,16 @@
     <div *ngIf="stepLoader" fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
         <mat-progress-spinner [diameter]="50" mode="indeterminate"></mat-progress-spinner>
     </div>
-    <div [ngStyle]="stepLoader ? { 'display': 'none' } : {}">
+    <div *ngIf="recorderNotInit">
+        <h4></h4>
+        The browser you are using does not have the support to record audio.
+        Please open with your standard browser (Chrome/Safari/Firefox).
+    </div>
+    <div [ngStyle]="stepLoader || recorderNotInit ? { 'display': 'none' } : {}">
         <div class="info-box" fxLayout="row" fxLayoutAlign="start center">
             <mat-icon class="material-icons">info</mat-icon>
-            Please make sure you are in a quiet environment and keep your device around 20cm from your face
+            Please make sure you are in a quiet environment and keep your device around 20 cm from your face
         </div>
-<!--        {{userData.uid}}-->
-<!--        <h4>{{this.recordStages.length - this.selectedStageIndex}} more steps to go!</h4>-->
         <mat-vertical-stepper [selectedIndex]="selectedStageIndex" [linear]="true" #stepper>
             <mat-step *ngFor="let stageId of recordStages" [stepControl]="formControls[stageId]">
                 <ng-template matStepLabel>{{titleDict[stageId]}}</ng-template>

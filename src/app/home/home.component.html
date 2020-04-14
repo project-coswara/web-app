@@ -1,20 +1,17 @@
 <div class="component-container">
-    <h2 class="title">Project Coswara</h2>
-    <p>This project, named ''Coswara'', attempts to provide a simple tool for diagnostics of Covid-19 based on respiratory, cough and speech sounds.
-        As most of the major symptoms of the disease include respiratory problems, the proposed project aims to detect and quantify the biomarkers of the disease in the acoustics of these sounds.
-        The project requires the participants to provide a recording of breathing sounds, cough sounds, sustained phonation of vowel sounds and a counting exercise.
-        The entire response requires about 5 minutes of recording time.
-        Along with these recordings, the tool also records patient's health status (without any personally identifiable information) as well as age, gender and location.
-        The dataset collected will be released for researchers across the world to develop diagnostic tools using signal processing and machine learning methods.
-    </p>
-    <p>
-        The project is in the  data collection stage at this point and requires an experimental validation before the full approval of the diagnostic tool.
-        Given the highly simplistic and cost effective nature of the tool, we hypothesize that, even a partial success for the tool would enable a massive deployment as a first line of diagnostic tool for the pandemic.
-        The project is not aimed to replace the chemical testing or the imaging methods but to merely supplement those with a cost effective, fast and simple technique.
-    </p>
+    <h2>Project Coswara</h2>
+    <div class="content">
+        <p>Project Coswara by <a href="https://www.iisc.ac.in" target="_blank">Indian Institute of Science (IISc) Bangalore</a> is an attempt to build a diagnostic tool for Covid-19 based on respiratory, cough and speech sounds.
+            The project is in the data collection stage now. It requires the participants to provide a recording of breathing sounds, cough sounds, sustained phonation of vowel sounds and a counting exercise which takes around 5-7 minutes of your time.
+            No personal identifiable data is collected from the participants.
+        </p>
+        <p>Given the highly simplistic and cost effective nature of this diagnosis approach, we hypothesize that even a partial success of the tool would enable a massive deployment as a first line of diagnosis for the pandemic.
+
+        </p>
+    </div>
 
     <div class="home-footer" fxLayout="row wrap" fxLayout.xs="column">
-<!--        <div class="button" [routerLink]="'/about'">ABOUT THE PROJECT</div>-->
-        <a class="button" href="https://record.coswara.iisc.ac.in" target="_blank">PROCEED TO COLLECTION SITE</a>
+        <a class="button button-dark" href="https://record.coswara.iisc.ac.in" target="_blank">PROCEED TO COLLECTION PAGE</a>
+        <a class="button" [routerLink]="'/about'">READ MORE</a>
     </div>
 </div>

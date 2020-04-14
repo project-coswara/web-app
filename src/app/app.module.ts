@@ -16,6 +16,7 @@ import { TermsComponent } from './terms/terms.component';
 import { AboutComponent } from './about/about.component';
 import { TeamComponent } from './team/team.component';
 import { ContactComponent } from './contact/contact.component';
+import { PermissionsComponent } from './permissions/permissions.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ContactComponent } from './contact/contact.component';
     TermsComponent,
     AboutComponent,
     TeamComponent,
-    ContactComponent
+    ContactComponent,
+    PermissionsComponent
   ],
   imports: [
     BrowserAnimationsModule,

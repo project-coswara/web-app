@@ -2,35 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Project Coswara | Collect</title>
+  <title>Project Coswara | IISc</title>
   <base href="/">
+  <meta name="description" content="Project Coswara by Indian Institute of Science (IISc), Bangalore attempts to provide a simple tool for potential diagnostics of COVID-19 based on respiratory, cough and speech sounds. The project is in the data collection stage at this point and requires an experimental validation before the full approval of the diagnostic tool."/>
+  <meta name="image" content="https://www.iisc.ac.in/wp-content/uploads/2017/09/IIScLogo-300x286.png">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:url" content="https://record.coswara.iisc.ac.in"/>
+  <meta property="og:title" content="Project Coswara | IISc" />
+  <meta property="og:description" content="Project Coswara by Indian Institute of Science (IISc), Bangalore attempts to provide a simple tool for potential diagnostics of COVID-19 based on respiratory, cough and speech sounds. The project is in the data collection stage at this point and requires an experimental validation before the full approval of the diagnostic tool." />
+  <meta property="og:image" content="https://www.iisc.ac.in/wp-content/uploads/2017/09/IIScLogo-300x286.png" />
+
   <link rel="icon" type="image/x-icon" href="favicon.png">
-  <script>
-    function openInBrowser(target, browserScheme) {
-      var ifc = document.createElement("div");
-      ifc.innerHTML = `<iframe src='${browserScheme}${target}' style='width:0;height:0;border:0; border:none;visibility: hidden;'></iframe>`;
-      document.body.appendChild(ifc);
-    }
-
-    function isInApp(appSpecificUserAgents) {
-      var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-      for (i = 0; i <= appSpecificUserAgents.length; i++) {
-        if (userAgent.indexOf(appSpecificUserAgents[i]) > -1) return true;
-
-      }
-    }
-
-    (function tryOpenBrowser() {
-      if (document.body) {
-        if (isInApp(["FBAN", "FBAV"])) {
-          openInBrowser(window.location.href, "googlechrome://navigate?url=");
-        }
-      } else {
-        window.requestAnimationFrame(tryOpenBrowser);
-      }
-    })()
-  </script>
 </head>
 <body>
   <cs-collect-root></cs-collect-root>

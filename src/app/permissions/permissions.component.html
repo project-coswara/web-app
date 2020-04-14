@@ -1,0 +1,27 @@
+<div class="component-container" fxFlex>
+    <h4 *ngIf="!permissionsLoader">Oops..</h4>
+    <div *ngIf="!permissionsLoader" class="content">
+        <div *ngIf="errorCode == 'blocked'" class="message">
+            You have blocked microphone access. Please enable microphone permissions for
+            <span class="bold-text">{{domainName}}</span>
+            from browser settings.
+            <div class="button-container" fxLayout="row" fxLayout.xs="column">
+                <a class="button" target="_blank" href="https://support.google.com/chrome/answer/2693767">CHROME HELP</a>
+                <a class="button" target="_blank" href="https://support.mozilla.org/en-US/kb/how-manage-your-camera-and-microphone-permissions#w_changing-microphone-permissions">FIREFOX HELP</a>
+                <a class="button" target="_blank" href="https://support.apple.com/en-in/guide/safari/ibrw7f78f7fe">SAFARI HELP</a>
+            </div>
+        </div>
+        <div *ngIf="errorCode == 'unsupported'" class="message">
+            You are using an unsupported browser. Please open the app in a different browser.
+            <p>If you are using an in-app browsers like Facebook, open in your default browser by clicking <span class="bold-text">open with</span> in the top right drop-down menu.
+            </p>
+        </div>
+        <div *ngIf="errorCode == 'unknown'">
+            We are not able to get your microphone access. Please check if a microphone is connected.
+        </div>
+    </div>
+    <div *ngIf="permissionsLoader" class="permissions-loader" fxLayout="row" fxLayoutAlign="center center">
+        <mat-progress-spinner [diameter]="50" mode="indeterminate"></mat-progress-spinner>
+        <span class="content">{{permissionsLoaderText}}</span>
+    </div>
+</div>

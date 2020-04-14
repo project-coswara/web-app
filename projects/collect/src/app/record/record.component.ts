@@ -11,7 +11,6 @@ import 'firebase/storage';
 
 import { UserDataService } from "../../../../../src/app/user-data.service";
 import { environment } from "../../../../../src/environments/environment";
-import {error} from "@angular/compiler/src/util";
 
 @Component({
   selector: 'cs-record-record',
@@ -24,6 +23,7 @@ export class RecordComponent implements AfterViewInit, OnInit {
   sampleAudio = null;
   recordedAudio = null;
   recorder = null;
+  recorderNotInit: boolean = false;
   stepLoader: boolean = true;
   recordState:number = -1;
   titleDict = {
@@ -116,100 +116,105 @@ export class RecordComponent implements AfterViewInit, OnInit {
   initRecord() {
     let recordRoot = this;
     this.recordState = -1;
-    if (navigator.getUserMedia) {
-      navigator.mediaDevices.getUserMedia({audio: true}).then(stream => {
-        this.recordState = 1;
-        this.recorder = RecordRTC(stream, {
-          disableLogs: true,
-          type: 'audio',
-          numberOfAudioChannels: 1,
-          recorderType: RecordRTC.StereoAudioRecorder,
-          desiredSampleRate: 16000
-        });
 
-        this.startRecording = function () {
-          this.recorder.startRecording();
-          // this.timeoutVar = setTimeout(() => {
-          //   if (this.recordState == 2) {
-          //     this.recordState = 3;
-          //     this.stopRecording();
-          //   }
-          // }, 30000);
-        }
+    // let initTimeOut = setTimeout(() => {
+    //   console.log('recorderNotInitTrigger');
+    //   this.recorderNotInit = true;
+    // }, 3000);
 
-        this.stopRecording = function () {
-          // clearTimeout(this.timeoutVar);
-          this.recorder.stopRecording(() => {
-            const blob = this.recorder.getBlob();
-            const metadata = {contentType: 'audio/wav'};
-            this.recorder.reset();
-            this.recordedAudio = new Audio();
-            this.recordedAudio.src = URL.createObjectURL(blob);
-            this.recordedAudio.load();
-            this.recordedAudio.addEventListener("ended", () => {
-              this.recordState = 3;
-            });
-            this.uploadAudio = function (stageId) {
-              if (this.userData) {
-                this.uploadProgress = 0;
-                let upload_task = firebase.storage().ref()
-                    .child('AUDIO_DATA')
-                    .child(this.userData.uid)
-                    .child(stageId + '.wav')
-                    .put(blob, metadata);
-                upload_task.on('state_changed', snapshot => {
-                  this.uploadProgress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                })
-                this.cancelUpload = function() {
-                  upload_task.cancel();
-                }
-                upload_task.then(function () {
-                  let cSD = new Date().toISOString();
+    navigator.mediaDevices.getUserMedia({audio: true}).then(stream => {
+      this.recorderNotInit = false;
+      // clearTimeout(initTimeOut);
+      this.recordState = 1;
+      this.recorder = RecordRTC(stream, {
+        disableLogs: true,
+        type: 'audio',
+        numberOfAudioChannels: 1,
+        recorderType: RecordRTC.StereoAudioRecorder,
+        desiredSampleRate: 16000
+      });
+
+      this.startRecording = function () {
+        this.recorder.startRecording();
+        this.timeoutVar = setTimeout(() => {
+          console.log('stopRecordingTrigger');
+          if (this.recordState == 2) {
+            this.recordState = 3;
+            this.stopRecording();
+          }
+        }, 30000);
+      }
+
+      this.stopRecording = function () {
+        clearTimeout(this.timeoutVar);
+        this.recorder.stopRecording(() => {
+          const blob = this.recorder.getBlob();
+          const metadata = {contentType: 'audio/wav'};
+          this.recorder.reset();
+          this.recordedAudio = new Audio();
+          this.recordedAudio.src = URL.createObjectURL(blob);
+          this.recordedAudio.load();
+          this.recordedAudio.addEventListener("ended", () => {
+            this.recordState = 3;
+          });
+          this.uploadAudio = function (stageId) {
+            if (this.userData) {
+              this.uploadProgress = 0;
+              let upload_task = firebase.storage().ref()
+                  .child('AUDIO_DATA')
+                  .child(this.userData.uid)
+                  .child(stageId + '.wav')
+                  .put(blob, metadata);
+              upload_task.on('state_changed', snapshot => {
+                this.uploadProgress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              })
+              this.cancelUpload = function() {
+                upload_task.cancel();
+              }
+              upload_task.then(function () {
+                let cSD = new Date().toISOString();
+                firebase.firestore().collection('USERS').doc(recordRoot.userData.uid)
+                    .update({
+                      'cS': stageId,
+                      'cSD': cSD,
+                      'lUV': environment.version
+                    }).then();
+                recordRoot.stepper.selected.completed = true;
+                recordRoot.stepper.selected.editable = false;
+                recordRoot.stepper.next();
+                recordRoot.userMetaData['cS'] = stageId;
+                recordRoot.userMetaData['cSD'] = new Date().toISOString();
+                recordRoot.userMetaData['lUV'] = environment.version;
+                if (recordRoot.recordStages[recordRoot.recordStages.length - 2] == stageId) {
                   firebase.firestore().collection('USERS').doc(recordRoot.userData.uid)
                       .update({
-                        'cS': stageId,
-                        'cSD': cSD,
-                        'lUV': environment.version
+                        'cS': 'done',
+                        'cSD': cSD
                       }).then();
-                  recordRoot.stepper.selected.completed = true;
-                  recordRoot.stepper.selected.editable = false;
-                  recordRoot.stepper.next();
-                  recordRoot.userMetaData['cS'] = stageId;
-                  recordRoot.userMetaData['cSD'] = new Date().toISOString();
+                  recordRoot.userMetaData['cS'] = 'done';
+                  recordRoot.userMetaData['cSD'] = cSD;
                   recordRoot.userMetaData['lUV'] = environment.version;
-                  if (recordRoot.recordStages[recordRoot.recordStages.length - 2] == stageId) {
-                    firebase.firestore().collection('USERS').doc(recordRoot.userData.uid)
-                        .update({
-                          'cS': 'done',
-                          'cSD': cSD
-                        }).then();
-                    recordRoot.userMetaData['cS'] = 'done';
-                    recordRoot.userMetaData['cSD'] = cSD;
-                    recordRoot.userMetaData['lUV'] = environment.version;
-                    recordRoot.userDataService.sendMetaData(recordRoot.userMetaData);
-                    recordRoot.goToThankYouPage();
-                  } else {
-                    recordRoot.stepper.next();
-                  }
-                }).catch((error) => {
-                  console.error(error)
-                  if (error.code != 'storage/canceled') {
-                    alert('Upload failed! Retry again');
-                  }
-                  recordRoot.recordState = 3;
-                })
-              }
+                  recordRoot.userDataService.sendMetaData(recordRoot.userMetaData);
+                  recordRoot.goToThankYouPage();
+                } else {
+                  recordRoot.stepper.next();
+                }
+              }).catch((error) => {
+                console.error(error)
+                if (error.code != 'storage/canceled') {
+                  alert('Upload failed! Retry again');
+                }
+                recordRoot.recordState = 3;
+              })
             }
-          });
-        }
-      }).catch((error) => {
-        alert('Need microphone permissions to proceed!');
-        this.router.navigate(['']).then();
-        console.error(error);
-      });
-    } else {
-      alert('This browser does not support audio recording. Please open it in Chrome/Safari/FireFox.')
-    }
+          }
+        });
+      }
+    }).catch((error) => {
+      alert('Need microphone permissions to proceed! Please enable it in the browser settings.');
+      this.router.navigate(['']).then();
+      console.error(error);
+    });
   }
 
   cancelUpload() { }
