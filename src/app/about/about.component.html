@@ -29,11 +29,15 @@
             </li>
         </ul>
         <br>
-        <p align="center">A basic flowchart of the project is given below:</p>
+        <!-- <p align="center">A basic flowchart of the project is given below:</p>
         <div>
         <img src="assets/images/about_diagram.png" alt="About" width="900" height="400"/>
+    </div> -->
+    <div class="home-footer" fxLayout="row wrap" fxLayout.xs="column">
+        <!-- <a class="button button-dark" href="https://record.coswara.iisc.ac.in" target="_blank">PROCEED TO COLLECTION PAGE</a> -->
+        <a class="button" [routerLink]="'/team'">MEET THE TEAM</a>
+        <a class="button" [routerLink]="'/home'">BACK</a>
     </div>
-
         <!-- <p>Project Coswara aims at designing point-of-care diagnosis for respiratory infections.
             The focus is on making the diagnosis in seconds, without having to walk to the clinic, and inexpensive.
             Towards this, we propose using human breath and voice.
