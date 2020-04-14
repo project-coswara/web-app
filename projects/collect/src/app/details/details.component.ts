@@ -143,7 +143,7 @@ export class DetailsComponent implements OnInit {
     this.optionList.selectedStateList = this.optionList.stateList[
         this.formControls.country.value
             .toLowerCase()
-            .replace(' ', '_')
+            .replace(/ /g, '_')
             .replace('(', '')
             .replace(')','')
         ];
