@@ -64,7 +64,7 @@ export class TeamComponent implements OnInit {
     'image': 'shreyas.jpg'
   }, {
     'id': 'srikanth',
-    'name': 'Dr. Srikanth Raj',
+    'name': 'Srikanth Raj Chetupalli',
     'designation': 'Postdoctoral Fellow',
     'institution': 'IISc Bangalore',
     'areas': 'Signal Processing, Speech Recognition',
