@@ -7,6 +7,7 @@ import { HomeComponent } from "./home/home.component";
 import { PermissionsComponent } from "./permissions/permissions.component";
 import { TeamComponent } from "./team/team.component";
 import { TermsComponent } from "./terms/terms.component";
+import { AdminComponent } from './admin/admin.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'permissions', component: PermissionsComponent },
   { path: 'team', component: TeamComponent },
   { path: 'terms', component: TermsComponent },
+  { path: 'admin', component: AdminComponent},
 ];
 
 @NgModule({
