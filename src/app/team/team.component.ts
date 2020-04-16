@@ -28,7 +28,7 @@ export class TeamComponent implements OnInit {
     'designation': 'MTech (Artificial Intelligence)',
     'institution': 'IISc Bangalore',
     'areas': 'Speech Recognition',
-    'image': 'anand.jpeg'
+    'image': 'anand.png'
   }, {
     'id': 'anuroop',
     'name': 'Anuroop Iyengar',

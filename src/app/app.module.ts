@@ -19,6 +19,7 @@ import { ContactComponent } from './contact/contact.component';
 import { PermissionsComponent } from './permissions/permissions.component';
 import {MatMenuModule} from "@angular/material/menu";
 import {MatIconModule} from "@angular/material/icon";
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {MatIconModule} from "@angular/material/icon";
     AboutComponent,
     TeamComponent,
     ContactComponent,
-    PermissionsComponent
+    PermissionsComponent,
+    AdminComponent
   ],
   imports: [
     BrowserAnimationsModule,
