@@ -7,7 +7,8 @@
         <div fxFlex></div>
         <div class="button-container" fxLayout="row" fxLayoutAlign="center center" fxFlexFill>
             <mat-progress-spinner *ngIf="loginLoader" [diameter]="50" mode="indeterminate"></mat-progress-spinner>
-            <div *ngIf="!loginLoader" class="button button-dark" (click)="guestLogin()" fxFlex>Continue as Guest</div>
+            <div *ngIf="!loginLoader && false" class="button button-dark" (click)="guestLogin()" fxFlex>CONTINUE AS GUEST</div>
+            <div *ngIf="!loginLoader" class="button" (click)="googleLogin()" fxFlex>SIGN IN WITH GOOGLE</div>
         </div>
     </div>
 </div>

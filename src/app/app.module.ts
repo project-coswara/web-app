@@ -20,6 +20,7 @@ import { PermissionsComponent } from './permissions/permissions.component';
 import { AdminComponent } from './admin/admin.component';
 import {MatMenuModule} from "@angular/material/menu";
 import {MatIconModule} from "@angular/material/icon";
+import { AdminComponent } from './admin/admin.component';
 
 
 @NgModule({
