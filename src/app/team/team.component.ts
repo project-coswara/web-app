@@ -44,7 +44,7 @@ export class TeamComponent implements OnInit {
     'image': 'neeraj.jpeg'
   }, {
     'id': 'prashant',
-    'name': 'Prashant K',
+    'name': 'Prashant Krishnan',
     'designation': 'Research Assistant',
     'institution': 'IISc Bangalore',
     'areas': 'Speaker Recognition',

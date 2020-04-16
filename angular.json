@@ -144,7 +144,8 @@
             ],
             "styles": [
               "src/custom-theme.scss",
-              "projects/test/src/styles.less"
+              "projects/test/src/styles.less",
+              "src/font-awesome.min.css"
             ],
             "scripts": []
           },
