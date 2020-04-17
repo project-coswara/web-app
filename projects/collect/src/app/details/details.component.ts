@@ -106,7 +106,7 @@ export class DetailsComponent implements OnInit {
       }
       let userHealthData = { 'covid_status': this.formControls.currentStatus.value };
       for( let key in this.optionList.healthConditionList) {
-        this.optionList.healthConditionList[key].forEach(function (item, index) {
+        this.optionList.healthConditionList[key].forEach(function (item) {
           if(detailsRoot.formControls[item.id].value) {
             userHealthData[item.id] = true;
           }
