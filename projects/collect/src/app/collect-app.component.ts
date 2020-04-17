@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Router } from '@angular/router';
+import { MatDialog } from "@angular/material/dialog";
 
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
@@ -7,7 +8,6 @@ import 'firebase/firestore';
 
 import { firebaseConfig } from "../../../../src/environments/environment";
 import { UserDataService } from "../../../../src/app/user-data.service";
-import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'cs-collect-root',
@@ -17,15 +17,8 @@ import {MatDialog} from "@angular/material/dialog";
 
 export class CollectAppComponent implements OnInit {
   appLoader = true;
-  isFacebook = false;
 
-  constructor(public dialog: MatDialog, private route: ActivatedRoute, private router: Router, private userDataService: UserDataService) {
-    this.route.queryParams.subscribe((params) => {
-      if (params.fbclid) {
-        this.isFacebook = true;
-      }
-    })
-  }
+  constructor(public infoDialog: MatDialog, private router: Router, private userDataService: UserDataService) { }
 
   ngOnInit() {
     let appRoot = this;
@@ -33,37 +26,31 @@ export class CollectAppComponent implements OnInit {
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
         appRoot.userDataService.sendUserData(user);
-        firebase.firestore().collection('USERS').doc(user.uid).get().then((doc) => {
-          let startedRecording = false;
+        firebase.firestore().collection('USER_APPDATA').doc(user.uid).get().then((doc) => {
+          let startedRecord = false;
           if (doc.exists) {
-            appRoot.userDataService.sendMetaData(doc.data())
-            if (doc.data()['cS']) {
-              startedRecording = true;
-            }
+            appRoot.userDataService.sendAppData(doc.data())
+            if (doc.data()['cS']) { startedRecord = true; }
           }
-          if (!startedRecording && appRoot.isMobileDevice() ) {
-            const dialogRef = appRoot.dialog.open(BrowserNoteDialogComponent);
-            dialogRef.afterClosed().subscribe(result => {
-              appRoot.appLoader = false;
-            });
+          if (!startedRecord && window.innerWidth < 1024) {
+            appRoot.infoDialog.open(BrowserNoteDialogComponent)
+                .afterClosed()
+                .subscribe(result => { appRoot.appLoader = false; });
           } else {
             appRoot.appLoader = false;
           }
-          // appRoot.router.navigate(['permissions']).then();
+        }).catch((error) => {
+          console.error(error)
         })
       } else {
-        appRoot.userDataService.sendUserData(null);
-        appRoot.userDataService.sendMetaData(null);
+        appRoot.userDataService.clearUserData();
+        appRoot.userDataService.clearAppData();
         firebase.auth().signInAnonymously().then(function (userCredential) {
           appRoot.router.navigate(['']).then();
         });
       }
     });
   }
-
-  isMobileDevice = function() {
-    return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
-  };
 }
 
 @Component({

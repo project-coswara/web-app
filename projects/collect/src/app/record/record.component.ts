@@ -75,7 +75,7 @@ export class RecordComponent implements AfterViewInit, OnInit {
       this.userData = userData;
     });
 
-    this.userDataService.getMetaData().subscribe(metaData => {
+    this.userDataService.getAppData().subscribe(metaData => {
       if (metaData && metaData['cS']) {
         this.userMetaData = metaData;
         let nextIndex = this.recordStages.indexOf(metaData['cS']) + 1;
@@ -194,7 +194,7 @@ export class RecordComponent implements AfterViewInit, OnInit {
                   recordRoot.userMetaData['cS'] = 'done';
                   recordRoot.userMetaData['cSD'] = cSD;
                   recordRoot.userMetaData['lUV'] = environment.version;
-                  recordRoot.userDataService.sendMetaData(recordRoot.userMetaData);
+                  recordRoot.userDataService.sendAppData(recordRoot.userMetaData);
                   recordRoot.goToThankYouPage();
                 } else {
                   recordRoot.stepper.next();

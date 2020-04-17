@@ -8,27 +8,27 @@ import { User } from "firebase";
 })
 
 export class UserDataService {
-  private metaData = new BehaviorSubject<any>('META_DATA');
+  private appData = new BehaviorSubject<any>('USER_APPDATA');
   private userData = new BehaviorSubject<any>('USER_DATA');
 
-  clearMetaData() {
-    this.metaData.next(null);
+  clearAppData() {
+    this.appData.next(null);
   }
 
   clearUserData() {
     this.userData.next(null);
   }
 
-  getMetaData(): Observable<any> {
-    return this.metaData.asObservable();
+  getAppData(): Observable<any> {
+    return this.appData.asObservable();
   }
 
   getUserData(): Observable<any> {
     return this.userData.asObservable();
   }
 
-  sendMetaData(metaData) {
-    this.metaData.next(metaData);
+  sendAppData(metaData) {
+    this.appData.next(metaData);
   }
 
   sendUserData(firebaseUser: User) {
@@ -40,7 +40,8 @@ export class UserDataService {
         verified: firebaseUser.emailVerified,
         photoURL: firebaseUser.photoURL
       });
-    } else {
+    }
+    else {
       this.userData.next(null);
     }
   }

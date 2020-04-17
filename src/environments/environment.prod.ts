@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
   title: 'coswara',
-  version: 1.2
+  version: 2.0
 };
 
 export const firebaseConfig = {
@@ -41,30 +41,26 @@ export const health_option_list = {
     id: 'healthy',
     value: 'I do not have any respiratory illnesses'
   }],
-  conditions: {
-    resp: [{
-      id: 'fever',
-      name: 'Fever'
-    }, {
-      id: 'smoker',
-      name: 'Smoker'
-    }, {
-      id: 'asthma',
-      name: 'Asthma'
-    }, {
-      id: 'cld',
-      name: 'Chronic lung disease'
-    }],
-    heart: [{
-      id: 'ht',
-      name: 'Hypertension'
-    }, {
-      id: 'ihd',
-      name: 'Ischemic heart disease'
-    }],
-    others: [{
-      id: 'diabetes',
-      name: 'Diabetes'
-    }]
-  }
+  conditions: [{
+    id: 'fever',
+    name: 'Fever'
+  }, {
+    id: 'smoker',
+    name: 'Smoker'
+  }, {
+    id: 'asthma',
+    name: 'Asthma'
+  }, {
+    id: 'cld',
+    name: 'Chronic lung disease'
+  }, {
+    id: 'ht',
+    name: 'Hypertension'
+  }, {
+    id: 'ihd',
+    name: 'Ischemic heart disease'
+  }, {
+    id: 'diabetes',
+    name: 'Diabetes'
+  }]
 };

@@ -101,13 +101,7 @@
                 <div class="tab-content-spacer" fxFlex="100"></div>
                 <h5 class="tab-sub-title" fxFlex="100">Health Conditions</h5>
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="100">
-                    <div class="tab-check-box" *ngFor="let cb of optionList.healthConditionList.resp" fxFlex="24" fxFlex.xs="100">
-                        <mat-checkbox [formControl]="formControls[cb.id]">{{cb.name}}</mat-checkbox>
-                    </div>
-                    <div class="tab-check-box" *ngFor="let cb of optionList.healthConditionList.heart" fxFlex="24" fxFlex.xs="100">
-                        <mat-checkbox [formControl]="formControls[cb.id]">{{cb.name}}</mat-checkbox>
-                    </div>
-                    <div class="tab-check-box" *ngFor="let cb of optionList.healthConditionList.others" fxFlex="24" fxFlex.xs="100">
+                    <div class="tab-check-box" *ngFor="let cb of optionList.healthConditionList" fxFlex="24" fxFlex.xs="100">
                         <mat-checkbox [formControl]="formControls[cb.id]">{{cb.name}}</mat-checkbox>
                     </div>
                 </div>

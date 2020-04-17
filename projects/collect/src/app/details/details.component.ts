@@ -70,9 +70,9 @@ export class DetailsComponent implements OnInit {
       this.userData = userData;
     });
 
-    this.userDataService.getMetaData().subscribe(metaData => {
+    this.userDataService.getAppData().subscribe(metaData => {
       if (metaData) {
-        this.finishedMetaData = metaData['aMD'];
+        this.finishedMetaData = metaData['fMD'];
         if (metaData['cS'] == 'done') {
           this.goToThankYouPage()
         }
@@ -94,46 +94,47 @@ export class DetailsComponent implements OnInit {
     let detailsRoot = this;
     if(this.userData && this.formGroups.metadata.valid && this.formGroups.healthStatus.valid) {
       this.submitLoader = true;
+      const updateDate = new Date().toISOString();
+      const dateString = updateDate.substring(0, 10)
       let userMetaData = {
+        'fD': updateDate,
+        'fV': environment.version,
         'a': this.formControls.age.value,
         'g': this.formControls.gender.value,
         'ep': this.formControls.englishProficient.value,
         'l_c': this.formControls.country.value,
-        'l_s': this.formControls.state.value
+        'l_s': this.formControls.state.value,
+        'covid_status': this.formControls.currentStatus.value
       };
+
       if(detailsRoot.formControls.locality.value) {
         userMetaData['l_l'] = detailsRoot.formControls.locality.value;
       }
-      let userHealthData = { 'covid_status': this.formControls.currentStatus.value };
-      for( let key in this.optionList.healthConditionList) {
-        this.optionList.healthConditionList[key].forEach(function (item, index) {
-          if(detailsRoot.formControls[item.id].value) {
-            userHealthData[item.id] = true;
-          }
-        })
+
+      this.optionList.healthConditionList.forEach(function (item, index) {
+        if(detailsRoot.formControls[item.id].value) {
+          userMetaData[item.id] = true;
+        }
+      })
+
+      let userAppData = {
+        'fMD': true,
+        'dS': dateString,
+        'fV': environment.version,
       }
-      let appMetaData = {
-        'aMD': true,
-        'uT': 'anonymous',
-        'mDD': new Date().toISOString(),
-        'fUV': environment.version
-      };
+
       let db = firebase.firestore();
       let firebaseBatch = db.batch();
       firebaseBatch.set(
-          db.collection('METADATA').doc(detailsRoot.userData.uid),
+          db.doc(`USER_METADATA/${dateString}/DATA/${this.userData.uid}`),
           userMetaData
       );
       firebaseBatch.set(
-          db.collection('HEALTH_DATA').doc(detailsRoot.userData.uid),
-          userHealthData
-      );
-      firebaseBatch.set(
-          db.collection('USERS').doc(detailsRoot.userData.uid),
-          appMetaData
+          db.doc(`USER_APPDATA/${this.userData.uid}`),
+          userAppData
       );
       firebaseBatch.commit().then(function () {
-        detailsRoot.userDataService.sendMetaData(appMetaData);
+        detailsRoot.userDataService.sendAppData(userAppData);
         detailsRoot.goToRecordPage();
       });
     }
