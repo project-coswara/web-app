@@ -2,12 +2,7 @@
     <div *ngIf="stepLoader" fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
         <mat-progress-spinner [diameter]="50" mode="indeterminate"></mat-progress-spinner>
     </div>
-    <div *ngIf="recorderNotInit">
-        <h4></h4>
-        The browser you are using does not have the support to record audio.
-        Please open with your standard browser (Chrome/Safari/Firefox).
-    </div>
-    <div [ngStyle]="stepLoader || recorderNotInit ? { 'display': 'none' } : {}">
+    <div [ngStyle]="stepLoader ? { 'display': 'none' } : {}">
         <div class="info-box" fxLayout="row" fxLayoutAlign="start center">
             <mat-icon class="material-icons">info</mat-icon>
             Please make sure you are in a quiet environment and keep your device around 20 cm from your face

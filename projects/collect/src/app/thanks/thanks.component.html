@@ -4,7 +4,8 @@
         Thank you for being a part of this! Please share it among your friends and relatives.
     </div>
     <div class="thank-you-footer">
-        <div class="button" (click)="startSession()">START A NEW SESSION</div>
+        <div *ngIf="!signOutLoader" class="button" (click)="startSession()">START A NEW SESSION</div>
+        <mat-progress-spinner *ngIf="signOutLoader" [diameter]="30" mode="indeterminate"></mat-progress-spinner>
     </div>
     <h4>Developed by</h4>
     <div class="logo" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">

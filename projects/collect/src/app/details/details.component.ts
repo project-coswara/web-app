@@ -97,7 +97,7 @@ export class DetailsComponent implements OnInit {
       const updateDate = new Date().toISOString();
       const dateString = updateDate.substring(0, 10)
       let userMetaData = {
-        'fD': updateDate,
+        'dT': 'web',
         'fV': environment.version,
         'a': this.formControls.age.value,
         'g': this.formControls.gender.value,

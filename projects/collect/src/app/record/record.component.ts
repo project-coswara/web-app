@@ -23,7 +23,6 @@ export class RecordComponent implements AfterViewInit, OnInit {
   sampleAudio = null;
   recordedAudio = null;
   recorder = null;
-  recorderNotInit: boolean = false;
   stepLoader: boolean = true;
   recordState:number = -1;
   titleDict = {
@@ -64,7 +63,7 @@ export class RecordComponent implements AfterViewInit, OnInit {
   };
   recordStages = Object.keys(this.titleDict);
   selectedStageIndex: number = 0;
-  userMetaData = null;
+  userAppData = null;
   uploadProgress = 0;
   timeoutVar = null;
 
@@ -75,21 +74,17 @@ export class RecordComponent implements AfterViewInit, OnInit {
       this.userData = userData;
     });
 
-    this.userDataService.getAppData().subscribe(metaData => {
-      if (metaData && metaData['cS']) {
-        this.userMetaData = metaData;
-        let nextIndex = this.recordStages.indexOf(metaData['cS']) + 1;
+    this.userDataService.getAppData().subscribe(userAppData => {
+      this.userAppData = userAppData;
+      if (userAppData && userAppData['cS']) {
+        if (!userAppData['fMD']) {
+          firebase.auth().signOut().then();
+        }
+        let nextIndex = this.recordStages.indexOf(userAppData['cS']) + 1;
         if (nextIndex >= this.recordStages.length - 1) {
           this.goToThankYouPage();
-        } else {
-          this.selectedStageIndex = nextIndex;
         }
-      } else {
-        this.userMetaData = {
-          'aMD': true,
-          'uT': 'anonymous',
-          'fUV': environment.version
-        };
+        this.selectedStageIndex = nextIndex;
       }
       this.stepLoader = false;
     });
@@ -117,14 +112,7 @@ export class RecordComponent implements AfterViewInit, OnInit {
     let recordRoot = this;
     this.recordState = -1;
 
-    // let initTimeOut = setTimeout(() => {
-    //   console.log('recorderNotInitTrigger');
-    //   this.recorderNotInit = true;
-    // }, 3000);
-
     navigator.mediaDevices.getUserMedia({audio: true}).then(stream => {
-      this.recorderNotInit = false;
-      // clearTimeout(initTimeOut);
       this.recordState = 1;
       this.recorder = RecordRTC(stream, {
         disableLogs: true,
@@ -161,7 +149,8 @@ export class RecordComponent implements AfterViewInit, OnInit {
             if (this.userData) {
               this.uploadProgress = 0;
               let upload_task = firebase.storage().ref()
-                  .child('AUDIO_DATA')
+                  .child('COLLECT_DATA')
+                  .child(this.userAppData.dS)
                   .child(this.userData.uid)
                   .child(stageId + '.wav')
                   .put(blob, metadata);
@@ -172,30 +161,40 @@ export class RecordComponent implements AfterViewInit, OnInit {
                 upload_task.cancel();
               }
               upload_task.then(function () {
-                let cSD = new Date().toISOString();
-                firebase.firestore().collection('USERS').doc(recordRoot.userData.uid)
-                    .update({
-                      'cS': stageId,
-                      'cSD': cSD,
-                      'lUV': environment.version
-                    }).then();
-                recordRoot.stepper.selected.completed = true;
-                recordRoot.stepper.selected.editable = false;
-                recordRoot.stepper.next();
-                recordRoot.userMetaData['cS'] = stageId;
-                recordRoot.userMetaData['cSD'] = new Date().toISOString();
-                recordRoot.userMetaData['lUV'] = environment.version;
+                const db = firebase.firestore();
+                const updateAppData = {
+                  'cS': stageId,
+                  'cSD': new Date().toISOString(),
+                  'lV': environment.version
+                }
+                db.collection('USER_APPDATA')
+                    .doc(recordRoot.userData.uid)
+                    .update(updateAppData).then(() => {
+                  recordRoot.stepper.selected.completed = true;
+                  recordRoot.stepper.selected.editable = false;
+                  recordRoot.stepper.next();
+                  recordRoot.userAppData = Object.assign(recordRoot.userAppData, updateAppData)
+                });
                 if (recordRoot.recordStages[recordRoot.recordStages.length - 2] == stageId) {
-                  firebase.firestore().collection('USERS').doc(recordRoot.userData.uid)
-                      .update({
-                        'cS': 'done',
-                        'cSD': cSD
-                      }).then();
-                  recordRoot.userMetaData['cS'] = 'done';
-                  recordRoot.userMetaData['cSD'] = cSD;
-                  recordRoot.userMetaData['lUV'] = environment.version;
-                  recordRoot.userDataService.sendAppData(recordRoot.userMetaData);
-                  recordRoot.goToThankYouPage();
+                  updateAppData['cS'] = 'done';
+                  const batch = db.batch();
+                  batch.update(
+                      db.collection('USER_APPDATA')
+                          .doc(recordRoot.userData.uid),
+                      updateAppData
+                  );
+                  batch.update(
+                      db.collection('USER_METADATA')
+                          .doc(recordRoot.userAppData.dS)
+                          .collection('DATA')
+                          .doc(recordRoot.userData.uid),
+                      {'iF': true}
+                  );
+                  batch.commit().then(() => {
+                    recordRoot.userAppData = Object.assign(recordRoot.userAppData, updateAppData)
+                    recordRoot.userDataService.sendAppData(recordRoot.userAppData);
+                    recordRoot.goToThankYouPage();
+                  })
                 } else {
                   recordRoot.stepper.next();
                 }

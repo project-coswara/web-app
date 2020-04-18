@@ -5,6 +5,7 @@ import 'firebase/auth'
 import 'firebase/firestore'
 import {UserDataService} from "../../../../../src/app/user-data.service";
 import {FormControl, Validators} from "@angular/forms";
+import {matFormFieldAnimations} from "@angular/material/form-field";
 
 @Component({
   selector: 'cs-thanks-thanks',
@@ -13,6 +14,7 @@ import {FormControl, Validators} from "@angular/forms";
 })
 
 export class ThanksComponent implements OnInit {
+  signOutLoader: boolean = false;
   showFeedbackBox: boolean = true;
   showFeedbackLoader: boolean = false;
   userData = null;
@@ -28,6 +30,7 @@ export class ThanksComponent implements OnInit {
   ngOnInit() { }
 
   startSession() {
+    this.signOutLoader = true;
     firebase.auth().signOut().then();
   }
 
