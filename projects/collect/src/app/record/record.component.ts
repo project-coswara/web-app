@@ -76,17 +76,18 @@ export class RecordComponent implements AfterViewInit, OnInit {
 
     this.userDataService.getAppData().subscribe(userAppData => {
       this.userAppData = userAppData;
-      if (userAppData && userAppData['cS']) {
-        if (!userAppData['fMD']) {
-          firebase.auth().signOut().then();
-        }
+      if (!userAppData || !userAppData['fMD']) {
+        firebase.auth().signOut().then();
+      } else if (userAppData && userAppData['cS']) {
         let nextIndex = this.recordStages.indexOf(userAppData['cS']) + 1;
         if (nextIndex >= this.recordStages.length - 1) {
           this.goToThankYouPage();
         }
         this.selectedStageIndex = nextIndex;
+        this.stepLoader = false;
+      } else {
+        this.stepLoader = false;
       }
-      this.stepLoader = false;
     });
   }
 
