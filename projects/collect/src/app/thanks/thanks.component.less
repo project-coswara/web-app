@@ -1,17 +1,21 @@
-.feedback {
-  width: 75%;
-}
+@import "../../styles";
 
-.thank-you-footer {
-  margin: 15px 0;
+.feedback { width: 60%;}
+.warning-box {
+  margin: 10px 0;
+  padding: 10px 20px;
+  border: @border_line;
+  width: 100%;
 }
-
-.thank-you-footer .button {
-  margin: 0;
+.warning-box .material-icons {
+  color: @color_red;
+  font-size: @text_bigger_size;
+  margin-right: 15px;
 }
+.thank-you-footer { margin: 15px 0; }
+.thank-you-footer .button { margin: 0; }
 
 @media(max-width: 768px) {
-  .feedback {
-    width: 100%;
-  }
+  .feedback { width: 100%; }
+  .warning-box .material-icons { margin-right: 10px; }
 }

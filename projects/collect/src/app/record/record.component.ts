@@ -177,6 +177,7 @@ export class RecordComponent implements AfterViewInit, OnInit {
                   recordRoot.userAppData = Object.assign(recordRoot.userAppData, updateAppData)
                 });
                 if (recordRoot.recordStages[recordRoot.recordStages.length - 2] == stageId) {
+                  recordRoot.stepLoader = true;
                   updateAppData['cS'] = 'done';
                   const batch = db.batch();
                   batch.update(

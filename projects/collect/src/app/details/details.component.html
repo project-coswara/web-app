@@ -1,5 +1,5 @@
 <div class="component-container">
-    <h4 *ngIf="!finishedMetaData">We need some information to continue!</h4>
+    <h4 *ngIf="!finishedMetaData" class="page-title">We need some information to continue!</h4>
     <mat-tab-group [dynamicHeight]="true" [selectedIndex]="selectedIndex" (selectedIndexChange)="selectedIndex = $event">
         <mat-tab [disabled]="submitLoader" label="Disclaimer">
             <p>This study builds on other previous studies which have reported a high level of sensitivity for identifying respiratory illness from the human voice.
@@ -54,14 +54,14 @@
             </div>
             <div class="tab-content-spacer" fxFlex></div>
             <div class="tab-group" fxLayout="row wrap" fxLayoutAlign="start center" fxFlex>
-                <h5 class="tab-sub-title" fxFlex.xs="100">Are you a returning user?<span>*</span></h5>
+                <h5 class="tab-sub-title" fxFlex.xs="100">Are you a returning user?</h5>
                 <div fxFlex="5" fxHide.xs></div>
                 <mat-radio-group class="radio-group lang"
                                  fxLayout="row wrap"
                                  fxLayoutAlign="start center"
                                  fxLayoutGap="10px" fxFlex
                                  fxFlex.xs="100"
-                                 [formControl]="formControls.englishProficient">
+                                 [formControl]="formControls.returningUser">
                     <mat-radio-button class="tab-check-box" value="y" fxFlex="13" fxFlex.xs="25">Yes</mat-radio-button>
                     <mat-radio-button class="tab-check-box" value="n" fxFlex="13" fxFlex.xs="25">No</mat-radio-button>
                 </mat-radio-group>
@@ -116,7 +116,7 @@
                 <div class="tab-content-spacer" fxFlex="100"></div>
                 <h5 class="tab-sub-title" fxFlex="100">Health Conditions</h5>
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="100">
-                    <div class="tab-check-box" *ngFor="let cb of optionList.healthConditionList" fxFlex="24" fxFlex.xs="100">
+                    <div class="tab-check-box" *ngFor="let cb of optionList.healthConditionList" fxFlex="32" fxFlex.xs="100">
                         <mat-checkbox [formControl]="formControls[cb.id]">{{cb.name}}</mat-checkbox>
                     </div>
                 </div>

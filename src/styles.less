@@ -21,6 +21,7 @@
 @color_lighter: #eeeeee;
 @color_lightest: #f9f9f9;
 @color_light_border: #f3f3f3;
+@color_red: #b00020;
 
 @light_border_line: 1px solid @color_light_border;
 @border_line: 1px solid @color_border;
@@ -58,7 +59,7 @@ h1 {
 h2 { font-size: 48px!important; }
 h3 { font-size: 32px!important; }
 h4 { font-size: 24px!important; }
-h5 { font-size: 20px!important; }
+h5 { font-size: 18px!important; }
 h6 { font-size: 16px!important; }
 
 @media(max-width: 768px) {
@@ -105,7 +106,7 @@ p {
 
 /* Container class starts */
 .component-container {
-  padding: 0 15%;
+  padding: 0 15% 30px;
   font-size: @text_normal_size;
   min-height: 100%;
 }
@@ -122,7 +123,7 @@ p {
 
 @media(max-width: 768px) {
   .component-container {
-    padding: 5px;
+    padding: 5px 5px 20px;
   }
   .nav-container {
     padding: 15px;

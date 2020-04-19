@@ -1,5 +1,5 @@
 <div class="component-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
-    <h4>Thank you for your participation!</h4>
+    <h4 class="page-title">Thank you for your participation!</h4>
     <div class="content">
         Thank you for being a part of this!
         Please share it among your friends and relatives.
@@ -8,6 +8,10 @@
     <div class="thank-you-footer">
         <div *ngIf="!signOutLoader" class="button" (click)="startSession()">START A NEW SESSION</div>
         <mat-progress-spinner *ngIf="signOutLoader" [diameter]="30" mode="indeterminate"></mat-progress-spinner>
+    </div>
+    <div class="warning-box" fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon class="material-icons">warning</mat-icon>
+        The recording device should not be shared with others before cleaning/sanitation
     </div>
     <h4>Developed by</h4>
     <div class="logo" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
