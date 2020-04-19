@@ -24,6 +24,7 @@ export class DetailsComponent implements OnInit {
     age: new FormControl(null,[Validators.required, Validators.min(0), Validators.max(140)]),
     gender: new FormControl(null,[Validators.required]),
     englishProficient: new FormControl('y', [Validators.required]),
+    returningUser: new FormControl('n', [Validators.required]),
     country: new FormControl(null, [Validators.required]),
     state: new FormControl(null, [Validators.required]),
     locality: new FormControl(null),
@@ -41,6 +42,7 @@ export class DetailsComponent implements OnInit {
       age: this.formControls.age,
       gender: this.formControls.gender,
       englishProficient: this.formControls.englishProficient,
+      returningUser: this.formControls.returningUser,
       country: this.formControls.country,
       state: this.formControls.state,
       locality: this.formControls.locality
@@ -102,6 +104,7 @@ export class DetailsComponent implements OnInit {
         'a': this.formControls.age.value,
         'g': this.formControls.gender.value,
         'ep': this.formControls.englishProficient.value,
+        'rU': this.formControls.returningUser.valid,
         'l_c': this.formControls.country.value,
         'l_s': this.formControls.state.value,
         'covid_status': this.formControls.currentStatus.value
