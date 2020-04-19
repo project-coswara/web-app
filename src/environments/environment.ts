@@ -46,6 +46,9 @@ export const health_option_list = {
     value: 'I do not have any respiratory illnesses'
   }],
   conditions: [{
+    id: 'cold',
+    name: 'Cold'
+  }, {
     id: 'fever',
     name: 'Fever'
   }, {
