@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { UserDataService } from "../user-data.service";
 import { ActivatedRoute, Router } from "@angular/router";
 
 import * as firebase from 'firebase/app';
 import 'firebase/database';
-import {error} from "util";
+import 'firebase/firestore';
+
+import { UserDataService } from "../user-data.service";
+import { health_option_list } from "../../environments/environment";
 
 @Component({
   selector: 'cs-admin',
@@ -15,6 +17,13 @@ export class AdminComponent implements OnInit {
   adminLoader: boolean = true;
   isAdmin: boolean = false;
   userData = null;
+  statsData = null;
+  dailyStatus = []
+  netStatus = []
+  dateString = new Date().toISOString().substring(0, 10);
+  dateStringList = Array.from(Array(7).keys()).map((index) => {
+    return this.getDateStringWithOffset(this.dateString, -1 * index)
+  })
 
   statsList = [{
     'id': 'total_visits',
@@ -33,33 +42,28 @@ export class AdminComponent implements OnInit {
     'name': 'Daily Completed'
   }]
 
-  statsData = {
-    'total_visits': 0,
-    'total_positive': 0,
-    'total_completed': 0,
-    'daily_positive': 0,
-    'daily_completed': 0
-  }
-
-  lastUpdated = {
-    'time': new Date().getTime(),
-    'name': 'Anand',
-    'content': `Last updated by Anand at ${new Date().toLocaleString()}`
-  }
-
   constructor(private route: ActivatedRoute, private router: Router, private userDataService: UserDataService) {
     let adminRoot = this;
     this.userDataService.getUserData().subscribe((userData) => {
       if (userData) {
-        this.userData = userData;
-        firebase.database().ref().child('ADMIN').child('ADMIN_TEST').once('value').then((snapshot) => {
-          adminRoot.isAdmin = true;
-          this.adminLoader = false;
-        }).catch((error) => {
-          adminRoot.isAdmin = false;
-          this.adminLoader = false;
-          console.error(error)
-        })
+        if (userData.uid) {
+          this.userData = userData;
+          this.isAdmin = true;
+          this.populateData(this.dateString, () => {
+            this.adminLoader = false;
+          });
+        }
+        // firebase.database().ref().child('ADMIN').child('ADMIN_TEST').once('value').then((snapshot) => {
+        //   adminRoot.isAdmin = true;
+        //   const dateString = new Date().toISOString().substring(0, 10)
+        //   this.populateData(dateString, () => {
+        //     this.adminLoader = false;
+        //   })
+        // }).catch((error) => {
+        //   adminRoot.isAdmin = false;
+        //   this.adminLoader = false;
+        //   console.error(error)
+        // })
       } else {
         this.route.url.subscribe((url) => {
           if (url) {
@@ -73,4 +77,52 @@ export class AdminComponent implements OnInit {
   ngOnInit() {
   }
 
+  getDateStringWithOffset(dateString: string, offset: number) {
+    const dateStringISO = `${dateString}T00:00:00.000Z`
+    const dataObject = new Date(dateStringISO)
+    dataObject.setDate(dataObject.getDate() + offset)
+    return dataObject.toISOString().substring(0, 10)
+  }
+
+  populateData(dateString: string, callback) {
+    this.resetStats();
+    const db = firebase.firestore();
+    Promise.all([
+      db.collection('USER_METADATA').doc(dateString).get(),
+      db.collection('COLLECT_STATS').doc(this.getDateStringWithOffset(dateString, -1)).get()
+    ]).then((result) => {
+      if (result[0].exists) {
+        const dailyData = result[0].data();
+        this.statsData.daily_completed = this.statsData.total_completed = dailyData.completed;
+        this.statsData.daily_positive = this.statsData.total_positive = dailyData.positive_mild + dailyData.positive_moderate;
+        this.statsData.total_visits += dailyData.visited
+      }
+      if (result[1].exists) {
+        const prevNetData = result[1].data();
+        this.statsData.total_completed += prevNetData.completed;
+        this.statsData.total_positive += prevNetData.positive_mild + prevNetData.positive_moderate;
+        this.statsData.total_visits += prevNetData.visited
+      }
+      callback(true);
+    })
+  }
+
+  dateStringChange(dateString) {
+    this.adminLoader = true;
+    this.populateData(dateString, () => {
+      this.adminLoader = false;
+    })
+  }
+
+  resetStats() {
+    this.statsData = {
+      'total_visits': 0,
+      'total_positive': 0,
+      'total_completed': 0,
+      'daily_positive': 0,
+      'daily_completed': 0
+    }
+    this.netStatus = [];
+    this.dailyStatus = [];
+  }
 }

@@ -3,6 +3,15 @@
         <mat-progress-spinner [diameter]="50" mode="indeterminate"></mat-progress-spinner>
     </div>
     <div *ngIf="!adminLoader && isAdmin">
+        <div fxLayout="row" fxLayoutAlign="start center">
+            <h4 class="page-title" fxFlex>app stats</h4>
+            <mat-form-field fxFlex="15" fxFlex.xs="33">
+                <mat-label>Select Date</mat-label>
+                <mat-select [(value)]="dateString" (selectionChange)="dateStringChange(dateString)">
+                    <mat-option *ngFor="let dS of dateStringList" [value]="dS">{{dS}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
         <div class="stats-container" fxLayout="row wrap">
             <div class="stats" *ngFor="let stats of statsList"
                  fxFlex fxFlex.xs="{{stats.id == 'total_visits' ? 100 : 50}}">
@@ -11,10 +20,6 @@
                     <div class="label">{{stats.name}}</div>
                 </div>
             </div>
-        </div>
-        <div class="update" fxLayout="column" fxLayoutAlign="center end">
-            <div class="content">{{lastUpdated.content}}</div>
-            <div class="button">UPDATE</div>
         </div>
     </div>
     <div *ngIf="!adminLoader && !isAdmin">

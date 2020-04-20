@@ -20,6 +20,7 @@ import { AboutComponent } from './about/about.component';
 import { TeamComponent } from './team/team.component';
 import { ContactComponent } from './contact/contact.component';
 import { PermissionsComponent } from './permissions/permissions.component';
+import { MatSelectModule } from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -36,15 +37,16 @@ import { PermissionsComponent } from './permissions/permissions.component';
     PermissionsComponent,
     AdminComponent
   ],
-  imports: [
-    BrowserAnimationsModule,
-    BrowserModule,
-    AppRoutingModule,
-    FlexLayoutModule,
-    MatProgressSpinnerModule,
-    MatMenuModule,
-    MatIconModule
-  ],
+    imports: [
+        BrowserAnimationsModule,
+        BrowserModule,
+        AppRoutingModule,
+        FlexLayoutModule,
+        MatProgressSpinnerModule,
+        MatMenuModule,
+        MatIconModule,
+        MatSelectModule
+    ],
   providers: [
       UserDataService
   ],
