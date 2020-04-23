@@ -49,8 +49,14 @@ export const health_option_list = {
     id: 'cold',
     name: 'Cold'
   }, {
+    id: 'cough',
+    name: 'Cough'
+  }, {
     id: 'fever',
     name: 'Fever'
+  }, {
+    id: 'pneumonia',
+    name: 'Pneumonia'
   }, {
     id: 'smoker',
     name: 'Smoker'
