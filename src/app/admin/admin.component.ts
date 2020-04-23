@@ -89,7 +89,8 @@ export class AdminComponent implements OnInit {
     const db = firebase.firestore();
     Promise.all([
       db.collection('USER_METADATA').doc(dateString).get(),
-      db.collection('COLLECT_STATS').doc(this.getDateStringWithOffset(dateString, -1)).get()
+      db.collection('USER_METADATA').doc(this.getDateStringWithOffset(dateString, -1)).get(),
+      db.collection('COLLECT_STATS').doc(this.getDateStringWithOffset(dateString, -2)).get()
     ]).then((result) => {
       if (result[0].exists) {
         const dailyData = result[0].data();
@@ -99,6 +100,12 @@ export class AdminComponent implements OnInit {
       }
       if (result[1].exists) {
         const prevNetData = result[1].data();
+        this.statsData.total_completed += prevNetData.completed;
+        this.statsData.total_positive += prevNetData.positive_mild + prevNetData.positive_moderate;
+        this.statsData.total_visits += prevNetData.visited
+      }
+      if (result[2].exists) {
+        const prevNetData = result[2].data();
         this.statsData.total_completed += prevNetData.completed;
         this.statsData.total_positive += prevNetData.positive_mild + prevNetData.positive_moderate;
         this.statsData.total_visits += prevNetData.visited
