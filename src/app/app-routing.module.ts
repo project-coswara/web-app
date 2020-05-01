@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'about', component: AboutComponent },
   { path: 'admin', component: AdminComponent },
-  { path: 'contact', component: ContactComponent },
+  { path: 'faq', component: ContactComponent },
   { path: 'login', component: LoginComponent },
   { path: 'permissions', component: PermissionsComponent },
   { path: 'team', component: TeamComponent },

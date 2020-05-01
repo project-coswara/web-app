@@ -28,9 +28,9 @@ export class AppComponent implements OnInit {
     'name': 'People',
     'url': 'team'
   }, {
-    'id': 'contact',
-    'name': 'Contact',
-    'url': 'contact'
+    'id': 'faq',
+    'name': 'FAQ',
+    'url': 'faq'
   }, ]
 
   constructor(private userDataService: UserDataService) { }
