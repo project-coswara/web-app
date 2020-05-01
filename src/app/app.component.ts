@@ -31,7 +31,11 @@ export class AppComponent implements OnInit {
     'id': 'faq',
     'name': 'FAQ',
     'url': 'faq'
-  }, ]
+  }, {
+    'id': 'media',
+    'name': 'Media',
+    'url': 'media'
+  },]
 
   constructor(private userDataService: UserDataService) { }
 

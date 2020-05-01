@@ -21,6 +21,7 @@ import { TeamComponent } from './team/team.component';
 import { ContactComponent } from './contact/contact.component';
 import { PermissionsComponent } from './permissions/permissions.component';
 import { MatSelectModule } from "@angular/material/select";
+import { NewsComponent } from './news/news.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { MatSelectModule } from "@angular/material/select";
     TeamComponent,
     ContactComponent,
     PermissionsComponent,
-    AdminComponent
+    AdminComponent,
+    NewsComponent
   ],
     imports: [
         BrowserAnimationsModule,

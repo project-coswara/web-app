@@ -1,0 +1,13 @@
+<div class="component-container">
+    <h3 class="page-title">in the news</h3>
+    <div class="content">
+        <div class="news-section" *ngFor="let nC of newsContent">
+            <h5>{{nC.lang}}</h5>
+            <ul>
+            <li class="news-content" *ngFor="let item of nC.items">
+                <a [href]="item.link">{{item.title}}, <span class="bold-text">{{item.paper}}</span></a>
+            </li>
+            </ul>
+        </div>
+    </div>
+</div>
