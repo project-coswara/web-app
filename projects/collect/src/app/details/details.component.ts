@@ -7,6 +7,7 @@ import 'firebase/firestore';
 
 import { environment, general_option_list, health_option_list } from "../../../../../src/environments/environment";
 import { UserDataService } from "../../../../../src/app/user-data.service";
+import {isQuote} from "@angular/compiler";
 
 @Component({
   selector: 'cs-collect-details',
@@ -29,16 +30,19 @@ export class DetailsComponent implements OnInit {
     state: new FormControl(null, [Validators.required]),
     locality: new FormControl(null),
     currentStatus: new FormControl(null, [Validators.required]),
+    conditionStatus: new FormControl(null, [Validators.required]),
     cold: new FormControl(false),
     cough: new FormControl(false),
     fever: new FormControl(false),
     pneumonia: new FormControl(false),
+    loss_of_smell: new FormControl(false),
     smoker: new FormControl(false),
     asthma: new FormControl(false),
     cld: new FormControl(false),
     ht: new FormControl(false),
     ihd: new FormControl(false),
-    diabetes: new FormControl(false)
+    diabetes: new FormControl(false),
+    none: new FormControl(false)
   };
   formGroups = {
     metadata: new FormGroup({
@@ -52,10 +56,12 @@ export class DetailsComponent implements OnInit {
     }),
     healthStatus: new FormGroup({
       currentStatus: this.formControls.currentStatus,
+      conditionStatus: this.formControls.conditionStatus,
       cold: this.formControls.cold,
       cough: this.formControls.cough,
       fever: this.formControls.fever,
       pneumonia: this.formControls.pneumonia,
+      loss_of_smell: this.formControls.loss_of_smell,
       smoker: this.formControls.smoker,
       asthma: this.formControls.asthma,
       cld: this.formControls.cld,
@@ -76,6 +82,7 @@ export class DetailsComponent implements OnInit {
   constructor(private router: Router, private userDataService: UserDataService) {
     this.userDataService.getUserData().subscribe(userData => {
       this.userData = userData;
+      this.submitLoader = false;
     });
 
     this.userDataService.getAppData().subscribe(metaData => {
@@ -84,6 +91,8 @@ export class DetailsComponent implements OnInit {
         if (metaData['cS'] == 'done') {
           this.goToThankYouPage()
         }
+      } else {
+        this.finishedMetaData = false;
       }
     });
   }
@@ -96,6 +105,24 @@ export class DetailsComponent implements OnInit {
 
   goToThankYouPage() {
     this.router.navigate(['thank-you']).then();
+  }
+
+  setValidity() {
+    this.formControls.conditionStatus.setValue(null);
+    let currentConditionStatus = false;
+    const detailsRoot = this;
+    this.optionList.healthConditionList.forEach(function (item, index) {
+      currentConditionStatus = currentConditionStatus || detailsRoot.formControls[item.id].value
+    })
+    currentConditionStatus = currentConditionStatus || this.formControls.none.value
+    if (currentConditionStatus) {
+      this.formControls.conditionStatus.setValue(true)
+    }
+  }
+
+  startOver() {
+    this.submitLoader = true;
+    firebase.auth().signOut().then();
   }
 
   submitData() {
@@ -120,11 +147,13 @@ export class DetailsComponent implements OnInit {
         userMetaData['l_l'] = detailsRoot.formControls.locality.value;
       }
 
-      this.optionList.healthConditionList.forEach(function (item, index) {
-        if(detailsRoot.formControls[item.id].value) {
-          userMetaData[item.id] = true;
-        }
-      })
+      if (!this.formControls.none.value) {
+        this.optionList.healthConditionList.forEach(function (item, index) {
+          if(detailsRoot.formControls[item.id].value) {
+            userMetaData[item.id] = true;
+          }
+        })
+      }
 
       let userAppData = {
         'fMD': true,
@@ -158,4 +187,20 @@ export class DetailsComponent implements OnInit {
             .replace(')','')
         ];
   };
+
+  resetStatus() {
+    const detailsRoot = this;
+    if (this.formControls.none.value) {
+      this.optionList.healthConditionList.forEach(function (item, index) {
+        detailsRoot.formControls[item.id].disable();
+        detailsRoot.formControls[item.id].setValue(false);
+      })
+      this.formControls.conditionStatus.setValue(true)
+    } else {
+      this.optionList.healthConditionList.forEach(function (item, index) {
+        detailsRoot.formControls[item.id].enable();
+      })
+      this.formControls.conditionStatus.setValue(null)
+    }
+  }
 }

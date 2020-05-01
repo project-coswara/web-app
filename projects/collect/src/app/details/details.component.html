@@ -16,9 +16,14 @@
             <a href="https://coswara.iisc.ac.in/terms" target="_blank">terms and conditions</a>.
             <p>For any questions, please contact <a href="mailto:sriramg@iisc.ac.in">sriramg@iisc.ac.in</a></p>
             <div class="tab-footer" fxLayout="row" fxLayoutAlign="end center">
-                <div *ngIf="disableMetaData && !finishedMetaData" class="button button-dark" (click)="disableMetaData = false; selectedIndex = selectedIndex + 1">START</div>
-                <div *ngIf="!disableMetaData && !finishedMetaData" class="button button-dark" (click)="disableMetaData = false; selectedIndex = selectedIndex + 1">NEXT</div>
-                <div *ngIf="finishedMetaData" class="button button-dark" (click)="goToRecordPage()">CONTINUE</div>
+                <div *ngIf="!submitLoader && disableMetaData && !finishedMetaData" class="button button-dark" (click)="disableMetaData = false; selectedIndex = selectedIndex + 1">START</div>
+                <div *ngIf="!submitLoader && !disableMetaData && !finishedMetaData" class="button button-dark" (click)="disableMetaData = false; selectedIndex = selectedIndex + 1">NEXT</div>
+                <div *ngIf="!submitLoader && finishedMetaData" class="button button-dark" (click)="goToRecordPage()">CONTINUE</div>
+                <div *ngIf="!submitLoader && finishedMetaData" style="margin: 5px"></div>
+                <div *ngIf="!submitLoader && finishedMetaData" class="button" (click)="startOver()">START OVER</div>
+                <div *ngIf="submitLoader" fxFlex="row" fxLayoutAlign="center center" fxFlexFill>
+                    <mat-progress-spinner [diameter]="50" mode="indeterminate"></mat-progress-spinner>
+                </div>
             </div>
         </mat-tab>
         <mat-tab *ngIf="!finishedMetaData" [disabled]="submitLoader || disableMetaData" label="Metadata" fxLayout="row wrap">
@@ -114,10 +119,13 @@
                     </mat-radio-group>
                 </div>
                 <div class="tab-content-spacer" fxFlex="100"></div>
-                <h5 class="tab-sub-title" fxFlex="100">Health Conditions</h5>
+                <h5 class="tab-sub-title" fxFlex="100">Health Conditions<span>*</span></h5>
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="100">
                     <div class="tab-check-box" *ngFor="let cb of optionList.healthConditionList" fxFlex="32" fxFlex.xs="100">
-                        <mat-checkbox [formControl]="formControls[cb.id]">{{cb.name}}</mat-checkbox>
+                        <mat-checkbox [formControl]="formControls[cb.id]" (change)="setValidity()">{{cb.name}}</mat-checkbox>
+                    </div>
+                    <div class="tab-check-box" fxFlex="32" fxFlex.xs="100">
+                        <mat-checkbox [formControl]="formControls.none" (change)="resetStatus()">None of the above</mat-checkbox>
                     </div>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="end center" fxFlexFill>
