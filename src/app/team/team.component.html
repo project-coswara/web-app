@@ -1,7 +1,7 @@
 <div class="component-container">
     <h3 class="page-title">meet the team</h3>
     <div class="mentors">
-        <div class="people-set" fxLayout="row wrap" fxLayoutAlign="center center">
+        <div class="people-set" fxLayout="row wrap" fxLayoutAlign="center start">
             <div class="people" *ngFor="let mentor of mentorsList" fxLayout="column" fxLayoutAlign="center center">
                 <div *ngIf="!mentor.image" class="image" [ngStyle]="{'background-image': 'url(\'../../../assets/team/default.jpeg\')'}"></div>
                 <div *ngIf="mentor.image" class="image" [ngStyle]="{'background-image': 'url(\'../../../assets/team/' + mentor.image + '\')'}"></div>
@@ -12,7 +12,7 @@
             </div>
         </div>
     </div>
-    <div class="people-set" fxLayout="row wrap" fxLayoutAlign="center center">
+    <div class="people-set" fxLayout="row wrap" fxLayoutAlign="center start">
         <div class="people" *ngFor="let people of peopleList" fxLayout="column" fxLayoutAlign="center center" fxFlex="33" fxFlex.xs="100">
             <div *ngIf="!people.image" class="image" [ngStyle]="{'background-image': 'url(\'../../../assets/team/default.jpeg\')'}"></div>
             <div *ngIf="people.image" class="image" [ngStyle]="{'background-image': 'url(\'../../../assets/team/' + people.image + '\')'}"></div>

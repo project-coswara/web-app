@@ -50,6 +50,18 @@ export class TeamComponent implements OnInit {
     'areas': 'Speaker Recognition',
     'image': 'prashant.jpeg'
   }, {
+    'id': 'nirmala',
+    'name': 'Dr. R. Nirmala',
+    'designation': 'Medical Officer',
+    'institution': 'IISc Bangalore',
+    'image': 'nirmala.jpg'
+  }, {
+    'id': 'raksheet',
+    'name': 'Raksheet Bhat',
+    'designation': 'Software Engineer',
+    'institution': 'upGrad',
+    'image': 'raksheet.jpg'
+  }, {
     'id': 'shahbaz',
     'name': 'Shahbaz Sultan',
     'designation': 'Developer',
