@@ -31,4 +31,4 @@ jobs:
     - name: Deploy to Firebase
       env:
         COSWARA_FIREBASE_TOKEN: ${{ secrets.COSWARA_FIREBASE_TOKEN }}
-      run: firebase deploy --token $COSWARA_FIREBASE_TOKEN --non-interactive --only hosting:prod,hosting:prod-record
+      run: firebase deploy --token $COSWARA_FIREBASE_TOKEN --non-interactive --only hosting:base,hosting:collect

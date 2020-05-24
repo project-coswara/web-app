@@ -74,5 +74,14 @@
 	"record.description.counting-fast": "Count from 1 to 20 faster",
 	"record.description.done": "Thank you for your participation!",
 	"record.message.initializing": "Initialising! Please wait...",
-	"record.message.uploading": "Uploading! Please wait..."
+	"record.message.uploading": "Uploading! Please wait...",
+	"record.button.start_recording": "Start Recording",
+	"record.button.stop_recording": "Start Recording",
+	"record.button.play_sample": "Play Sample",
+	"record.button.stop_playing": "Stop Playing",
+	"record.button.play": "Play",
+	"record.button.stop": "Stop",
+	"record.button.upload": "Upload",
+	"record.button.record_again": "Record Again",
+	"record.button.cancel": "Cancel"
 }

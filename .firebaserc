@@ -6,10 +6,10 @@
     "project-coswara": {
       "hosting": {
         "base": [
-          "project-coswara"
+          "project-coswara-dev"
         ],
         "collect": [
-          "project-coswara-collect"
+          "project-coswara-collect-dev"
         ],
         "collect-dev": [
           "project-coswara-collect-dev"
