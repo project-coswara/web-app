@@ -221,7 +221,7 @@ export class RecordComponent implements AfterViewInit, OnInit {
   cancelUpload() { }
 
   goToThankYouPage() {
-    this.router.navigate(['thank-you']).then();
+    this.router.navigate(['thank-you'], {queryParamsHandling: 'merge'}).then();
   }
 
   markStepsCompleted(steps) {

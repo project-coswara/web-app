@@ -1,15 +1,15 @@
 <div class="nav-container" fxLayout="row" fxLayoutAlign="center center" fxFill>
-    <h3 class="title" [routerLink]="'/'">{{name}}</h3>
+    <h3 class="title" [routerLink]="'/'" queryParamsHandling="merge">{{name}}</h3>
     <div *ngIf="tabs" fxFlex></div>
     <div *ngIf="tabs" class="tab-container" fxLayout="row" fxHide.xs>
-        <div class="tab" *ngFor="let tab of tabs" [routerLink]="tab.url">{{tab.name}}</div>
+        <div class="tab" *ngFor="let tab of tabs" [routerLink]="tab.url" queryParamsHandling="merge">{{tab.name}}</div>
     </div>
     <div *ngIf="tabs" class="tab-small-container" fxHide fxShow.xs>
         <div class="menu-button" [matMenuTriggerFor]="menu">
             <mat-icon>menu</mat-icon>
         </div>
         <mat-menu #menu="matMenu">
-            <button *ngFor="let tab of tabs" [routerLink]="tab.url" mat-menu-item>{{tab.name}}</button>
+            <button *ngFor="let tab of tabs" [routerLink]="tab.url" queryParamsHandling="merge" mat-menu-item>{{tab.name}}</button>
         </mat-menu>
     </div>
 </div>

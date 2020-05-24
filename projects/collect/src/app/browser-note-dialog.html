@@ -1,38 +1,35 @@
-<h3 mat-dialog-title>Note</h3>
+<h3 mat-dialog-title>{{'note.title' | translate}}</h3>
 <mat-dialog-content class="mat-typography">
-    <p>
-        If you are visiting the page from Facebook or Twitter App, you may face difficulty in using microphone.
-        Please open the url below in any of the supported browsers.
-    </p>
+    <p [innerHtml]="'note.para1' | translate"></p>
     <div class="link" fxLayout="row" fxLayoutAlign="center center">
         <h4>record.coswara.iisc.ac.in</h4>
     </div>
-    <h5>Supported Browsers</h5>
+    <h5>{{'note.supported_browsers' | translate}}</h5>
     <div class="browsers" fxLayout="row wrap">
         <div class="item" fxLayout="row" fxFlex fxFlex.xs="100">
-            <div class="name">PC</div>
+            <div class="name">{{'device.pc' | translate}}</div>
             <div class="sep">-</div>
-            <div class="value">Chrome/Safari/Firefox</div>
+            <div class="value">{{'browsers.chrome' | translate}}/{{'browsers.safari' | translate}}/{{'browsers.firefox' | translate}}</div>
         </div>
         <div class="item" fxLayout="row" fxFlex fxFlex.xs="100">
-            <div class="name">MAC</div>
+            <div class="name">{{'device.mac' | translate}}</div>
             <div class="sep">-</div>
-            <div class="value">Chrome/Safari/Firefox</div>
+            <div class="value">{{'browsers.chrome' | translate}}/{{'browsers.safari' | translate}}/{{'browsers.firefox' | translate}}</div>
         </div>
         <div class="item" fxLayout="row" fxFlex fxFlex.xs="100">
-            <div class="name">Android</div>
+            <div class="name">{{'device.android' | translate}}</div>
             <div class="sep">-</div>
-            <div class="value">Chrome/Firefox</div>
+            <div class="value">{{'browsers.chrome' | translate}}/{{'browsers.firefox' | translate}}</div>
         </div>
         <div class="item" fxLayout="row" fxFlex fxFlex.xs="100">
-            <div class="name">iOS</div>
+            <div class="name">{{'device.ios' | translate}}</div>
             <div class="sep">-</div>
-            <div class="value">Safari</div>
+            <div class="value">{{'browsers.safari' | translate}}</div>
         </div>
     </div>
 
 
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <div class="button" mat-dialog-close>DISMISS</div>
+    <div class="button" mat-dialog-close>{{'note.button.dismiss' | translate}}</div>
 </mat-dialog-actions>

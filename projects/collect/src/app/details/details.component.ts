@@ -100,11 +100,11 @@ export class DetailsComponent implements OnInit {
   }
 
   goToRecordPage() {
-    this.router.navigate(['record']).then();
+    this.router.navigate(['record'], {queryParamsHandling: 'merge'}).then();
   }
 
   goToThankYouPage() {
-    this.router.navigate(['thank-you']).then();
+    this.router.navigate(['thank-you'], {queryParamsHandling: 'merge'}).then();
   }
 
   setValidity() {

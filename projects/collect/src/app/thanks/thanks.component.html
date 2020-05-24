@@ -1,19 +1,18 @@
 <div class="component-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
-    <h4 class="page-title">Thank you for your participation!</h4>
+    <h4 class="page-title">{{'thanks.heading' | translate}}</h4>
     <div class="content">
-        Thank you for being a part of this!
-        Please share it among your friends and relatives.
-        Follow us at <a href="https://www.facebook.com/coswara.iisc">Facebook</a> and <a href="https://twitter.com/coswara_iisc">Twitter</a> to get the latest updates.
+        {{'thanks.message.para1' | translate}}
+        <span [innerHTML]="'thanks.message.para2' | translate"></span>
     </div>
     <div class="thank-you-footer">
-        <div *ngIf="!signOutLoader" class="button" (click)="startSession()">START A NEW SESSION</div>
+        <div *ngIf="!signOutLoader" class="button" (click)="startSession()">{{'thanks.button.start_new_session' | translate}}</div>
         <mat-progress-spinner *ngIf="signOutLoader" [diameter]="30" mode="indeterminate"></mat-progress-spinner>
     </div>
     <div class="warning-box" fxLayout="row" fxLayoutAlign="start center">
         <mat-icon class="material-icons">warning</mat-icon>
-        The recording device should not be shared with others before cleaning/sanitation
+        {{'thanks.warning.reuse' | translate}}
     </div>
-    <h4>Developed by</h4>
+    <h4>{{'thanks.developed_by' | translate}}</h4>
     <div class="logo" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
         <div class="leap-logo">
             <a href="http://leap.ee.iisc.ac.in/" target="_blank"><img src="../../assets/logo/leap.png" height="90px" width="auto" alt="leap"/></a>
@@ -26,19 +25,19 @@
         </div>
     </div>
     <div class="feedback" fxLayout="column" fxLayoutAlign="start start">
-        <h4>Let us know your comments!</h4>
+        <h4>{{'thanks.let_us_know_comments' | translate}}</h4>
         <mat-form-field *ngIf="!showFeedbackLoader && showFeedbackBox" class="full-width" appearance="outline">
-            <mat-label>Feedback</mat-label>
+            <mat-label>{{'thanks.feedback' | translate}}</mat-label>
             <textarea [formControl]="feedbackControl" matInput rows="5"></textarea>
         </mat-form-field>
         <div *ngIf="!showFeedbackLoader && showFeedbackBox && feedbackControl.valid" class="thank-you-footer" fxLayout="row" fxLayoutAlign="end center">
-            <div class="button" (click)="sendFeedback()">SEND FEEDBACK</div>
+            <div class="button" (click)="sendFeedback()">{{'thanks.button.send_feedback' | translate}}</div>
         </div>
         <div *ngIf="showFeedbackLoader">
             <mat-progress-spinner [diameter]="50" mode="indeterminate"></mat-progress-spinner>
         </div>
         <div *ngIf="!showFeedbackBox">
-            Thank you for your feedback!
+            {{'thanks.feedback.complete' | translate}}
         </div>
     </div>
 </div>
