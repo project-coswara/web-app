@@ -22,6 +22,12 @@ import { ContactComponent } from './contact/contact.component';
 import { PermissionsComponent } from './permissions/permissions.component';
 import { MatSelectModule } from "@angular/material/select";
 import { NewsComponent } from './news/news.component';
+import { AnnotateComponent } from './annotate/annotate.component';
+import {MatRadioModule} from "@angular/material/radio";
+import {ReactiveFormsModule} from "@angular/forms";
+import {MatInputModule} from "@angular/material/input";
+import { LBComponent } from './lb/lb.component';
+import {MatTableModule} from "@angular/material/table";
 
 @NgModule({
   declarations: [
@@ -37,18 +43,24 @@ import { NewsComponent } from './news/news.component';
     ContactComponent,
     PermissionsComponent,
     AdminComponent,
-    NewsComponent
+    NewsComponent,
+    AnnotateComponent,
+    LBComponent
   ],
-    imports: [
-        BrowserAnimationsModule,
-        BrowserModule,
-        AppRoutingModule,
-        FlexLayoutModule,
-        MatProgressSpinnerModule,
-        MatMenuModule,
-        MatIconModule,
-        MatSelectModule
-    ],
+  imports: [
+    BrowserAnimationsModule,
+    BrowserModule,
+    AppRoutingModule,
+    FlexLayoutModule,
+    MatProgressSpinnerModule,
+    MatMenuModule,
+    MatIconModule,
+    MatSelectModule,
+    MatRadioModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatTableModule
+  ],
   providers: [
       UserDataService
   ],

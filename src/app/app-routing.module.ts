@@ -10,12 +10,16 @@ import { NewsComponent } from "./news/news.component";
 import { PermissionsComponent } from "./permissions/permissions.component";
 import { TeamComponent } from "./team/team.component";
 import { TermsComponent } from "./terms/terms.component";
+import {AnnotateComponent} from "./annotate/annotate.component";
+import {LBComponent} from "./lb/lb.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'about', component: AboutComponent },
   { path: 'admin', component: AdminComponent },
+  { path: 'annotate', component: AnnotateComponent },
   { path: 'faq', component: ContactComponent },
+  { path: 'leaderboard', component: LBComponent },
   { path: 'login', component: LoginComponent },
   { path: 'media', component: NewsComponent },
   { path: 'permissions', component: PermissionsComponent },

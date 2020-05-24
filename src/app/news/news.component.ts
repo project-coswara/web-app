@@ -7,11 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NewsComponent implements OnInit {
   newsContent = [{
-    lang: 'English (Major)',
+    lang: 'English',
     items: [{
       paper: 'The Better India',
       title: 'Here’s your chance to help the scientists. All you need is a smartphone, an inbuilt microphone and 5 minutes of your time! #COVID19',
       link: 'https://www.thebetterindia.com/225136/bengaluru-iisc-innovation-coronavirus-test-coswara-covid19-india-tan42/'
+    }, {
+      paper: 'BangaloreMirror',
+      title: 'What does an infection sound like? IISc',
+      link: 'https://bangaloremirror.indiatimes.com/bangalore/others/what-does-an-infection-sound-like-iisc-knows/articleshow/75524950.cms'
     }, {
       paper: 'IndiaToday',
       title: 'IISc researchers working on tool for Covid-19 diagnosis based on cough, speech sounds',
@@ -24,10 +28,7 @@ export class NewsComponent implements OnInit {
       paper: 'Deccan Chronicle',
       title: 'IISc working on tool for COVID-19 detection based on cough, speech sounds',
       link: 'https://www.deccanchronicle.com/technology/in-other-news/150420/iisc-working-on-tool-for-covid-19-detection-based-on-cough-speech-sou.html'
-    }]
-  }, {
-    lang: 'English (Minor)',
-    items: [{
+    }, {
       paper: 'OneIndia',
       title: 'Tool to diagnose COVID-19 based on cough, speech being worked on',
       link: 'https://www.oneindia.com/india/tool-to-diagnose-covid-19-based-on-cough-speech-being-worked-on-3072438.html'
@@ -86,6 +87,13 @@ export class NewsComponent implements OnInit {
       paper: 'Asianet News',
       title: 'सांस लेने और खांसी की आवाज से हो सकेगी कोरोना की टेस्टिंग, भारत में हो रही है रिसर्च',
       link: 'https://hindi.asianetnews.com/national-news/iisc-researchers-working-on-tool-for-covid-19-diagnosis-kpn-q8u1y5'
+    }]
+  }, {
+    lang: 'Tamil',
+    items: [{
+      paper: 'Hindu Tamil',
+      title: 'குரல் மூலம் கரோனாவைக் கண்டுபிடிக்கப் புதிய கருவி!',
+      link: 'https://www.hindutamil.in/news/india/552737-corona-device.html'
     }]
   }, {
     lang: 'French',

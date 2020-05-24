@@ -1,8 +1,9 @@
 <div *ngIf="!appLoader" fxLayout="column" fxFill>
     <cs-navbar [tabs]="tabsList"></cs-navbar>
-    <cs-content fxLayout="column" fxFlex>
+    <cs-content>
         <router-outlet></router-outlet>
     </cs-content>
+    <div fxFlex></div>
     <cs-footer></cs-footer>
 </div>
 <div *ngIf="appLoader" class="content-container" fxLayout="column" fxLayoutAlign="center center" fxFill>

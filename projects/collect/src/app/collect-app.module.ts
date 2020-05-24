@@ -22,6 +22,13 @@ import { MatStepperModule } from "@angular/material/stepper";
 import { ThanksComponent } from './thanks/thanks.component';
 import { MatIconModule } from "@angular/material/icon";
 import { MatDialogModule } from "@angular/material/dialog";
+import {HttpClient} from "@angular/common/http";
+import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
@@ -51,7 +58,14 @@ import { MatDialogModule } from "@angular/material/dialog";
         MatNativeDateModule,
         MatStepperModule,
         MatIconModule,
-        MatDialogModule
+        MatDialogModule,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+          },
+        })
     ],
   entryComponents: [BrowserNoteDialogComponent],
   providers: [],

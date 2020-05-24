@@ -1,5 +1,3 @@
-
-
 @import 'assets/fonts/content_font.css';
 @import 'assets/fonts/header_font.css';
 @import 'assets/fonts/material_icons.css';
@@ -46,7 +44,7 @@ html, body {
 }
 
 /* Heading starts */
-h1, h2, h3, h4, h5, h6, .button, .button-dark {
+h1, h2, h3, h4, h5, h6, .button, .button-dark, .table th {
   font-family: 'Quicksand', sans-serif!important;
 }
 h1, h2, h3, h4, h5, h6 {
@@ -109,9 +107,11 @@ p {
   padding: 0 15% 30px;
   font-size: @text_normal_size;
   min-height: 100%;
+  flex-shrink: 0;
 }
 .content-container {
   padding: 10px;
+  flex-shrink: 0;
 }
 .footer-container {
   border-top: @border_line;
@@ -168,9 +168,30 @@ p {
 .small-text { font-size: @text_small_size; }
 .smaller-text { font-size: @text_smaller_size; }
 .full-width { width: 100%; }
+.no-side-margin { margin-left: 0; margin-right: 0;}
 
 @media(max-width: 768px) {
   .page-title { margin: 10px 0 15px; }
   .sub-title { margin: 5px 0 10px; }
 }
 /* General classes ends*/
+
+/* Table classes starts */
+.table {
+  width: 100%;
+  border: @border_line;
+}
+.table th, .table td {
+  text-align: left;
+  padding: 10px;
+}
+.table tr {
+  border-bottom: @border_line;
+}
+.table th {
+  background-color: @color_lighter;
+}
+.table tr:nth-child(2n + 1) {
+  background-color: @color_lightest;
+}
+/* Table classes ends */

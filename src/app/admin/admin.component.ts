@@ -67,6 +67,7 @@ export class AdminComponent implements OnInit {
       } else {
         this.route.url.subscribe((url) => {
           if (url) {
+            // console.log(url)
             this.router.navigate(['login'], { queryParams: { redirect: url } }).then()
           }
         })

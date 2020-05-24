@@ -44,7 +44,7 @@ exports.metaDataNewDateAdded = functions.firestore.document('USER_METADATA/{date
             dateSummary[key] = (prevStatsData[key] ? prevStatsData[key] : 0) + (dateData[key] ? dateData[key] : 0)
         })
 
-        const netCountryStatsData = {}
+        const netCountryStatsData: { [id: string] : number; } = {}
         const prevCountryStatsData = result[2].data() || {}
         const dateCountryStatsData = result[3].data() || {}
         Object.keys({...prevCountryStatsData, ...dateCountryStatsData}).forEach((key) => {

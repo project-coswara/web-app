@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { MatDialog } from "@angular/material/dialog";
 
 import * as firebase from 'firebase/app';
@@ -8,6 +8,7 @@ import 'firebase/firestore';
 
 import { firebaseConfig } from "../../../../src/environments/environment";
 import { UserDataService } from "../../../../src/app/user-data.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'cs-collect-root',
@@ -17,8 +18,14 @@ import { UserDataService } from "../../../../src/app/user-data.service";
 
 export class CollectAppComponent implements OnInit {
   appLoader = true;
+  locale = 'en-US'
 
-  constructor(public infoDialog: MatDialog, private router: Router, private userDataService: UserDataService) { }
+  constructor(public infoDialog: MatDialog, private router: Router, private userDataService: UserDataService, activatedRoute: ActivatedRoute, translateService: TranslateService) {
+    activatedRoute.queryParams.subscribe((queryParams) => {
+      this.locale = queryParams.locale;
+      translateService.use(this.locale);
+    })
+  }
 
   ngOnInit() {
     let appRoot = this;
