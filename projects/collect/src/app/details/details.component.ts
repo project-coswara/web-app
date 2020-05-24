@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
 
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 
-import { environment, general_option_list, health_option_list } from "../../../../../src/environments/environment";
-import { UserDataService } from "../../../../../src/app/user-data.service";
-import {isQuote} from "@angular/compiler";
+import {environment, general_option_list, health_option_list} from "../../../../../src/environments/environment";
+import {UserDataService} from "../../../../../src/app/user-data.service";
 
 @Component({
   selector: 'cs-collect-details',
@@ -22,8 +21,8 @@ export class DetailsComponent implements OnInit {
   submitLoader: boolean = false;
   userData = null;
   formControls = {
-    age: new FormControl(null,[Validators.required, Validators.min(0), Validators.max(140)]),
-    gender: new FormControl(null,[Validators.required]),
+    age: new FormControl(null, [Validators.required, Validators.min(0), Validators.max(140)]),
+    gender: new FormControl(null, [Validators.required]),
     englishProficient: new FormControl('y', [Validators.required]),
     returningUser: new FormControl('n'),
     country: new FormControl(null, [Validators.required]),
@@ -97,7 +96,8 @@ export class DetailsComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+  }
 
   goToRecordPage() {
     this.router.navigate(['record']).then();
@@ -112,7 +112,7 @@ export class DetailsComponent implements OnInit {
     let currentConditionStatus = false;
     const detailsRoot = this;
     this.optionList.healthConditionList.forEach(function (item, index) {
-      currentConditionStatus = currentConditionStatus || detailsRoot.formControls[item.id].value
+      currentConditionStatus = currentConditionStatus || detailsRoot.formControls[item].value
     })
     currentConditionStatus = currentConditionStatus || this.formControls.none.value
     if (currentConditionStatus) {
@@ -127,7 +127,7 @@ export class DetailsComponent implements OnInit {
 
   submitData() {
     let detailsRoot = this;
-    if(this.userData && this.formGroups.metadata.valid && this.formGroups.healthStatus.valid) {
+    if (this.userData && this.formGroups.metadata.valid && this.formGroups.healthStatus.valid) {
       this.submitLoader = true;
       const updateDate = new Date().toISOString();
       const dateString = updateDate.substring(0, 10)
@@ -143,14 +143,14 @@ export class DetailsComponent implements OnInit {
         'covid_status': this.formControls.currentStatus.value
       };
 
-      if(detailsRoot.formControls.locality.value) {
+      if (detailsRoot.formControls.locality.value) {
         userMetaData['l_l'] = detailsRoot.formControls.locality.value;
       }
 
       if (!this.formControls.none.value) {
         this.optionList.healthConditionList.forEach(function (item, index) {
-          if(detailsRoot.formControls[item.id].value) {
-            userMetaData[item.id] = true;
+          if (detailsRoot.formControls[item].value) {
+            userMetaData[item] = true;
           }
         })
       }
@@ -164,12 +164,12 @@ export class DetailsComponent implements OnInit {
       let db = firebase.firestore();
       let firebaseBatch = db.batch();
       firebaseBatch.set(
-          db.doc(`USER_METADATA/${dateString}/DATA/${this.userData.uid}`),
-          userMetaData
+        db.doc(`USER_METADATA/${dateString}/DATA/${this.userData.uid}`),
+        userMetaData
       );
       firebaseBatch.set(
-          db.doc(`USER_APPDATA/${this.userData.uid}`),
-          userAppData
+        db.doc(`USER_APPDATA/${this.userData.uid}`),
+        userAppData
       );
       firebaseBatch.commit().then(function () {
         detailsRoot.userDataService.sendAppData(userAppData);
@@ -180,25 +180,25 @@ export class DetailsComponent implements OnInit {
 
   getStates() {
     this.optionList.selectedStateList = this.optionList.stateList[
-        this.formControls.country.value
-            .toLowerCase()
-            .replace(/ /g, '_')
-            .replace('(', '')
-            .replace(')','')
-        ];
+      this.formControls.country.value
+        .toLowerCase()
+        .replace(/ /g, '_')
+        .replace('(', '')
+        .replace(')', '')
+      ];
   };
 
   resetStatus() {
     const detailsRoot = this;
     if (this.formControls.none.value) {
       this.optionList.healthConditionList.forEach(function (item, index) {
-        detailsRoot.formControls[item.id].disable();
-        detailsRoot.formControls[item.id].setValue(false);
+        detailsRoot.formControls[item].disable();
+        detailsRoot.formControls[item].setValue(false);
       })
       this.formControls.conditionStatus.setValue(true)
     } else {
       this.optionList.healthConditionList.forEach(function (item, index) {
-        detailsRoot.formControls[item.id].enable();
+        detailsRoot.formControls[item].enable();
       })
       this.formControls.conditionStatus.setValue(null)
     }

@@ -74,6 +74,5 @@
 	"record.description.counting-fast": "Count from 1 to 20 faster",
 	"record.description.done": "Thank you for your participation!",
 	"record.message.initializing": "Initialising! Please wait...",
-	"record.message.uploading": "Uploading! Please wait...",
-
+	"record.message.uploading": "Uploading! Please wait..."
 }

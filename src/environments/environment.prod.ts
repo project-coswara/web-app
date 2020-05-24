@@ -22,57 +22,6 @@ export const general_option_list = {
 };
 
 export const health_option_list = {
-  current_status: [{
-    id: 'positive_mild',
-    value: 'I have been identified with Covid-19 and have mild symptoms'
-  }, {
-    id: 'positive_moderate',
-    value: 'I have been identified with Covid-19 and have moderately severe symptoms'
-  }, {
-    id: 'recovered_full',
-    value: 'I was identified with Covid-19 and have recovered fully'
-  }, {
-    id: 'resp_illness_not_identified',
-    value: 'I have other pre-existing respiratory illnesses but have not been identified with Covid-19'
-  }, {
-    id: 'no_resp_illness_exposed',
-    value: 'I have no respiratory illness but I may have been exposed to the virus through contact'
-  }, {
-    id: 'healthy',
-    value: 'I do not have any respiratory illnesses'
-  }],
-  conditions: [{
-    id: 'cold',
-    name: 'Cold'
-  }, {
-    id: 'cough',
-    name: 'Cough'
-  }, {
-    id: 'fever',
-    name: 'Fever'
-  }, {
-    id: 'pneumonia',
-    name: 'Pneumonia'
-  }, {
-    id: 'loss_of_smell',
-    name: 'Loss of Smell'
-  }, {
-    id: 'smoker',
-    name: 'Smoker'
-  }, {
-    id: 'asthma',
-    name: 'Asthma'
-  }, {
-    id: 'cld',
-    name: 'Chronic lung disease'
-  }, {
-    id: 'ht',
-    name: 'Hypertension'
-  }, {
-    id: 'ihd',
-    name: 'Ischemic heart disease'
-  }, {
-    id: 'diabetes',
-    name: 'Diabetes'
-  }]
+  current_status: ['positive_mild', 'positive_moderate', 'recovered_full', 'resp_illness_not_identified', 'no_resp_illness_exposed', 'healthy'],
+  conditions: ['cold', 'cough', 'fever', 'pneumonia', 'loss_of_smell', 'smoker', 'asthma', 'cld', 'ht', 'ihd', 'diabetes'],
 };
