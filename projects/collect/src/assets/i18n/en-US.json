@@ -76,7 +76,7 @@
 	"record.message.initializing": "Initialising! Please wait...",
 	"record.message.uploading": "Uploading! Please wait...",
 	"record.button.start_recording": "Start Recording",
-	"record.button.stop_recording": "Start Recording",
+	"record.button.stop_recording": "Stop Recording",
 	"record.button.play_sample": "Play Sample",
 	"record.button.stop_playing": "Stop Playing",
 	"record.button.play": "Play",
