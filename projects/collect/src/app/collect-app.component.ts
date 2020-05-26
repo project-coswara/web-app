@@ -22,7 +22,7 @@ export class CollectAppComponent implements OnInit {
 
   constructor(public infoDialog: MatDialog, private router: Router, private userDataService: UserDataService, activatedRoute: ActivatedRoute, translateService: TranslateService) {
     activatedRoute.queryParams.subscribe((queryParams) => {
-      this.locale = queryParams.locale;
+      this.locale = queryParams.locale || this.locale;
       translateService.use(this.locale);
     })
   }
