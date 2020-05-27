@@ -9,7 +9,7 @@
           "project-coswara-dev"
         ],
         "collect": [
-          "project-coswara-collect-dev"
+          "project-coswara-collect"
         ],
         "collect-dev": [
           "project-coswara-collect-dev"
