@@ -1,4 +1,12 @@
 {
+    "language.english":"English",
+    "language.hindi":"हिन्दी",
+    "language.tamil":"தமிழ்",
+    "language.kannada":"ಕನ್ನಡ",
+    "language.marathi":"मराठी",
+    "language.malayalam":"മലയാളം",
+    "language.telugu":"తెలుగు",
+    "language.bengali":"বাংলা",
     "app.title": "coswara",
     "metadata.title.no_metadata": "ನಾವು ಮುಂದುವರಿಯಲು ಕೆಲವು ಮಾಹಿತಿಯ ಅಗತ್ಯವಿದೆ!",
     "metadata.tabs.disclaimer": "ಹಕ್ಕುತ್ಯಾಗ",
