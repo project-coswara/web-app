@@ -104,5 +104,8 @@
 	"device.mac": "MAC",
 	"device.android": "Android",
 	"device.ios": "iOs",
-	"note.button.dismiss": "Dismiss"
+	"note.button.dismiss": "Dismiss",
+
+	"forms.label.using_mask": "Are you wearing a mask now?",
+	"forms.option.bd": "Breathing Difficulties"
 }

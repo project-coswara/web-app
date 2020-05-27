@@ -23,6 +23,7 @@ export class DetailsComponent implements OnInit {
   formControls = {
     age: new FormControl(null, [Validators.required, Validators.min(0), Validators.max(140)]),
     gender: new FormControl(null, [Validators.required]),
+    usingMask: new FormControl('n', [Validators.required]),
     englishProficient: new FormControl('y', [Validators.required]),
     returningUser: new FormControl('n'),
     country: new FormControl(null, [Validators.required]),
@@ -41,6 +42,7 @@ export class DetailsComponent implements OnInit {
     ht: new FormControl(false),
     ihd: new FormControl(false),
     diabetes: new FormControl(false),
+    bd: new FormControl(false),
     none: new FormControl(false)
   };
   formGroups = {
@@ -66,7 +68,8 @@ export class DetailsComponent implements OnInit {
       cld: this.formControls.cld,
       ht: this.formControls.ht,
       ihd: this.formControls.ihd,
-      diabetes: this.formControls.diabetes
+      diabetes: this.formControls.diabetes,
+      bd: this.formControls.bd
     })
   };
   optionList = {
@@ -111,7 +114,7 @@ export class DetailsComponent implements OnInit {
     this.formControls.conditionStatus.setValue(null);
     let currentConditionStatus = false;
     const detailsRoot = this;
-    this.optionList.healthConditionList.forEach(function (item, index) {
+    this.optionList.healthConditionList.forEach(function (item) {
       currentConditionStatus = currentConditionStatus || detailsRoot.formControls[item].value
     })
     currentConditionStatus = currentConditionStatus || this.formControls.none.value
@@ -136,6 +139,7 @@ export class DetailsComponent implements OnInit {
         'fV': environment.version,
         'a': this.formControls.age.value,
         'g': this.formControls.gender.value,
+        'um': this.formControls.usingMask.value,
         'ep': this.formControls.englishProficient.value,
         'rU': this.formControls.returningUser.value,
         'l_c': this.formControls.country.value,
@@ -148,7 +152,7 @@ export class DetailsComponent implements OnInit {
       }
 
       if (!this.formControls.none.value) {
-        this.optionList.healthConditionList.forEach(function (item, index) {
+        this.optionList.healthConditionList.forEach(function (item) {
           if (detailsRoot.formControls[item].value) {
             userMetaData[item] = true;
           }
@@ -191,13 +195,13 @@ export class DetailsComponent implements OnInit {
   resetStatus() {
     const detailsRoot = this;
     if (this.formControls.none.value) {
-      this.optionList.healthConditionList.forEach(function (item, index) {
+      this.optionList.healthConditionList.forEach(function (item) {
         detailsRoot.formControls[item].disable();
         detailsRoot.formControls[item].setValue(false);
       })
       this.formControls.conditionStatus.setValue(true)
     } else {
-      this.optionList.healthConditionList.forEach(function (item, index) {
+      this.optionList.healthConditionList.forEach(function (item) {
         detailsRoot.formControls[item].enable();
       })
       this.formControls.conditionStatus.setValue(null)
