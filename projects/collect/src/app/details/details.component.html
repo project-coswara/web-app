@@ -5,8 +5,8 @@
             <p [innerHTML]="'metadata.disclaimer.para1' | translate"></p>
             <p [innerHTML]="'metadata.disclaimer.para2' | translate"></p>
             <p [innerHTML]="'metadata.disclaimer.para3' | translate"></p>
-            <p *ngIf="finishedMetaData" [innerHTML]="'metadata.disclaimer.para4' | translate"></p>
-            <p *ngIf="!finishedMetaData" [innerHTML]="'metadata.disclaimer.para4.alternate' | translate"></p>
+            <p *ngIf="!finishedMetaData" [innerHTML]="'metadata.disclaimer.para4' | translate"></p>
+            <p *ngIf="finishedMetaData" [innerHTML]="'metadata.disclaimer.para4.alternate' | translate"></p>
             <p [innerHTML]="'metadata.disclaimer.para5' | translate"></p>
             <div class="tab-footer" fxLayout="row" fxLayoutAlign="end center">
                 <div *ngIf="!submitLoader && disableMetaData && !finishedMetaData" class="button button-dark" (click)="disableMetaData = false; selectedIndex = selectedIndex + 1">{{'metadata.buttons.start' | translate}}</div>
