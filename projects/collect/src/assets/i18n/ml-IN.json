@@ -112,5 +112,7 @@
  "device.mac": "മാക്",
  "device.android": "ആൻഡ്രോയിഡ്",
  "device.ios": "iOS",
- "note.button.dismiss": "പുറംതള്ളുക"
+ "note.button.dismiss": "പുറംതള്ളുക",
+ "forms.label.using_mask": "നിങ്ങൾ ഇപ്പോൾ മാസ്ക് ധരിക്കുന്നുണ്ടോ?",
+	"forms.option.bd": "ശ്വസിക്കാനുള്ള ബുദ്ധിമുട്ടുകൾ"
 }

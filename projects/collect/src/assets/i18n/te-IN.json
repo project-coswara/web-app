@@ -104,5 +104,7 @@
     "device.mac": "MAC",
     "device.android": "Android",
     "device.ios": "IOS ఉపకరణాల్లో",
-    "note.button.dismiss": "రద్దుచేసే"
+    "note.button.dismiss": "రద్దుచేసే",
+    "forms.label.using_mask": "మీరు ఇప్పుడు ముసుగు ధరించారా?",
+	"forms.option.bd": "శ్వాస తీసుకోవడంలో ఇబ్బందులు"
 }

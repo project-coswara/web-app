@@ -112,5 +112,7 @@
  "device.mac": "மேக்",
  "device.android": "அண்ட்ராய்டு",
  "device.ios": "iOS",
- "note.button.dismiss": "நிராகரி"
+ "note.button.dismiss": "நிராகரி",
+ "forms.label.using_mask": "நீங்கள் இப்பொழுது முகமூடி அணிந்திருக்கிறீர்களா??",
+	"forms.option.bd": "சுவாச சிரமங்கள்"
 }

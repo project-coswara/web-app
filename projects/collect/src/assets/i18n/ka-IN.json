@@ -112,5 +112,7 @@
     "device.mac": "ಮ್ಯಾಕ್",
     "device.android": "ಆಂಡ್ರಾಯ್ಡ್",
     "device.ios": "ಐಒಎಸ್",
-    "note.button.dismiss": "ವಜಾಗೊಳಿಸಿ"
+    "note.button.dismiss": "ವಜಾಗೊಳಿಸಿ",
+    "forms.label.using_mask": "ನೀವು ಈಗ ಮುಖವಾಡ ಧರಿಸಿದ್ದೀರಾ?",
+	"forms.option.bd": "ಉಸಿರಾಟದ ತೊಂದರೆಗಳು"
 }
