@@ -15,7 +15,7 @@
 	"metadata.disclaimer.para1": "This study builds on other previous studies which have reported a high level of sensitivity for identifying respiratory illness from the human voice. Any tools with statistical significance in disease detection will also be implemented as part of this app at a later date. The participation in this study is purely voluntary and the details collected will not contain any personally identifiable information.",
 	"metadata.disclaimer.para2": "The entire recording and data collection should take about 5 minutes only. Please keep your device around 20 cm from your face during the recording and perform the recording in a quiet environment. The recording device should not be shared with others before cleaning/sanitation.",
 	"metadata.disclaimer.para3": "The Indian Institute of Science Ethics Committee has approved the procedure for non-invasive recordings.",
-	"metadata.disclaimer.para4": "By clicking start you will proceed to data and stimuli collection, accepting our <a href='https://coswara.iisc.ac.in/terms' target='_blank'>terms and conditions</a>",
+	"metadata.disclaimer.para4": "By clicking start, you agree to our <a href='https://coswara.iisc.ac.in/terms' target='_blank'>terms and conditions</a> and provide us the consent to your data solely for research and development purposes.",
 	"metadata.disclaimer.para4.alternate": "You have accepted our <a href='https://coswara.iisc.ac.in/terms' target='_blank'>terms and conditions</a>",
 	"metadata.disclaimer.para5": "For any questions, please contact <a href='mailto:sriramg@iisc.ac.in'>sriramg@iisc.ac.in</a>",
 	"metadata.buttons.start": "start",
