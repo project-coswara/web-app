@@ -114,5 +114,6 @@
     "device.ios": "iOS",
     "note.button.dismiss": "काढून टाकणे",
     "forms.label.using_mask": "आपण आता मुखवटा घातला आहे?",
-	"forms.option.bd": "श्वास घेण्यास अडचणी"
+    "forms.option.bd": "श्वास घेण्यास अडचणी",
+    "forms.option.st": "घसा खवखवणे"
 }

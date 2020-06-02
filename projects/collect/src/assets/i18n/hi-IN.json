@@ -115,5 +115,6 @@
  "device.ios": "आईओएस",
  "note.button.dismiss": "खारिज",
  "forms.label.using_mask": "क्या आपने अभी मास्क पहना है?",
-	"forms.option.bd": "साँस की तकलीफे"
+    "forms.option.bd": "साँस की तकलीफे",
+    "forms.option.st": "गले में खराश"
 }

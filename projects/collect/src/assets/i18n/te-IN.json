@@ -106,5 +106,6 @@
     "device.ios": "iOs",
     "note.button.dismiss": "రద్దు చేయి",
     "forms.label.using_mask": "మీరు ఇప్పుడు ముసుగు ధరించారా?",
-	"forms.option.bd": "శ్వాస తీసుకోవడంలో ఇబ్బందులు"
+    "forms.option.bd": "శ్వాస తీసుకోవడంలో ఇబ్బందులు",
+    "forms.option.st": "గొంతు మంట"
 }

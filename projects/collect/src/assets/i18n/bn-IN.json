@@ -114,5 +114,6 @@
     "device.ios": "iOS",
     "note.button.dismiss": "খারিজ করা",
     "forms.label.using_mask": "আপনি কি এখন একটি মাস্ক পরেন?",
-	"forms.option.bd": "শ্বাস প্রশ্বাস"
+    "forms.option.bd": "শ্বাস প্রশ্বাস",
+    "forms.option.st": "গলা ব্যথা"
 }
