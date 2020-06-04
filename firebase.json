@@ -24,6 +24,17 @@
           "source": "**",
           "destination": "/index.html"
         }
+      ],
+      "headers": [
+        {
+          "source": "**/*.@(json)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "max-age=600"
+            }
+          ]
+        }
       ]
     },
     {
@@ -38,6 +49,17 @@
         {
           "source": "**",
           "destination": "/index.html"
+        }
+      ],
+      "headers": [
+        {
+          "source": "**/*.@(json)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "max-age=600"
+            }
+          ]
         }
       ]
     },
@@ -54,6 +76,17 @@
           "source": "**",
           "destination": "/index.html"
         }
+      ],
+      "headers": [
+        {
+          "source": "**/*.@(json)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "max-age=60"
+            }
+          ]
+        }
       ]
     },
     {
@@ -68,6 +101,17 @@
         {
           "source": "**",
           "destination": "/index.html"
+        }
+      ],
+      "headers": [
+        {
+          "source": "**/*.@(json)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "max-age=600"
+            }
+          ]
         }
       ]
     }
