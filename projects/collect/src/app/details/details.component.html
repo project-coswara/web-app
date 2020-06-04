@@ -31,7 +31,7 @@
                 <mat-form-field fxFlex="17" fxFlex.xs="67">
                     <mat-label>{{'forms.label.gender' | translate}}</mat-label>
                     <mat-select [formControl]="formControls.gender" required>
-                        <mat-option *ngFor="let g of optionList.genderList" [value]="g.toLowerCase()">{{g}}</mat-option>
+                        <mat-option *ngFor="let g of optionList.genderList" [value]="g.toLowerCase()">{{'forms.options' + g | translate}}</mat-option>
                     </mat-select>
                     <mat-error *ngIf="formControls.gender.hasError('required')">{{'forms.errors.required' | translate}}</mat-error>
                 </mat-form-field>
