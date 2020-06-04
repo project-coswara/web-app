@@ -2,7 +2,7 @@
     <div *ngIf="!locale" fxLayout="row wrap" fxLayoutAlign="center center">
         <div [mat-dialog-close]="lang.locale" class="lang button" *ngFor="let lang of languageList">{{'language.' + lang.name | translate}}</div>
     </div>
-    <div fxHide.gt-xs>
+    <div *ngIf="locale" fxHide.gt-xs>
         <h4 mat-dialog-title>{{'note.title' | translate}}</h4>
         <p [innerHtml]="'note.para1' | translate"></p>
         <div class="link" fxLayout="row" fxLayoutAlign="center center">
