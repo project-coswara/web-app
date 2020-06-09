@@ -78,7 +78,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       },
-      // defaultLanguage: 'en-US'
+      defaultLanguage: 'en-US'
     })
   ],
   providers: [
