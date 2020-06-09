@@ -1,7 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
-import { environment } from "../../environments/environment";
-import {ActivatedRoute} from "@angular/router";
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'cs-navbar',
@@ -9,11 +8,10 @@ import {ActivatedRoute} from "@angular/router";
   styleUrls: ['./navbar.component.less']
 })
 
-export class NavbarComponent implements OnInit{
+export class NavbarComponent {
   name = environment.title;
   @Input('tabs') tabs;
 
-  constructor() { }
-
-  ngOnInit() { }
+  constructor() {
+  }
 }

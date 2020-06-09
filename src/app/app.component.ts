@@ -1,10 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-
-import * as firebase from 'firebase/app';
+import {Component} from '@angular/core';
 import 'firebase/auth';
-
-import { firebaseConfig } from "../environments/environment";
-import {UserDataService} from "./user-data.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'cs-root',
@@ -12,8 +9,9 @@ import {UserDataService} from "./user-data.service";
   styles: []
 })
 
-export class AppComponent implements OnInit {
-  appLoader = true;
+export class AppComponent {
+  appLoader = false;
+  locale = 'en-US'
 
   tabsList = [{
     'id': 'home',
@@ -37,19 +35,11 @@ export class AppComponent implements OnInit {
     'url': 'media'
   },]
 
-  constructor(private userDataService: UserDataService) { }
-
-  ngOnInit() {
-    let appRoot = this;
-    this.appLoader = false;
-    firebase.initializeApp(firebaseConfig);
-    firebase.auth().onAuthStateChanged(function (user) {
-      appRoot.userDataService.sendUserData(user);
-      if (user) {
-
-      } else {
-
-      }
-    });
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, translateService: TranslateService) {
+    this.activatedRoute.queryParams.subscribe((queryParams) => {
+      this.locale = queryParams.locale;
+      console.log(this.locale)
+      translateService.use(this.locale);
+    })
   }
 }

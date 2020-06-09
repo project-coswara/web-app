@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  title: 'coswara',
+  title: 'app.title',
   version: 2.0
 };
 

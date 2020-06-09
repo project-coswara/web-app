@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  title: 'coswara',
+  title: 'app.title',
   version: 2.0
 };
 

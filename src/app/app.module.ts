@@ -29,9 +29,10 @@ import {MatInputModule} from "@angular/material/input";
 import {LBComponent} from './lb/lb.component';
 import {MatTableModule} from "@angular/material/table";
 import {MatDialogModule} from "@angular/material/dialog";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import {LanguageDialogComponent} from "./language-dialog";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -54,6 +55,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     NewsComponent,
     AnnotateComponent,
     LBComponent,
+    LanguageDialogComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -69,13 +71,14 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatInputModule,
     MatTableModule,
     MatDialogModule,
+    HttpClientModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       },
-      defaultLanguage: 'en-US'
+      // defaultLanguage: 'en-US'
     })
   ],
   providers: [
@@ -87,7 +90,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     FooterComponent
   ],
   bootstrap: [AppComponent],
-  entryComponents: []
+  entryComponents: [LanguageDialogComponent]
 })
 export class AppModule {
 }

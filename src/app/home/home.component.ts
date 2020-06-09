@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'cs-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.less']
 })
-export class HomeComponent implements OnInit {
 
-  constructor() { }
+export class HomeComponent {
+  locale = null
 
-  ngOnInit() {
+  constructor(activatedRoute: ActivatedRoute) {
+    activatedRoute.queryParams.subscribe((queryParams) => {
+      this.locale = queryParams.locale || this.locale
+    })
   }
-
 }

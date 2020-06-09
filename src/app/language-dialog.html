@@ -1,0 +1,5 @@
+<mat-dialog-content class="mat-typography">
+    <div fxLayout="row wrap" fxLayoutAlign="center center">
+        <div [mat-dialog-close]="lang.locale" class="lang button" *ngFor="let lang of languageList">{{'language.' + lang.name | translate}}</div>
+    </div>
+</mat-dialog-content>
