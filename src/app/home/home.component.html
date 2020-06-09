@@ -5,6 +5,6 @@
     </div>
     <div class="home-footer" fxLayout="row wrap" fxLayout.xs="column">
         <a class="button button-dark" href="https://record.coswara.iisc.ac.in/?locale={{locale}}">{{'home.button.record' | translate}}</a>
-        <a class="button" [routerLink]="'/about'">{{'home.button.read' | translate }}</a>
+        <a class="button" [routerLink]="'/about'" queryParamsHandling="merge">{{'home.button.read' | translate }}</a>
     </div>
 </div>

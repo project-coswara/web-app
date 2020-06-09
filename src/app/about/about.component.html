@@ -1,35 +1,15 @@
 <div class="component-container">
-    <h3 class="page-title">about the project</h3>
+    <h3 class="page-title">{{'title.about' | translate}}</h3>
     <div class="content">
-        <p class="no-indent">
-            The word <b>Coswara</b> is  an amalgamation of Co (from corona) and Swara (sound in sanskrit). The project is being pursued in three stages:
-        </p>
-        <h5 class="sub-title">Data Collection</h5>
-        <p>
-            We aim at creating a dataset composed of voice samples from healthy individuals, and those with COVID-19 infection. The data is collected using a web and mobile application. Voice samples collected include breathing sounds (fast and slow), cough sounds (deep and shallow), phonation of sustained vowels (/a/ as in made, /i/,/o/), and counting numbers at slow and fast pace.
-            Metadata information collected includes the participant's age, gender, location (country, state/ province), current health status (healthy/ exposed/ cured/ infected) and the presence of comorbidities (pre-existing medical conditions).
-        </p>
-        <p>
-            No personally identifiable information is collected, and the data collection respects the privacy of the contributors.
-            The data is also anonymized during storage itself. All the collected data will be available updated <a href="https://github.com/iiscleap/Coswara-Data">here</a> on a daily basis.
-        </p>
-        <h5 class="sub-title">Modeling</h5>
-        <p>
-            The collected data will be analysed using signal processing and machine learning techniques.
-            The goal is to build mathematical models aiding identification of ‘infection prints’ from voice samples. This stage is a work-in-progress while we create the dataset.
-        </p>
-        <p>
-            We also aim at releasing the collected dataset in a structured form openly via a Github platform.
-            This is to pool effort from the larger research community to contribute in making point-of-care diagnosis a reality soon.
-        </p>
-        <h5 class="sub-title">Diagnostic Tool</h5>
-        <p>
-            We aim to release the diagnosis tool as a web/mobile application. Similar to the dataset creation stage, the application requests for recording the voice samples, and preferably provides a score indicating the probability of COVID-19 infection.
-            The final deployment of the tool is subject to validation with clinical findings, and authorization/approval from competent authorities.
-        </p>
-        <p>
-            Given the highly simplistic and cost effective nature of this diagnosis approach, we hypothesize that even a partial success of the tool would enable a massive deployment as a first line of diagnosis for the pandemic.
-            The potential diagnostic tool will not replace chemical testing but merely supplement the existing testing methods.
-        </p>
+        <p class="no-indent" [innerHtml]="'about.para1' | translate"></p>
+        <h5 class="sub-title">{{'about.subtitle.data_collection' | translate}}</h5>
+        <p [innerHTML]="'about.data.para1' | translate"></p>
+        <p [innerHTML]="'about.data.para2' | translate"></p>
+        <h5 class="sub-title">{{'about.subtitle.modelling' | translate}}</h5>
+        <p [innerHTML]="'about.modelling.para1' | translate"></p>
+        <p [innerHTML]="'about.modelling.para2' | translate"></p>
+        <h5 class="sub-title">{{'about.subtitle.tool' | translate}}</h5>
+        <p [innerHTML]="'about.tool.para1' | translate"></p>
+        <p [innerHTML]="'about.tool.para2' | translate"></p>
     </div>
 </div>

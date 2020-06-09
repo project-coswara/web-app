@@ -3,10 +3,22 @@
 	"app.title": "coswara",
 	"home.button.read": "READ MORE",
 	"home.button.record": "PROCEED TO DATA RECORDING",
-	"home.content": "Project Coswara by <a href=\"https://www.iisc.ac.in\" target=\"_blank\">Indian Institute of Science (IISc) Bangalore</a> is an attempt to build a diagnostic tool for Covid-19 based on respiratory, cough and speech sounds.\n            The project is in the data collection stage now. It requires the participants to provide a recording of breathing sounds, cough sounds, sustained phonation of vowel sounds and a counting exercise which takes around 5-7 minutes of your time. No personally identifiable data is collected from the participants.",
+	"home.content": "Project Coswara by <a href=\"https://www.iisc.ac.in\" target=\"_blank\">Indian Institute of Science (IISc) Bangalore</a> is an attempt to build a diagnostic tool for Covid-19 based on respiratory, cough and speech sounds. The project is in the data collection stage now. It requires the participants to provide a recording of breathing sounds, cough sounds, sustained phonation of vowel sounds and a counting exercise which takes around 5-7 minutes of your time. No personally identifiable data is collected from the participants.",
 	"tabs.about": "About",
 	"tabs.faq": "FAQ",
 	"tabs.home": "Home",
 	"tabs.media": "Media",
-	"tabs.people": "People"
+	"tabs.people": "People",
+	"title.about": "about the project",
+	"about.para1": "The word <b>Coswara</b> is  an amalgamation of Co (from corona) and Swara (sound in sanskrit). The project is being pursued in three stages:",
+	"about.subtitle.data_collection": "Data Collection",
+	"about.subtitle.modelling": "Modelling",
+	"about.subtitle.tool": "Diagnostic Tool",
+	"about.data.para1": "We aim at creating a dataset composed of voice samples from healthy individuals, and those with COVID-19 infection. The data is collected using a web and mobile application. Voice samples collected include breathing sounds (fast and slow), cough sounds (deep and shallow), phonation of sustained vowels (/a/ as in made, /i/,/o/), and counting numbers at slow and fast pace. Metadata information collected includes the participant's age, gender, location (country, state/ province), current health status (healthy/ exposed/ cured/ infected) and the presence of comorbidities (pre-existing medical conditions).",
+	"about.data.para2": "No personally identifiable information is collected, and the data collection respects the privacy of the contributors. The data is also anonymized during storage itself. All the collected data will be available updated <a href=\"https://github.com/iiscleap/Coswara-Data\">here</a> on a daily basis.",
+	"about.modelling.para1": "The collected data will be analysed using signal processing and machine learning techniques. The goal is to build mathematical models aiding identification of ‘infection prints’ from voice samples. This stage is a work-in-progress while we create the dataset.",
+	"about.modelling.para2": "We also aim at releasing the collected dataset in a structured form openly via a Github platform. This is to pool effort from the larger research community to contribute in making point-of-care diagnosis a reality soon.",
+	"about.tool.para1": "We aim to release the diagnosis tool as a web/mobile application. Similar to the dataset creation stage, the application requests for recording the voice samples, and preferably provides a score indicating the probability of COVID-19 infection. The final deployment of the tool is subject to validation with clinical findings, and authorization/approval from competent authorities.",
+	"about.tool.para2": "Given the highly simplistic and cost effective nature of this diagnosis approach, we hypothesize that even a partial success of the tool would enable a massive deployment as a first line of diagnosis for the pandemic. The potential diagnostic tool will not replace chemical testing but merely supplement the existing testing methods."
+
 }
