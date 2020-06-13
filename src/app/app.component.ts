@@ -42,7 +42,7 @@ export class AppComponent {
       this.locale = queryParams.locale || this.locale;
       translateService.use(this.locale);
       this.infoDialog.closeAll();
-      if (!queryParams.locale || window.innerWidth < 1024) {
+      if (false && !queryParams.locale) {
         this.infoDialog.open(LanguageDialogComponent).afterClosed().subscribe((locale) => {
           if (locale) {
             this.router.navigate([], {
