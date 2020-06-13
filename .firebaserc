@@ -6,7 +6,7 @@
     "project-coswara": {
       "hosting": {
         "base": [
-          "project-coswara-dev"
+          "project-coswara"
         ],
         "collect": [
           "project-coswara-collect"
