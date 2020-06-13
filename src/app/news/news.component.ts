@@ -9,6 +9,26 @@ export class NewsComponent implements OnInit {
   newsContent = [{
     lang: 'English',
     items: [{
+      paper: 'The Dialogue',
+      title: 'Video interview',
+      link: 'https://www.youtube.com/watch?v=GnBWZIt41w4&feature=emb_logo'
+    }, {
+      paper: 'New Indian Express',
+      title: 'Now, a sound test to hear a positive pitch',
+      link: 'https://www.newindianexpress.com/states/karnataka/2020/may/22/now-a-sound-test-to-hear-a-positive-pitch-2146440.html'
+    }, {
+      paper: 'Hindustan Times',
+      title: 'IISc experts to collect sound samples of Covid patients’ cough, breath',
+      link: 'https://www.hindustantimes.com/mumbai-news/iisc-experts-to-collect-sound-samples-of-covid-patients-cough-breath/story-tNqZwkX15dnfEgs9fVRPJI.html'
+    }, {
+      paper: 'New Indian Express',
+      title: 'Can cough sound help COVID-19 diagnosis? Yes, says IISc, Bengaluru scientists',
+      link: 'https://www.newindianexpress.com/nation/2020/may/25/can-cough-sound-help-covid-19-diagnosis-yes-says-iisc-bengaluru-scientists-2147589.html'
+    }, {
+      paper: 'Bangalore Mirror',
+      title: 'IISc’s sound-of-Covid study gets ICMR boost',
+      link: 'https://bangaloremirror.indiatimes.com/bangalore/others/iiscs-sound-of-covid-study-gets-icmr-boost/articleshow/76271951.cms'
+    }, {
       paper: 'The Better India',
       title: 'Here’s your chance to help the scientists. All you need is a smartphone, an inbuilt microphone and 5 minutes of your time! #COVID19',
       link: 'https://www.thebetterindia.com/225136/bengaluru-iisc-innovation-coronavirus-test-coswara-covid19-india-tan42/'
