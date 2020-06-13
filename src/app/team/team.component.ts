@@ -9,77 +9,70 @@ export class TeamComponent implements OnInit {
   mentorsList = [{
     'id': 'sriram',
     'name': 'Dr. Sriram Ganapathy',
-    'designation': 'Assistant Professor',
-    'institution': 'IISc Bangalore',
-    'areas': 'Speech Recognition, Deep Learning, Neuroscience',
+    'designation': 'asst_prof',
+    'institution': 'iisc',
     'image': 'sriram.jpg'
   }, {
     'id': 'pkg',
     'name': 'Dr. Prasanta Kumar Ghosh',
-    'designation': 'Associate Professor',
-    'institution': 'IISc Bangalore',
-    'areas': 'Speech Production, Articulation, Speech Disorders',
+    'designation': 'assoc_prof',
+    'institution': 'iisc',
     'image': 'pkg.jpg'
   }]
 
   peopleList = [{
-    'id': 'anandmoghan',
+    'id': 'anand',
     'name': 'Anand Mohan',
-    'designation': 'MTech (Artificial Intelligence)',
-    'institution': 'IISc Bangalore',
-    'areas': 'Speech Recognition',
+    'designation': 'mtech_ai',
+    'institution': 'iisc',
     'image': 'anand.png'
   }, {
     'id': 'anuroop',
     'name': 'Anuroop Iyengar',
-    'designation': 'CEO',
-    'institution': 'Cogknit Semantics',
+    'designation': 'ceo',
+    'institution': 'cogknit',
     'image': 'anuroop.jpg'
   }, {
     'id': 'neeraj',
     'name': 'Dr. Neeraj Sharma',
-    'designation': 'Postdoctoral Fellow',
-    'institution': 'CMU, USA',
-    'areas': 'Auditory Neuroscience, Signal Processing',
+    'designation': 'post_doc',
+    'institution': 'cmu',
     'image': 'neeraj.jpeg'
   }, {
     'id': 'prashant',
     'name': 'Prashant Krishnan',
-    'designation': 'Research Assistant',
-    'institution': 'IISc Bangalore',
-    'areas': 'Speaker Recognition',
+    'designation': 'ra',
+    'institution': 'iisc',
     'image': 'prashant.jpeg'
   }, {
     'id': 'nirmala',
     'name': 'Dr. R. Nirmala',
-    'designation': 'Medical Officer',
-    'institution': 'IISc Bangalore',
+    'designation': 'mo',
+    'institution': 'iisc',
     'image': 'nirmala.jpg'
   }, {
     'id': 'raksheet',
     'name': 'Raksheet Bhat',
-    'designation': 'Software Engineer',
-    'institution': 'upGrad',
+    'designation': 'sde',
+    'institution': 'upgrad',
     'image': 'raksheet.jpg'
   }, {
     'id': 'shahbaz',
     'name': 'Shahbaz Sultan',
-    'designation': 'Developer',
-    'institution': 'Cogknit Semantics',
+    'designation': 'sde',
+    'institution': 'cogknit',
     'image': 'shahbaz.jpg'
   }, {
     'id': 'shreyas',
     'name': 'Shreyas Ramoji',
-    'designation': 'PhD Scholar',
-    'institution': 'IISc Bangalore',
-    'areas': 'Speaker Recognition, Machine Learning',
+    'designation': 'phd',
+    'institution': 'iisc',
     'image': 'shreyas.jpg'
   }, {
     'id': 'srikanth',
     'name': 'Srikanth Raj Chetupalli',
-    'designation': 'Postdoctoral Fellow',
-    'institution': 'IISc Bangalore',
-    'areas': 'Signal Processing, Speech Recognition',
+    'designation': 'post_doc',
+    'institution': 'iisc',
     'image': 'srikanth.png'
   }]
 

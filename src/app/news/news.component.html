@@ -1,7 +1,7 @@
 <div class="component-container">
-    <h3 class="page-title">in the news</h3>
+    <h3 class="page-title">{{'media.title' | translate}}</h3>
     <div class="content">
-        We appreciate the media’s help in promoting our research and positively contributing to the data collection.
+        <span [innerHtml]="'media.content' | translate"></span>
         <div class="news-section" *ngFor="let nC of newsContent">
             <h5>{{nC.lang}}</h5>
             <ul>

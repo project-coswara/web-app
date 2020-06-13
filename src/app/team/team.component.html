@@ -1,14 +1,14 @@
 <div class="component-container">
-    <h3 class="page-title">meet the team</h3>
+    <h3 class="page-title">{{'team.title' | translate}}</h3>
     <div class="mentors">
         <div class="people-set" fxLayout="row wrap" fxLayoutAlign="center start">
             <div class="people" *ngFor="let mentor of mentorsList" fxLayout="column" fxLayoutAlign="center center">
                 <div *ngIf="!mentor.image" class="image" [ngStyle]="{'background-image': 'url(\'../../../assets/team/default.jpeg\')'}"></div>
                 <div *ngIf="mentor.image" class="image" [ngStyle]="{'background-image': 'url(\'../../../assets/team/' + mentor.image + '\')'}"></div>
-                <h5 class="name">{{mentor.name}}</h5>
-                <div *ngIf="mentor.areas" class="areas">{{mentor.areas}}</div>
-                <div class="designation">{{mentor.designation}}</div>
-                <div class="institution">{{mentor.institution}}</div>
+                <h5 class="name">{{'name.' + mentor.id | translate}}</h5>
+                <div class="areas">{{'team.areas.' + mentor.id | translate}}</div>
+                <div class="designation">{{'team.title.' + mentor.designation | translate}}</div>
+                <div class="institution">{{'place.' + mentor.institution | translate}}</div>
             </div>
         </div>
     </div>
@@ -16,10 +16,10 @@
         <div class="people" *ngFor="let people of peopleList" fxLayout="column" fxLayoutAlign="center center" fxFlex="33" fxFlex.xs="100">
             <div *ngIf="!people.image" class="image" [ngStyle]="{'background-image': 'url(\'../../../assets/team/default.jpeg\')'}"></div>
             <div *ngIf="people.image" class="image" [ngStyle]="{'background-image': 'url(\'../../../assets/team/' + people.image + '\')'}"></div>
-            <h5 class="name">{{people.name}}</h5>
-            <div *ngIf="people.areas" class="areas">{{people.areas}}</div>
-            <div class="designation">{{people.designation}}</div>
-            <div class="institution">{{people.institution}}</div>
+            <h5 class="name">{{'name.' + people.id | translate}}</h5>
+            <div class="areas">{{'team.areas.' + people.id | translate}}</div>
+            <div class="designation">{{'team.title.' + people.designation | translate}}</div>
+            <div class="institution">{{'place.' + people.institution | translate}}</div>
         </div>
     </div>
 </div>
