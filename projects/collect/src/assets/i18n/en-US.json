@@ -60,6 +60,7 @@
 	"forms.option.ht": "Hypertension",
 	"forms.option.ihd": "Ischemic Heart Disease",
 	"forms.option.mp" : "Muscle Pain",
+	"forms.option.ftg" : "Fatigue",
 	"forms.option.diabetes": "Diabetes",
 	"record.message.info": "Please make sure you are in a quiet environment and keep your device around 20 cm from your face",
 	"record.title.breathing-shallow": "Breathing(shallow)",
