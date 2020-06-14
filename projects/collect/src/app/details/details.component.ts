@@ -72,8 +72,8 @@ export class DetailsComponent implements OnInit {
       ihd: this.formControls.ihd,
       diabetes: this.formControls.diabetes,
       bd: this.formControls.bd,
-      st: this.formControls.st,
       mp: this.formControls.mp,
+      st: this.formControls.st,
     })
   };
   optionList = {
