@@ -23,5 +23,5 @@ export const general_option_list = {
 
 export const health_option_list = {
   current_status: ['positive_mild', 'positive_moderate', 'recovered_full', 'resp_illness_not_identified', 'no_resp_illness_exposed', 'healthy'],
-  conditions: ['cold', 'cough', 'fever', 'bd', 'st', 'pneumonia', 'loss_of_smell', 'smoker', 'asthma', 'cld', 'ht', 'ihd', 'diabetes'],
+  conditions: ['cold', 'cough', 'fever', 'bd', 'mp', 'st', 'pneumonia', 'loss_of_smell', 'smoker', 'asthma', 'cld', 'ht', 'ihd', 'diabetes'],
 };

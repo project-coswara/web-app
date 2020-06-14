@@ -44,6 +44,7 @@ export class DetailsComponent implements OnInit {
     diabetes: new FormControl(false),
     bd: new FormControl(false),
     st: new FormControl(false),
+    mp: new FormControl(false),
     none: new FormControl(false)
   };
   formGroups = {
@@ -72,6 +73,7 @@ export class DetailsComponent implements OnInit {
       diabetes: this.formControls.diabetes,
       bd: this.formControls.bd,
       st: this.formControls.st,
+      mp: this.formControls.mp,
     })
   };
   optionList = {
