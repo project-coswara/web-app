@@ -1,9 +1,13 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {TranslateService} from "@ngx-translate/core";
 import {MatDialog} from "@angular/material/dialog";
 
 import {LanguageDialogComponent} from "./language-dialog";
+import {firebaseConfig} from "../environments/environment";
+
+import * as firebase from 'firebase/app';
+import {UserDataService} from "./user-data.service";
 
 @Component({
   selector: 'cs-root',
@@ -11,7 +15,7 @@ import {LanguageDialogComponent} from "./language-dialog";
   styles: []
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit {
   appLoader = false;
   locale = 'en-US'
 
@@ -37,7 +41,7 @@ export class AppComponent {
     'url': 'media'
   },]
 
-  constructor(public infoDialog: MatDialog, private router: Router, private activatedRoute: ActivatedRoute, translateService: TranslateService) {
+  constructor(public infoDialog: MatDialog, private router: Router, private activatedRoute: ActivatedRoute, translateService: TranslateService, private userDataService: UserDataService) {
     this.activatedRoute.queryParams.subscribe((queryParams) => {
       this.locale = queryParams.locale || this.locale;
       translateService.use(this.locale);
@@ -56,6 +60,13 @@ export class AppComponent {
       } else {
         this.infoDialog.closeAll();
       }
+    })
+  }
+
+  ngOnInit() {
+    firebase.initializeApp(firebaseConfig);
+    firebase.auth().onAuthStateChanged( user => {
+      this.userDataService.sendUserData(user);
     })
   }
 }
