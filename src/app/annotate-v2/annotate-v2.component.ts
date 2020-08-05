@@ -123,6 +123,12 @@ loaderColor: 'purple',
 cursorColor: 'navy',
        height:256,
 maxCanvasWidth: 8000,
+xhr: {
+  cache: "default",
+  mode: "cors",
+  method: "GET",
+  credentials: "include",
+}
 
   });
   
@@ -249,7 +255,8 @@ stageParams["end_of_region" +l ] =   end_of_region[i];
       .getDownloadURL().then((url) => {
       this.showSkipOption = false;
       this.timeOut = false;
-      this.waveSurfer.load(url)
+      let audio = new Audio(url)
+      this.waveSurfer.load(audio)
 
       // this.recordingAudio = new Audio()
       // this.recordingAudio.src = url;
