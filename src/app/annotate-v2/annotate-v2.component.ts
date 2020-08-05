@@ -308,7 +308,7 @@ stageParams["end_of_region" +l ] =   end_of_region[i];
   setupAnnotation(callback) {
     const annotateRoot = this;
     firebase.firestore().collection('USER_APPDATA')
-      .where('cS', '==', 'done')
+      .where('cS', '==', 'verified')
       .orderBy('p')
       // .where('dS', '<=', '2020-05-06')
       .limit(1).get().then((snapshot) => {
