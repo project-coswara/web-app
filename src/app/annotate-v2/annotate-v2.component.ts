@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/storage';
+// declare function require(name:string);
+// const WaveSurfer = require('wavesurfer.js/dist/wavesurfer');
 import WaveSurfer from 'wavesurfer.js'
-
-// import WaveSurfer from 'node_modules/wavesurfer.js/dist/wavesurfer.min.js'
-
 
 
 import {UserDataService} from "../user-data.service";
@@ -19,7 +18,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
   styleUrls: ['./annotate-v2.component.less']
 })
 
-export class AnnotateV2Component implements OnInit {
+export class AnnotateV2Component implements OnInit, AfterViewInit {
   userData = null;
   isEnoughPermissions = false;
   annotateLoader = true;
@@ -34,17 +33,9 @@ export class AnnotateV2Component implements OnInit {
   timeOut = false;
   timeOutObject = null;
   showSkipOption = false;
-  waveSurfer = WaveSurfer.create({
-    container: '#waves',
-    waveColor: '#FF00FF',
-    progressColor: 'purple',
-  loaderColor: 'purple',
-  cursorColor: 'navy',
-     height:256,
-  maxCanvasWidth: 8000  
-  });
-  timeline = Object.create(WaveSurfer.Timeline)
-  spectogram = Object.create(WaveSurfer.Spectrogram)
+  waveSurfer = null
+  timeline = WaveSurfer.Timeline
+  spectogram = null
   regions_list = null
 
   titleDict = {
@@ -120,8 +111,23 @@ export class AnnotateV2Component implements OnInit {
       }
     });
   }
+ngOnInit() {
 
-  ngOnInit() {
+}
+  ngAfterViewInit() {
+    this.waveSurfer = WaveSurfer.create({
+      container: '#waves',
+      waveColor: '#FF00FF',
+      progressColor: 'purple',
+loaderColor: 'purple',
+cursorColor: 'navy',
+       height:256,
+maxCanvasWidth: 8000,
+
+  });
+  
+  this.timeline = Object.create(WaveSurfer.Timeline);
+  this.spectogram = Object.create(WaveSurfer.spectrogram);
   }
 
   getAnnotatorData(callback) {
@@ -230,16 +236,6 @@ stageParams["end_of_region" +l ] =   end_of_region[i];
       this.recordingAudioProgress = this.recordingAudio.duration;
     }
     setTimeout(this.updateAudioProgress, 50)
-  }
-  
-  wavesurferSpectogram(){
-
-    this.waveSurfer.on('region-click', function (region, ee) {
-      ee.stopPropagation();
-      // Play on click, loop on shift click
-      ee.shiftKey ? region.playLoop() : region.play();				
-      });
-
   }
 
   populateData(participantId, currentStage, dateString) {

@@ -1,8 +1,8 @@
+
 <div class="component-container">
     <div id = "waves"></div>
-
-<div id = "spectrogram"></div>
-<div id = "wavetimeline"></div>
+    <div id = "spectrogram"></div>
+    <div id = "wavetimeline"></div>
     <div *ngIf="annotateLoader" fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
         <mat-progress-spinner [diameter]="50" mode="indeterminate"></mat-progress-spinner>
     </div>
@@ -35,63 +35,7 @@
                     <div *ngIf="annotateFormGroup.valid && (playedOnce || timeOut)" class="button" (click)="nextRecording()">NEXT</div>
                 </div>
                 <div class="forms" fxLayout="row wrap" fxLayoutAlign="start start">
-                    <div class="tab-group" fxLayout="column" fxLayoutAlign="start start" fxFlex="100">
-                        <h6 class="tab-sub-title" fxFlex.xs="100">Is the volume okay?</h6>
-                        <div fxFlex="5" fxHide.xs></div>
-                        <mat-radio-group class="radio-group lang"
-                                         fxLayout="row wrap"
-                                         fxLayoutAlign="start center"
-                                         fxLayoutGap="10px"
-                                         fxFlex="100"
-                                         [formControl]="formControls.volumeOkay">
-                            <mat-radio-button class="tab-check-box" value="y" fxFlex="10" fxFlex.xs="25">Yes</mat-radio-button>
-                            <mat-radio-button class="tab-check-box" value="n" fxFlex="10" fxFlex.xs="25">No</mat-radio-button>
-                        </mat-radio-group>
-                    </div>
-                    <div class="tab-group" fxLayout="column" fxLayoutAlign="start start" fxFlex="100">
-                        <h6 class="tab-sub-title" fxFlex.xs="100">Is the audio continuous (not breaking in between)?</h6>
-                        <div fxFlex="5" fxHide.xs></div>
-                        <mat-radio-group class="radio-group lang"
-                                         fxLayout="row wrap"
-                                         fxLayoutAlign="start center"
-                                         fxLayoutGap="10px"
-                                         fxFlex="100"
-                                         [formControl]="formControls.continuousAudio">
-                            <mat-radio-button class="tab-check-box" value="y" fxFlex="10" fxFlex.xs="25">Yes</mat-radio-button>
-                            <mat-radio-button class="tab-check-box" value="n" fxFlex="10" fxFlex.xs="25">No</mat-radio-button>
-                        </mat-radio-group>
-                    </div>
-                    <div class="tab-group" fxLayout="column" fxLayoutAlign="start start" fxFlex="100">
-                        <h6 class="tab-sub-title" fxFlex.xs="100">How is the quality of audio?</h6>
-                        <div fxFlex="5" fxHide.xs></div>
-                        <mat-radio-group class="radio-group lang"
-                                         fxLayout="row wrap"
-                                         fxLayoutAlign="start center"
-                                         fxFlex="100"
-                                         [formControl]="formControls.audioQuality">
-                            <mat-radio-button class="tab-check-box" value="clean_audio" fxFlex="30" fxFlex.xs="100">
-                                Clean Audio
-                            </mat-radio-button>
-                            <mat-radio-button class="tab-check-box" value="noisy_audio" fxFlex="30" fxFlex.xs="100">
-                                Noisy Audio
-                            </mat-radio-button>
-                            <mat-radio-button class="tab-check-box" value="bad_audio" fxFlex="30" fxFlex.xs="100">
-                                Bad Audio
-                            </mat-radio-button>
-                        </mat-radio-group>
-                    </div>
-                    <div class="tab-group" fxLayout="column" fxLayoutAlign="start start" fxFlex="100">
-                        <h6 class="tab-sub-title" fxFlex.xs="100">Which category does the audio belong to?</h6>
-                        <div fxFlex="5" fxHide.xs></div>
-                        <mat-radio-group class="radio-group lang"
-                                         fxLayout="row wrap"
-                                         fxLayoutAlign="start center"
-                                         fxFlex="100"
-                                         [formControl]="formControls.audioCategory">
-                            <mat-radio-button class="tab-check-box" [value]="rS" fxFlex="30" fxFlex.xs="100"
-                                              *ngFor="let rS of recordStages">{{titleDict[rS]}}</mat-radio-button>
-                        </mat-radio-group>
-                    </div>
+
                     <div class="tab-group" fxLayout="column" fxLayoutAlign="start start" fxFlex="100">
                         <mat-form-field class="full-width" appearance="outline">
                             <mat-label>Comments</mat-label>
