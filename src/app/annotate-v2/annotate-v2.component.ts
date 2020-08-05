@@ -115,6 +115,7 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
       cursorColor: 'navy',
       height: 256,
       maxCanvasWidth: 8000,
+      backend: 'MediaElement',
       xhr: {
         cache: "default",
         mode: "no-cors",
@@ -176,6 +177,7 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
       if (this.formControls.extraComments.value) {
         stageParams['comments'] = this.formControls.extraComments.value
       }
+      stageParams['annotator_name'] = this.annotatorInfo['n']
       const nextStageIndex = this.recordStages.indexOf(this.currentStage) + 1;
       const nextStage = nextStageIndex > this.recordStages.length - 1 ? 'verified' : this.recordStages[nextStageIndex]
       const batch = firebase.firestore().batch();
@@ -198,7 +200,7 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
       Promise.all([
         batch.commit(),
         firebase.storage().ref('ANNOTATE_DATA').child(this.dateString).child(this.participantId)
-          .child(`${this.currentStage}.json`).put(jsonBlob)
+          .child(`${this.currentStage}_v2.json`).put(jsonBlob)
       ]).then(() => {
         if (nextStage == 'verified') {
           annotateRoot.annotateLoader = true;
@@ -303,7 +305,7 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
   setupAnnotation(callback) {
     const annotateRoot = this;
     firebase.firestore().collection('USER_APPDATA')
-      .where('cS', '==', 'done')
+      .where('cS', '==', 'verified')
       .orderBy('p')
       // .where('dS', '<=', '2020-05-06')
       .limit(1).get().then((snapshot) => {
