@@ -1,16 +1,15 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/storage';
-// declare function require(name:string);
-// const WaveSurfer = require('wavesurfer.js/dist/wavesurfer');
-import WaveSurfer from 'wavesurfer.js'
-
+import * as WaveSurfer from 'wavesurfer.js';
+import * as WaveSurferTimeline from 'wavesurfer.js/dist/plugin/wavesurfer.timeline.js';
+import * as WaveSurferSpectrogram from 'wavesurfer.js/dist/plugin/wavesurfer.spectrogram.js';
 
 import {UserDataService} from "../user-data.service";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'cs-annotate-v2',
@@ -35,7 +34,7 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
   showSkipOption = false;
   waveSurfer = null
   timeline = null
-  spectogram = null
+  spectrogram = null
   regions_list = null
 
   titleDict = {
@@ -52,17 +51,9 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
 
   recordStages = Object.keys(this.titleDict);
   formControls = {
-    // volumeOkay: new FormControl('y', [Validators.required]),
-    // continuousAudio: new FormControl('y', [Validators.required]),
-    // audioQuality: new FormControl('clean_audio', [Validators.required]),
-    // audioCategory: new FormControl(this.recordStages[0], [Validators.required]),
     extraComments: new FormControl(null),
   }
   annotateFormGroup = new FormGroup({
-    // volumeOkay: this.formControls.volumeOkay,
-    // continuousAudio: this.formControls.continuousAudio,
-    // audioQuality: this.formControls.audioQuality,
-    // audioCategory: this.formControls.audioCategory,
     extraComments: this.formControls.extraComments
   })
   annotatorRef = null;
@@ -88,7 +79,7 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
               this.annotatorInfo['pURL'] = this.userData.photoURL;
               this.annotatorRef.set(this.annotatorInfo).then();
             }
-            if(currentDoc) {
+            if (currentDoc) {
               this.participantId = currentDoc.id;
               this.currentStage = currentDoc.data()['cS'];
               this.dateString = currentDoc.data()['dS'];
@@ -101,40 +92,43 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
             }
           })
         }
-      }
-      else {
+      } else {
         this.route.url.subscribe((url) => {
           if (url) {
-            this.router.navigate(['login'], { queryParams: { redirect: url } }).then()
+            this.router.navigate(['login'], {queryParams: {redirect: url}}).then()
           }
         })
       }
     });
   }
-ngOnInit() {
 
-}
+  ngOnInit() {
+
+  }
+
   ngAfterViewInit() {
     this.waveSurfer = WaveSurfer.create({
       container: '#waves',
       waveColor: '#FF00FF',
       progressColor: 'purple',
-loaderColor: 'purple',
-cursorColor: 'navy',
-backend: 'MediaElement',
-       height:256,
-maxCanvasWidth: 8000,
-xhr: {
-  cache: "default",
-  mode: "cors",
-  method: "GET",
-  credentials: "include",
-}
+      loaderColor: 'purple',
+      cursorColor: 'navy',
+      height: 256,
+      maxCanvasWidth: 8000,
+      xhr: {
+        cache: "default",
+        mode: "no-cors",
+        method: "GET",
+        credentials: "include",
+        headers: [
+          { key: "cache-control", value: "no-cache" },
+          { key: "pragma", value: "no-cache" },
+        ]
+      }
+    });
 
-  });
-  
-  this.timeline = Object.create(WaveSurfer.Timeline);
-  this.spectogram = Object.create(WaveSurfer.spectrogram);
+    this.timeline = Object.create(WaveSurferTimeline);
+    this.spectrogram = Object.create(WaveSurferSpectrogram);
   }
 
   getAnnotatorData(callback) {
@@ -159,64 +153,52 @@ xhr: {
     let region_timings = {};
     const regions_ids_array = Object.keys(this.regions_list);
 
-// Renaming regions and stroing it in a separate array.
-for(let i =0; i<regions_ids_array.length; i++)
-{
-let l=i+1;
- id_names_array[i] = "Region"+l; //new names for ID's for record purpose. 
-}
+    // Renaming regions and storing it in a separate array.
+    for (let i = 0; i < regions_ids_array.length; i++) {
+      let l = i + 1;
+      id_names_array[i] = "Region" + l; //new names for ID's for record purpose.
+    }
 
 
-for(let i=0;i<regions_ids_array.length; i++)
-{
-end_of_region[i] = Object.values(this.regions_list)[i]["end"];
-start_of_region[i] = Object.values(this.regions_list)[i]["start"];
+    for (let i = 0; i < regions_ids_array.length; i++) {
+      end_of_region[i] = Object.values(this.regions_list)[i]["end"];
+      start_of_region[i] = Object.values(this.regions_list)[i]["start"];
 
-}
+    }
 
     if (this.annotatorRef) {
-      const stageParams = {
-
+      const stageParams = {}
+      for (let i = 0; i < regions_ids_array.length; i++) {
+        let l = i + 1;
+        stageParams["start_of_region" + l] = start_of_region[i];
+        stageParams["end_of_region" + l] = end_of_region[i];
       }
-      for (let i=0; i<regions_ids_array.length;i++)
-{
-let l=i+1;
-stageParams["start_of_region" +l] =   start_of_region[i];
-stageParams["end_of_region" +l ] =   end_of_region[i];
-}
-      // const stageParams = {
-      //   'vol': this.formControls.volumeOkay.value,
-      //   'cont': this.formControls.continuousAudio.value,
-      //   'quality': this.formControls.audioQuality.value,
-      //   'stage': this.formControls.audioCategory.value
-      // }
       if (this.formControls.extraComments.value) {
         stageParams['comments'] = this.formControls.extraComments.value
       }
-      stageParams['Annotator_Name'] = this.annotatorInfo['n']
       const nextStageIndex = this.recordStages.indexOf(this.currentStage) + 1;
-      const nextStage = nextStageIndex > this.recordStages .length - 1 ? 'verified' : this.recordStages[nextStageIndex]
+      const nextStage = nextStageIndex > this.recordStages.length - 1 ? 'verified' : this.recordStages[nextStageIndex]
       const batch = firebase.firestore().batch();
       batch.update(
         this.annotatorRef.collection('DATA').doc(this.participantId),
-        { 'cS': nextStage, 'fA': nextStage == 'verified' }
+        {'cS': nextStage, 'fA': nextStage == 'verified'}
       )
       if (nextStage == 'verified') {
         this.annotatorInfo.completed += 1
         batch.update(
           this.annotatorRef,
-          { 'completed': this.annotatorInfo.completed }
+          {'completed': this.annotatorInfo.completed}
         )
         batch.update(
           firebase.firestore().collection('USER_APPDATA').doc(this.participantId),
-          { 'cS': 'verified_v2'}
+          {'cS': 'verified_v2'}
         )
       }
       const jsonBlob = new Blob([JSON.stringify(stageParams, null, 4)], {type: "application/json"})
       Promise.all([
         batch.commit(),
         firebase.storage().ref('ANNOTATE_DATA').child(this.dateString).child(this.participantId)
-          .child(`${this.currentStage}_v2.json`).put(jsonBlob)
+          .child(`${this.currentStage}.json`).put(jsonBlob)
       ]).then(() => {
         if (nextStage == 'verified') {
           annotateRoot.annotateLoader = true;
@@ -256,32 +238,34 @@ stageParams["end_of_region" +l ] =   end_of_region[i];
       .getDownloadURL().then((url) => {
       this.showSkipOption = false;
       this.timeOut = false;
-      console.log("AUDIO LOAD")
-      console.log(url)
-      let audio = new Audio(url)
-      this.waveSurfer.load(audio)
+      this.waveSurfer.load(url)
 
       // this.recordingAudio = new Audio()
       // this.recordingAudio.src = url;
       this.playedOnce = 0;
-      this.waveSurfer.on('ready', function () {
+      this.waveSurfer.on('ready', () => {
         if (this.waveSurfer.getDuration() == Infinity) {
           this.skipToNextUser('zero_duration')
-        }
-        else if (this.waveSurfer.getDuration > 120) {
+        } else if (this.waveSurfer.getDuration > 120) {
           this.showSkipOption = true;
         }
-        this.timeline.init({ wavesurfer: this.waveSurfer, container: '#wavetimeline'});
+        this.timeline.init({wavesurfer: this.waveSurfer, container: '#wavetimeline'});
         //var spectrogramColorMap = colormap({ colormap: magma, nshades: 256, format: 'rgb',alpha: 1});
-        this.spectrogram.init({ wavesurfer: this.waveSurfer,container: "#spectrogram",fftSamples:512,label: true, windowFunc: 'bartlett'});
-        this.waveSurfer.enableDragSelection({});							
-                    
-        this.regions_list =  this.waveSurfer.regions.list;
+        this.spectrogram.init({
+          wavesurfer: this.waveSurfer,
+          container: "#spectrogram",
+          fftSamples: 512,
+          label: true,
+          windowFunc: 'bartlett'
+        });
+        this.waveSurfer.enableDragSelection({});
+
+        this.regions_list = this.waveSurfer.regions.list;
         //regions_list is an object...!!
-        
+
       });
       // this.recordingAudio.addEventListener("loadeddata", () => {
-        // this.recordingAudioState = 0;
+      // this.recordingAudioState = 0;
       // });
       // this.recordingAudio.addEventListener("loadedmetadata", () => {
       //   if (this.recordingAudio.duration == Infinity) {
@@ -295,8 +279,8 @@ stageParams["end_of_region" +l ] =   end_of_region[i];
 
       });
       // this.recordingAudio.addEventListener("ended", () => {
-        // this.recordingAudioState = 1;
-        // this.playedOnce += 1;
+      // this.recordingAudioState = 1;
+      // this.playedOnce += 1;
       // });
       this.recordingAudio.load()
       this.annotatedStageLoader = false;
@@ -319,32 +303,32 @@ stageParams["end_of_region" +l ] =   end_of_region[i];
   setupAnnotation(callback) {
     const annotateRoot = this;
     firebase.firestore().collection('USER_APPDATA')
-      .where('cS', '==', 'verified')
+      .where('cS', '==', 'done')
       .orderBy('p')
       // .where('dS', '<=', '2020-05-06')
       .limit(1).get().then((snapshot) => {
-        const userAppDataDoc = snapshot.docs[0]
-        // console.log(userAppDataDoc.id, userAppDataDoc.data(), userAppDataDoc.ref)
-        Promise.all([
-          firebase.firestore().runTransaction((transaction) => {
-            return transaction.get(userAppDataDoc.ref).then(() => {
-              transaction.update(userAppDataDoc.ref, {'cS': 'verification_in_process', 'aU': annotateRoot.userData.uid})
-            })
-          }),
-          firebase.firestore().collection('ANNOTATE_APPDATA')
-            .doc(this.userData.uid).collection('DATA')
-            .doc(userAppDataDoc.id).set({
-            'cS': annotateRoot.recordStages[0],
-            'dS': userAppDataDoc.data()['dS'],
-            'fA': false
+      const userAppDataDoc = snapshot.docs[0]
+      // console.log(userAppDataDoc.id, userAppDataDoc.data(), userAppDataDoc.ref)
+      Promise.all([
+        firebase.firestore().runTransaction((transaction) => {
+          return transaction.get(userAppDataDoc.ref).then(() => {
+            transaction.update(userAppDataDoc.ref, {'cS': 'verification_in_process', 'aU': annotateRoot.userData.uid})
           })
-        ]).then(() => {
-          annotateRoot.participantId = userAppDataDoc.id;
-          annotateRoot.currentStage = annotateRoot.recordStages[0];
-          annotateRoot.dateString = userAppDataDoc.data()['dS'];
-          annotateRoot.populateData(annotateRoot.participantId, annotateRoot.currentStage, annotateRoot.dateString);
-          callback(true)
-        });
+        }),
+        firebase.firestore().collection('ANNOTATE_APPDATA')
+          .doc(this.userData.uid).collection('DATA')
+          .doc(userAppDataDoc.id).set({
+          'cS': annotateRoot.recordStages[0],
+          'dS': userAppDataDoc.data()['dS'],
+          'fA': false
+        })
+      ]).then(() => {
+        annotateRoot.participantId = userAppDataDoc.id;
+        annotateRoot.currentStage = annotateRoot.recordStages[0];
+        annotateRoot.dateString = userAppDataDoc.data()['dS'];
+        annotateRoot.populateData(annotateRoot.participantId, annotateRoot.currentStage, annotateRoot.dateString);
+        callback(true)
+      });
     })
   }
 
@@ -355,7 +339,7 @@ stageParams["end_of_region" +l ] =   end_of_region[i];
     batch.update(
       this.db.collection('ANNOTATE_APPDATA').doc(this.userData.uid)
         .collection('DATA').doc(this.participantId),
-      { fA: true, comment: comment}
+      {fA: true, comment: comment}
     )
     batch.set(
       this.db.collection('ANNOTATE_ERRORS').doc(this.participantId),
@@ -377,8 +361,8 @@ stageParams["end_of_region" +l ] =   end_of_region[i];
     this.waveSurfer.on('region-click', function (region, ee) {
       ee.stopPropagation();
       // Play on click, loop on shift click
-      ee.shiftKey ? region.playLoop() : region.play();				
-      });
+      ee.shiftKey ? region.playLoop() : region.play();
+    });
 
     // this.recordingAudio.play();
     this.timeOutObject = setTimeout(() => {
@@ -388,10 +372,10 @@ stageParams["end_of_region" +l ] =   end_of_region[i];
 
   stopPlaying() {
     // if (this.recordingAudio) {
-      // this.timeOut = false;
-      // clearTimeout(this.timeOutObject);
-      // this.recordingAudio.pause();
-      // this.recordingAudio.currentTime = 0;
+    // this.timeOut = false;
+    // clearTimeout(this.timeOutObject);
+    // this.recordingAudio.pause();
+    // this.recordingAudio.currentTime = 0;
     // }
     if (this.waveSurfer) {
       this.timeOut = false;
