@@ -208,7 +208,7 @@ stageParams["end_of_region" +l ] =   end_of_region[i];
       Promise.all([
         batch.commit(),
         firebase.storage().ref('ANNOTATE_DATA').child(this.dateString).child(this.participantId)
-          .child(`${this.currentStage}.json`).put(jsonBlob)
+          .child(`${this.currentStage}_v2.json`).put(jsonBlob)
       ]).then(() => {
         if (nextStage == 'verified') {
           annotateRoot.annotateLoader = true;
