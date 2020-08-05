@@ -34,7 +34,7 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
   timeOutObject = null;
   showSkipOption = false;
   waveSurfer = null
-  timeline = WaveSurfer.Timeline
+  timeline = null
   spectogram = null
   regions_list = null
 
@@ -186,6 +186,7 @@ stageParams["end_of_region" +l ] =   end_of_region[i];
       if (this.formControls.extraComments.value) {
         stageParams['comments'] = this.formControls.extraComments.value
       }
+      stageParams['Annotator_Name'] = this.annotatorInfo['n']
       const nextStageIndex = this.recordStages.indexOf(this.currentStage) + 1;
       const nextStage = nextStageIndex > this.recordStages .length - 1 ? 'verified' : this.recordStages[nextStageIndex]
       const batch = firebase.firestore().batch();
