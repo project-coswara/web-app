@@ -121,6 +121,7 @@ ngOnInit() {
       progressColor: 'purple',
 loaderColor: 'purple',
 cursorColor: 'navy',
+backend: 'MediaElement',
        height:256,
 maxCanvasWidth: 8000,
 xhr: {
@@ -255,6 +256,8 @@ stageParams["end_of_region" +l ] =   end_of_region[i];
       .getDownloadURL().then((url) => {
       this.showSkipOption = false;
       this.timeOut = false;
+      console.log("AUDIO LOAD")
+      console.log(url)
       let audio = new Audio(url)
       this.waveSurfer.load(audio)
 
