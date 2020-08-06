@@ -24,22 +24,40 @@
   .tab-group .tab-check-box {
     margin: 5px;
   }
+// .wavesurfer-region {
+//     border: 1px solid #ddd !important;
+//     box-sizing: border-box;
+//   }
+  
+  
+// Width variables (appears count calculates by raw css)
+@width0: 2000px; // Appears 2 times
+
+
 .wavesurfer-region {
-    border: 1px solid #ddd !important;
-    box-sizing: border-box;
-  }
+	border: 1px solid #dddddd !important;
+	box-sizing: border-box;
+}
+#waveform {
+	width: @width0;
+}
+#spectrogram {
+	margin: 10px auto;
+	position: relative;
+	width:@width0;
+	canvas {
+		left: 0;
+	}
+}
+//   #waveform{
+//     width: 2000px;
+//     }
   
-  
-  
-  #waveform{
-    width: 2000px;
-    }
-  
-  #spectrogram{
-    width:2000px;
-    margin: 10px auto;
-    position: relative;
-  }
-  #spectrogram canvas{
-    left: 0;
-  }
+//   #spectrogram{
+//     width:2000px;
+//     margin: 10px auto;
+//     position: relative;
+//   }
+//   #spectrogram canvas{
+//     left: 0;
+//   }
