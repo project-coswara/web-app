@@ -7,7 +7,8 @@ import 'firebase/storage';
 import * as WaveSurfer from 'wavesurfer.js';
 import * as WaveSurferTimeline from 'wavesurfer.js/dist/plugin/wavesurfer.timeline.js';
 import * as WaveSurferSpectrogram from 'wavesurfer.js/dist/plugin/wavesurfer.spectrogram.js';
-
+import * as WaveSurferRegions from 'wavesurfer.js/dist/plugin/wavesurfer.regions.js';
+import * as WaveSurferMinimap from 'wavesurfer.js/dist/plugin/wavesurfer.minimap.js';
 import {UserDataService} from "../user-data.service";
 import {FormControl, FormGroup} from "@angular/forms";
 
@@ -116,6 +117,17 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
       height: 256,
       maxCanvasWidth: 8000,
       backend: 'MediaElement',
+      minimap: true,
+      plugins:[WaveSurferMinimap.create({height: 30,
+        waveColor: '#dddddd',
+        progressColor: '#999',
+        cursorColor: '#999'}),
+        WaveSurferTimeline.create({container:"#wavetimeline"}),
+        // WaveSurferSpectrogram.create({container: "#spectrogram", 
+        // fftSamples: 512,
+        // label: true,
+        // windowFunc: 'bartlett'}),
+        WaveSurferRegions.create()],
       xhr: {
         cache: "default",
         mode: "no-cors",
@@ -127,8 +139,16 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
         ]
       }
     });
-
-    this.timeline = Object.create(WaveSurferTimeline);
+    // this.spectrogram = WaveSurferSpectrogram.create({ //this.spectrogram = 
+    //   wavesurfer: this.waveSurfer,
+    //   container: "#spectrogram",
+    //   fftSamples: 512,
+    //   label: true,
+    //   windowFunc: 'bartlett'
+    // });
+    // this.timeline = WaveSurfer.Timeline.init({wavesurfer: this.waveSurfer, container: '#wavetimeline'});
+    // //var spectrogramColorMap = colormap({ colormap: magma, nshades: 256, format: 'rgb',alpha: 1});
+    // this.timeline = Object.create(WaveSurferTimeline);
     this.spectrogram = Object.create(WaveSurferSpectrogram);
   }
 
@@ -219,7 +239,7 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
     // this.formControls.volumeOkay.setValue('n');
     // this.formControls.continuousAudio.setValue('n');
   }
-
+  
   updateAudioProgress() {
     console.log('updateAudioProgress')
     const buffered = this.recordingAudio.buffered;
@@ -240,32 +260,35 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
       .getDownloadURL().then((url) => {
       this.showSkipOption = false;
       this.timeOut = false;
-      this.waveSurfer.load(url)
+      this.recordingAudio = new Audio()
+      this.recordingAudio.src = url;
+      // let audio = new Audio(url)
 
-      // this.recordingAudio = new Audio()
-      // this.recordingAudio.src = url;
+
       this.playedOnce = 0;
-      this.waveSurfer.on('ready', () => {
-        if (this.waveSurfer.getDuration() == Infinity) {
-          this.skipToNextUser('zero_duration')
-        } else if (this.waveSurfer.getDuration > 120) {
-          this.showSkipOption = true;
-        }
-        this.timeline.init({wavesurfer: this.waveSurfer, container: '#wavetimeline'});
-        //var spectrogramColorMap = colormap({ colormap: magma, nshades: 256, format: 'rgb',alpha: 1});
-        this.spectrogram.init({
-          wavesurfer: this.waveSurfer,
-          container: "#spectrogram",
-          fftSamples: 512,
-          label: true,
-          windowFunc: 'bartlett'
-        });
-        this.waveSurfer.enableDragSelection({});
+      this.recordingAudioState = 0;
+      // this.waveSurfer.on('ready', () => {
+      //   if (this.waveSurfer.getDuration() == Infinity) {
+      //     this.skipToNextUser('zero_duration')
+      //   } else if (this.waveSurfer.getDuration > 120) {
+      //     this.showSkipOption = true;
+      //   }
+        // this.waveSurfer.play()
+        // this.timeline.init({wavesurfer: this.waveSurfer, container: '#wavetimeline'});
+        // //var spectrogramColorMap = colormap({ colormap: magma, nshades: 256, format: 'rgb',alpha: 1});
+        // this.spectrogram.init({
+        //   wavesurfer: this.waveSurfer,
+        //   container: "#spectrogram",
+        //   fftSamples: 512,
+        //   label: true,
+        //   windowFunc: 'bartlett'
+        // });
+        // this.waveSurfer.enableDragSelection({});
 
-        this.regions_list = this.waveSurfer.regions.list;
+        // this.regions_list = this.waveSurfer.regions.list;
         //regions_list is an object...!!
 
-      });
+      // });
       // this.recordingAudio.addEventListener("loadeddata", () => {
       // this.recordingAudioState = 0;
       // });
@@ -275,16 +298,12 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
       //   }
 
       // });
-      this.waveSurfer.on('finish', () => {
-        this.recordingAudioState = 1;
-        this.playedOnce += 1;
 
-      });
       // this.recordingAudio.addEventListener("ended", () => {
       // this.recordingAudioState = 1;
       // this.playedOnce += 1;
       // });
-      this.recordingAudio.load()
+      // this.recordingAudio.load()
       this.annotatedStageLoader = false;
       // this.updateAudioProgress();
     }).catch((error) => {
@@ -359,14 +378,64 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
     })
   }
 
+  clearRegions(){
+    if(this.waveSurfer)
+    {
+      this.waveSurfer.clearRegions()
+      this.timeOut = false;
+      clearTimeout(this.timeOutObject);
+      this.waveSurfer.pause()
+      this.waveSurfer.seekTo(0)
+    }
+  }
+
   startPlaying() {
+    this.waveSurfer.load(this.recordingAudio)
+    // this.waveSurfer.backend.ac.resume();
+    this.waveSurfer.on('ready', () => {
+      if (this.waveSurfer.getDuration() == Infinity) {
+        this.skipToNextUser('zero_duration')
+      } else if (this.waveSurfer.getDuration > 120) {
+        this.showSkipOption = true;
+      }
+
+      // WaveSurferSpectrogram.create({ //this.spectrogram = 
+      //   wavesurfer: this.waveSurfer,
+      //   container: "#spectrogram",
+      //   fftSamples: 512,
+      //   label: true,
+      //   windowFunc: 'bartlett'
+      // });
+      // this.spectrogram = Object.create(WaveSurfer.Spectrogram);
+      this.spectrogram.create({
+        wavesurfer: this.waveSurfer,
+        container: "#spectrogram",
+        fftSamples: 512,
+        label: true,
+        windowFunc: 'bartlett'
+      });
+      this.waveSurfer.playPause()
+      // this.timeline = WaveSurferTimeline.create({wavesurfer: this.waveSurfer, container: '#wavetimeline'})
+      // this.timeline.init({wavesurfer: this.waveSurfer, container: '#wavetimeline'});
+      //var spectrogramColorMap = colormap({ colormap: magma, nshades: 256, format: 'rgb',alpha: 1});
+
+      this.waveSurfer.enableDragSelection({});
+
+      this.regions_list = this.waveSurfer.regions.list;
+      //regions_list is an object...!!
+
+    });
+
     this.waveSurfer.on('region-click', function (region, ee) {
       ee.stopPropagation();
       // Play on click, loop on shift click
       ee.shiftKey ? region.playLoop() : region.play();
     });
+    this.waveSurfer.on('finish', () => {
+      this.recordingAudioState = 1;
+      this.playedOnce += 1;
 
-    // this.recordingAudio.play();
+    });
     this.timeOutObject = setTimeout(() => {
       this.timeOut = true;
     }, 10000)
@@ -382,8 +451,9 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
     if (this.waveSurfer) {
       this.timeOut = false;
       clearTimeout(this.timeOutObject);
-      this.waveSurfer.pause()
       this.waveSurfer.seekTo(0)
+      this.waveSurfer.pause()
+
 
     }
   }
