@@ -4,6 +4,9 @@
         {{'thanks.message.para1' | translate}}
         <span [innerHTML]="'thanks.message.para2' | translate"></span>
     </div>
+    <div class="user-id" fxLayout="row" fxLayoutAlign="center center">
+        <div class="box">{{userData.uid}}</div>
+    </div>
     <div class="thank-you-footer">
         <div *ngIf="!signOutLoader" class="button" (click)="startSession()">{{'thanks.button.start_new_session' | translate}}</div>
         <mat-progress-spinner *ngIf="signOutLoader" [diameter]="30" mode="indeterminate"></mat-progress-spinner>
