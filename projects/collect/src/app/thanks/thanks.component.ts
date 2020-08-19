@@ -47,7 +47,9 @@ export class ThanksComponent implements OnInit {
               isOkay += 1
             }
           })
-          this.isOkay = true;
+          if (isOkay < this.recordStages.length) {
+            this.isOkay = false;
+          }
           this.showMainLoader = false;
         }).catch(() => {
           this.isOkay = false;
