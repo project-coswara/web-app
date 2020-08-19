@@ -1,11 +1,12 @@
-<div class="component-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
+<div *ngIf="!showMainLoader" class="component-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
     <h4 class="page-title">{{'thanks.heading' | translate}}</h4>
     <div class="content">
         {{'thanks.message.para1' | translate}}
         <span [innerHTML]="'thanks.message.para2' | translate"></span>
     </div>
-    <div class="user-id" fxLayout="row" fxLayoutAlign="center center">
+    <div class="user-id" fxLayout="column" fxLayoutAlign="center center">
         <div class="box">{{userData.uid}}</div>
+        <div *ngIf="!isOkay" class="color-red small-text">There is some issue with your recordings</div>
     </div>
     <div class="thank-you-footer">
         <div *ngIf="!signOutLoader" class="button" (click)="startSession()">{{'thanks.button.start_new_session' | translate}}</div>
@@ -43,4 +44,7 @@
             {{'thanks.feedback.complete' | translate}}
         </div>
     </div>
+</div>
+<div *ngIf="showMainLoader" class="component-container" fxLayout="column" fxLayoutAlign="center center" fxFill>
+    <mat-progress-spinner [diameter]="40" mode="indeterminate"></mat-progress-spinner>
 </div>
