@@ -33,28 +33,33 @@ export class ThanksComponent implements OnInit {
         this.userAppData = userAppData;
         let isOkay = 0
         let promises = []
-        this.recordStages.forEach(stageId => {
-          promises.push(firebase.storage()
-            .ref('COLLECT_DATA')
-            .child(this.userAppData.dS)
-            .child(this.userData.uid)
-            .child(stageId + '.wav')
-            .getMetadata())
-        })
-        Promise.all(promises).then(results => {
-          results.forEach(metadata => {
-            if (metadata.size > 100) {
-              isOkay += 1
-            }
+        if (this.userAppData.dS && !this.userData.uid) {
+          this.recordStages.forEach(stageId => {
+            promises.push(firebase.storage()
+              .ref('COLLECT_DATA')
+              .child(this.userAppData.dS)
+              .child(this.userData.uid)
+              .child(stageId + '.wav')
+              .getMetadata())
           })
-          if (isOkay < this.recordStages.length) {
+          Promise.all(promises).then(results => {
+            results.forEach(metadata => {
+              if (metadata.size > 100) {
+                isOkay += 1
+              }
+            })
+            if (isOkay < this.recordStages.length) {
+              this.isOkay = false;
+            }
+            this.showMainLoader = false;
+          }).catch(() => {
             this.isOkay = false;
-          }
-          this.showMainLoader = false;
-        }).catch(() => {
+            this.showMainLoader = false;
+          })
+        } else {
           this.isOkay = false;
           this.showMainLoader = false;
-        })
+        }
       })
     })
   }
