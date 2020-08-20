@@ -5,6 +5,7 @@ import 'firebase/auth'
 import 'firebase/firestore'
 import {UserDataService} from "../../../../../src/app/user-data.service";
 import {FormControl, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'cs-thanks-thanks',
@@ -26,14 +27,14 @@ export class ThanksComponent implements OnInit {
 
   feedbackControl = new FormControl(null, [Validators.required]);
 
-  constructor(private userDataService: UserDataService) {
+  constructor(private router: Router, private userDataService: UserDataService) {
     this.userDataService.getUserData().subscribe(userData => {
       this.userData = userData;
       this.userDataService.getAppData().subscribe(userAppData => {
         this.userAppData = userAppData;
         let isOkay = 0
         let promises = []
-        if (this.userAppData.dS && !this.userData.uid) {
+        if (this.userAppData.dS && this.userData.uid) {
           this.recordStages.forEach(stageId => {
             promises.push(firebase.storage()
               .ref('COLLECT_DATA')
@@ -57,8 +58,7 @@ export class ThanksComponent implements OnInit {
             this.showMainLoader = false;
           })
         } else {
-          this.isOkay = false;
-          this.showMainLoader = false;
+          this.router.navigate([''], {queryParamsHandling: 'merge'}).then();
         }
       })
     })
