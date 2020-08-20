@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
@@ -87,7 +87,7 @@ export class DetailsComponent implements OnInit {
     healthConditionList: health_option_list.conditions
   };
 
-  constructor(private router: Router, private userDataService: UserDataService) {
+  constructor(private route: ActivatedRoute, private router: Router, private userDataService: UserDataService) {
     this.userDataService.getUserData().subscribe(userData => {
       this.userData = userData;
       this.submitLoader = false;
@@ -103,6 +103,10 @@ export class DetailsComponent implements OnInit {
         this.finishedMetaData = false;
       }
     });
+
+    this.route.queryParams.subscribe(queryParams => {
+      this.formControls.locality.setValue(queryParams.l_l || '')
+    })
   }
 
   ngOnInit() {

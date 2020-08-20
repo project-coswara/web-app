@@ -33,7 +33,6 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {LanguageDialogComponent} from "./language-dialog";
-import {AnnotateV2Component} from './annotate-v2/annotate-v2.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -56,8 +55,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     NewsComponent,
     AnnotateComponent,
     LBComponent,
-    LanguageDialogComponent,
-    AnnotateV2Component
+    LanguageDialogComponent
   ],
   imports: [
     BrowserAnimationsModule,

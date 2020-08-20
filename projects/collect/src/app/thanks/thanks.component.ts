@@ -5,7 +5,7 @@ import 'firebase/auth'
 import 'firebase/firestore'
 import {UserDataService} from "../../../../../src/app/user-data.service";
 import {FormControl, Validators} from "@angular/forms";
-import {matFormFieldAnimations} from "@angular/material/form-field";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'cs-thanks-thanks',
@@ -18,12 +18,50 @@ export class ThanksComponent implements OnInit {
   showFeedbackBox: boolean = true;
   showFeedbackLoader: boolean = false;
   userData = null;
+  userAppData = null;
+  isOkay = true;
+  showMainLoader = true;
+
+  recordStages = ['breathing-shallow', 'breathing-deep', 'cough-shallow', 'cough-heavy', 'vowel-a', 'vowel-e', 'vowel-o',
+    'counting-normal', 'counting-fast'];
 
   feedbackControl = new FormControl(null, [Validators.required]);
 
-  constructor(private userDataService: UserDataService) {
+  constructor(private router: Router, private userDataService: UserDataService) {
     this.userDataService.getUserData().subscribe(userData => {
       this.userData = userData;
+      this.userDataService.getAppData().subscribe(userAppData => {
+        this.userAppData = userAppData;
+        let isOkay = 0
+        let promises = []
+        let isCompleted = this.userAppData && (this.recordStages.indexOf(this.userAppData.cS)  < 0)
+        if (isCompleted && this.userAppData.dS && this.userData.uid) {
+          this.recordStages.forEach(stageId => {
+            promises.push(firebase.storage()
+              .ref('COLLECT_DATA')
+              .child(this.userAppData.dS)
+              .child(this.userData.uid)
+              .child(stageId + '.wav')
+              .getMetadata())
+          })
+          Promise.all(promises).then(results => {
+            results.forEach(metadata => {
+              if (metadata.size > 100) {
+                isOkay += 1
+              }
+            })
+            if (isOkay < this.recordStages.length) {
+              this.isOkay = false;
+            }
+            this.showMainLoader = false;
+          }).catch(() => {
+            this.isOkay = false;
+            this.showMainLoader = false;
+          })
+        } else {
+          this.router.navigate([''], {queryParamsHandling: 'merge'}).then();
+        }
+      })
     })
   }
 
