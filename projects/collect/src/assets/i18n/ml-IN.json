@@ -44,6 +44,7 @@
  "forms.options.no": "ഇല്ല",
  "forms.option.positive_mild": "ഞാൻ ചൊവിദ്-19 താദാത്മ്യം രൂക്ഷമല്ലാത്ത ലക്ഷണങ്ങളില്ലെങ്കിലും ചെയ്തു",
  "forms.option.positive_moderate": "ഞാൻ ചൊവിദ്-19 താദാത്മ്യം കുറവ് കടുത്ത ലക്ഷണങ്ങളില്ലെങ്കിലും ചെയ്തു",
+ "forms.option.positive_asymp": "I have been identified with Covid-19 and am asymptomatic",
  "forms.option.recovered_full": "ഞാൻ ചൊവിദ്-19 താദാത്മ്യം പൂർണ്ണമായി കണ്ടെടുത്തതായി ചെയ്തു",
  "forms.option.resp_illness_not_identified": "ഞാൻ മറ്റ് പ്രീ-നിലവിലുള്ള ശ്വാസകോശ രോഗങ്ങൾ ഉണ്ട് എന്നാൽ ചൊവിദ്-19 താദാത്മ്യം ചെയ്യാത്ത",
  "forms.option.no_resp_illness_exposed": "ഞാൻ ശ്വാസകോശ രോഗം എങ്കില് സമ്പർക്കത്തിലൂടെയാണ് വൈറസ് പ്രിഫർ ചെയ്തിരിക്കാം",

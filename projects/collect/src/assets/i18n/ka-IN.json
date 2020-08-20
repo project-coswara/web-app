@@ -44,6 +44,7 @@
   "forms.options.no": "ಇಲ್ಲ",
   "forms.option.positive_mild": "ನಾನು Covid-19 ಸೋಂಕಿತ ಎಂದು ಗುರುತಿಸಲಾಗಿದೆ, ಹಾಗೂ ಮಂದರವಾದ (Mild) ರೋಗಲಕ್ಷಣಗಳನ್ನು ಹೊಂದಿರುವೆ.",
   "forms.option.positive_moderate": "ನಾನು Covid-19 ಸೋಂಕಿತ ಎಂದು ಗುರುತಿಸಲಾಗಿದೆ, ಹಾಗೂ ಮಧ್ಯಮ ತೀವ್ರತೆಯ ರೋಗಲಕ್ಷಣಗಳನ್ನು ಹೊಂದಿರುವೆ.",
+  "forms.option.positive_asymp": "I have been identified with Covid-19 and am asymptomatic",
   "forms.option.recovered_full": "ನಾನು Covid-19 ಸೋಂಕಿತ ಎಂದು ಗುರುತಿಸಲಾಗಿತ್ತು, ಈಗ ಸಂಪೂರ್ಣವಾಗಿ ಚೇತರಿಸಿಕೊಂಡಿದ್ದೇನೆ.",
   "forms.option.resp_illness_not_identified": "ನನಗೆ ಇತರೆ ಉಸಿರಾಟದ ಕಾಯಿಲೆಗಳ ತೊಂದರೆ ಇದೆ, ಆದರೆ Covid-19 ಜೊತೆ ಗುರುತಿಸಲಾಗಿಲ್ಲ",
   "forms.option.no_resp_illness_exposed": "ನಾನು ಯಾವುದೇ ಉಸಿರಾಟದ ತೊಂದರೆಯನ್ನು ಹೊಂದಿಲ್ಲ, ಆದರೆ ಸಂಪರ್ಕದ ಮೂಲಕ Covid-19 ವೈರಾಣು ಶಂಕಿತನಾಗಿರಬಹುದು.",

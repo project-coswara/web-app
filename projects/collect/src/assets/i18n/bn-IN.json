@@ -44,6 +44,7 @@
     "forms.options.no": "না",
     "forms.option.positive_mild": "আমি Covid -19 সঙ্গে চিহ্নিত করা হয়েছে এবং হালকা উপসর্গ",
     "forms.option.positive_moderate": "আমি Covid -19 সঙ্গে চিহ্নিত করা হয়েছে এবং পরিমিতরূপে গুরুতর লক্ষণ আছে",
+    "forms.option.positive_asymp": "I have been identified with Covid-19 and am asymptomatic",
     "forms.option.recovered_full": "আমি Covid -19 সঙ্গে চিহ্নিত করা হয় এবং সম্পূর্ণরূপে সেরে উঠেছে",
     "forms.option.resp_illness_not_identified": "আমি অন্য পূর্ব বিদ্যমান শ্বাসযন্ত্রের অসুস্থতা আছে কিন্তু Covid -19 সঙ্গে চিহ্নিত করা হয় নি",
     "forms.option.no_resp_illness_exposed": "আমি কোন শ্বাসযন্ত্রের অসুস্থতা আছে কিন্তু আমি যোগাযোগের মাধ্যমে ভাইরাস উন্মুক্ত করা হয়ে থাকতে পারে",

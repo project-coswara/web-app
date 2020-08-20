@@ -44,6 +44,7 @@
  "forms.options.no": "இல்லை",
  "forms.option.positive_mild": "எனக்கு Covid 19 வந்துள்ளதாக அறிவிக்கப்பட்டுள்ளது மற்றும் லேசான அறிகுறிகள் தென்படுகின்றன",
  "forms.option.positive_moderate": "எனக்கு Covid 19 வந்துள்ளதாக அறிவிக்கப்பட்டுள்ளது மற்றும் மிதமான கடுமையான அறிகுறிகள் தென்படுகின்றன",
+ "forms.option.positive_asymp": "I have been identified with Covid-19 and am asymptomatic",
  "forms.option.recovered_full": "எனக்கு Covid 19 வந்துள்ளதாக அறிவிக்கப்பட்டுள்ளது பின் முழுமையாக குணமடைந்து விட்டேன்",
  "forms.option.resp_illness_not_identified": "எனக்கு  முன்பே மற்ற சுவாச நோய்கள் உள்ளன, ஆனால் Covid 19 இதுவரை கண்டறியப்படவில்லை",
  "forms.option.no_resp_illness_exposed": "எனக்கு எந்த சுவாச நோயும் இல்லை, ஆனால் நான் தொடர்பு மூலம் வைரஸ் தாக்கப்பட்டு இருக்கலாம்",

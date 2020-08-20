@@ -44,6 +44,7 @@
     "forms.options.no": "नाही",
     "forms.option.positive_mild": "मी Covid-19 ओळखले आणि सौम्य लक्षणे आले आहेत",
     "forms.option.positive_moderate": "मी Covid-19 ओळखले आणि माफक प्रमाणात गंभीर लक्षणे आले आहेत",
+    "forms.option.positive_asymp": "I have been identified with Covid-19 and am asymptomatic",
     "forms.option.recovered_full": "मी Covid-19 ओळखला गेला होता आणि पूर्णपणे बरा आहे",
     "forms.option.resp_illness_not_identified": "मी इतर पूर्व-विद्यमान श्वसन आजार आहे पण Covid-19 सह ओळखले गेलो नाही",
     "forms.option.no_resp_illness_exposed": "मी श्वसन आजार आहे पण मी संपर्क व्हायरस उघड केले गेलो असावे",

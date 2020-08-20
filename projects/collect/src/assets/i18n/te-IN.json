@@ -36,6 +36,7 @@
     "forms.options.no": "కాదు",
     "forms.option.positive_mild": "నాకు కోవిద్-19 నిర్ధారణ అయినది మరియు స్వల్ప లక్షణాలు కలిగి ఉన్నాను",
     "forms.option.positive_moderate": "నాకు కోవిద్-19 నిర్ధారణ అయినది మరియు పరిమితంగా తీవ్రమైన లక్షణాలు కలిగి ఉన్నాను",
+    "forms.option.positive_asymp": "I have been identified with Covid-19 and am asymptomatic",
     "forms.option.recovered_full": "నాకు కోవిద్-19 నిర్ధారణ అయినది మరియు నేను  కోవిద్-19 నుంచి పూర్తిగా కోలుకున్నాను ",
     "forms.option.resp_illness_not_identified": "నాకు శ్వాస కోశ సంబంధిత వ్యాధి ఉంది, కానీ కోవిద్-19 నిర్ధారణ కాలేదు",
     "forms.option.no_resp_illness_exposed": "నాకు ఏవిధమైన శ్వాస కోశ సంబంధిత వ్యాధులు లేవు, కానీ పరిచయస్తుల ద్వారా వైరస్ కి గురై ఉండవచ్చు",

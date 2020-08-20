@@ -7,6 +7,7 @@ const dateSummaryTemplate: { [id: string] : number; } = {
     "completed": 0,
     "positive_mild": 0,
     "positive_moderate": 0,
+    'positive_asymp':0,
     "recovered_full": 0,
     "resp_illness_not_identified": 0,
     "no_resp_illness_exposed": 0,

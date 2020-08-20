@@ -44,6 +44,7 @@
 	"forms.options.no": "नहीं",
 	"forms.option.positive_mild": "मुझे Covid -19 से संक्रमण हुआ है और हल्के लक्षण है",
 	"forms.option.positive_moderate": "मुझे Covid -19 से संक्रमण हुआ है और मध्यम-गंभीर लक्षण है",
+	"forms.option.positive_asymp": "I have been identified with Covid-19 and am asymptomatic",
 	"forms.option.recovered_full": "मुझे Covid -19 से संक्रमण हुआ था और अब पूरी तरह से ठीक हूँ",
 	"forms.option.resp_illness_not_identified": "मुझे पहले से मौजूदा सांस की बीमारी है लेकिन Covid -19 के साथ संक्रमण नहीं हुआ",
 	"forms.option.no_resp_illness_exposed": "मुझे कोई सांस की बीमारी नहीं है, लेकिन मुझे अन्य लोगों से संपर्क के माध्यम से वायरस संक्रमण हो सकता है",
