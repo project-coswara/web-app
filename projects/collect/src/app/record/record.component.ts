@@ -158,7 +158,7 @@ export class RecordComponent implements AfterViewInit, OnInit {
               upload_task.on('state_changed', snapshot => {
                 this.uploadProgress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
               }, error => {
-                alert(error + " - Please try again!");
+                console.log(error["code"] + " - Please try again!");
                 this.recordState = 3;
               })
               this.cancelUpload = function() {

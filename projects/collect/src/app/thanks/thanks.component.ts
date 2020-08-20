@@ -34,7 +34,8 @@ export class ThanksComponent implements OnInit {
         this.userAppData = userAppData;
         let isOkay = 0
         let promises = []
-        if (this.userAppData.dS && this.userData.uid) {
+        let isCompleted = this.userAppData && (this.recordStages.indexOf(this.userAppData.cS)  < 0)
+        if (isCompleted && this.userAppData.dS && this.userData.uid) {
           this.recordStages.forEach(stageId => {
             promises.push(firebase.storage()
               .ref('COLLECT_DATA')
