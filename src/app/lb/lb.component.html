@@ -18,4 +18,23 @@
             </tr>
         </table>
     </div>
+    <h4 class="title">Leaderboard Annotate V2</h4>
+    <div *ngIf="leaderBoardV2List.length == 0">
+        <mat-progress-spinner [diameter]="30" mode="indeterminate"></mat-progress-spinner>
+    </div>
+    <div *ngIf="leaderBoardV2List.length > 0" class="content">
+        <table class="table leaderboard">
+            <tr>
+                <th>Name</th>
+                <th>Completed</th>
+            </tr>
+            <tr *ngFor="let leader of leaderBoardV2List">
+                <td fxLayout="row" fxLayoutAlign="start center">
+                    <img class="small-round" [src]="leader.pURL"/>
+                    {{leader.name}}
+                </td>
+                <td>{{leader.value}}</td>
+            </tr>
+        </table>
+    </div>
 </div>

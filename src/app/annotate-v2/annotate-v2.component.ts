@@ -10,7 +10,7 @@ import * as WaveSurferSpectrogram from 'wavesurfer.js/dist/plugin/wavesurfer.spe
 import * as WaveSurferRegions from 'wavesurfer.js/dist/plugin/wavesurfer.regions.js';
 import * as WaveSurferMinimap from 'wavesurfer.js/dist/plugin/wavesurfer.minimap.js';
 import {UserDataService} from "../user-data.service";
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'cs-annotate-v2',
@@ -37,6 +37,7 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
   timeline = null
   spectrogram = null
   regions_list = null
+  spectrogramFlag = false;
 
   titleDict = {
     'breathing-shallow': 'Breathing (shallow)',
@@ -52,14 +53,22 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
 
   recordStages = Object.keys(this.titleDict);
   formControls = {
+    volumeOkay: new FormControl('y', [Validators.required]),
+    continuousAudio: new FormControl('y', [Validators.required]),
+    audioQuality: new FormControl('clean_audio', [Validators.required]),
+    audioCategory: new FormControl(this.recordStages[0], [Validators.required]),
     extraComments: new FormControl(null),
   }
   annotateFormGroup = new FormGroup({
+    volumeOkay: this.formControls.volumeOkay,
+    continuousAudio: this.formControls.continuousAudio,
+    audioQuality: this.formControls.audioQuality,
+    audioCategory: this.formControls.audioCategory,
     extraComments: this.formControls.extraComments
   })
   annotatorRef = null;
   annotatorInfo = {
-    completed: 0,
+    completed_v2: 0,
     n: 'Annotator Master'
   }
   db = firebase.firestore();
@@ -114,20 +123,20 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
       progressColor: 'purple',
       loaderColor: 'purple',
       cursorColor: 'navy',
-      height: 256,
-      maxCanvasWidth: 8000,
+      height: 200,
+      maxCanvasWidth: 7000,
       backend: 'MediaElement',
       minimap: true,
-      plugins:[WaveSurferMinimap.create({height: 30,
-        waveColor: '#dddddd',
-        progressColor: '#999',
-        cursorColor: '#999'}),
+      plugins:[WaveSurferRegions.create(),//WaveSurferMinimap.create({height: 30,
+        // waveColor: '#dddddd',
+        // progressColor: '#999',
+        // cursorColor: '#999'}),
         WaveSurferTimeline.create({container:"#wavetimeline"}),
         // WaveSurferSpectrogram.create({container: "#spectrogram", 
         // fftSamples: 512,
         // label: true,
         // windowFunc: 'bartlett'}),
-        WaveSurferRegions.create()],
+        ],
       xhr: {
         cache: "default",
         mode: "no-cors",
@@ -139,17 +148,9 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
         ]
       }
     });
-    // this.spectrogram = WaveSurferSpectrogram.create({ //this.spectrogram = 
-    //   wavesurfer: this.waveSurfer,
-    //   container: "#spectrogram",
-    //   fftSamples: 512,
-    //   label: true,
-    //   windowFunc: 'bartlett'
-    // });
     // this.timeline = WaveSurfer.Timeline.init({wavesurfer: this.waveSurfer, container: '#wavetimeline'});
     // //var spectrogramColorMap = colormap({ colormap: magma, nshades: 256, format: 'rgb',alpha: 1});
     // this.timeline = Object.create(WaveSurferTimeline);
-    this.spectrogram = Object.create(WaveSurferSpectrogram);
   }
 
   getAnnotatorData(callback) {
@@ -171,7 +172,6 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
     let id_names_array = [];
     let start_of_region = [];
     let end_of_region = [];
-    let region_timings = {};
     const regions_ids_array = Object.keys(this.regions_list);
 
     // Renaming regions and storing it in a separate array.
@@ -188,11 +188,18 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
     }
 
     if (this.annotatorRef) {
-      const stageParams = {}
+      const stageParams = {
+        'vol': this.formControls.volumeOkay.value,
+        'cont': this.formControls.continuousAudio.value,
+        'quality': this.formControls.audioQuality.value,
+        'stage': this.formControls.audioCategory.value,
+        // 'regions_ids_array_keys':Object.keys(this.regions_list),
+        // 'regions_ids_array_values':Object.values(this.regions_list)
+      }
       for (let i = 0; i < regions_ids_array.length; i++) {
         let l = i + 1;
-        stageParams["start_of_region" + l] = start_of_region[i];
-        stageParams["end_of_region" + l] = end_of_region[i];
+        stageParams["start_" + l] = Number(start_of_region[i]).toFixed(3);
+        stageParams["end_" + l] = Number(end_of_region[i]).toFixed(3);
       }
       if (this.formControls.extraComments.value) {
         stageParams['comments'] = this.formControls.extraComments.value
@@ -206,10 +213,10 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
         {'cS': nextStage, 'fA': nextStage == 'verified'}
       )
       if (nextStage == 'verified') {
-        this.annotatorInfo.completed += 1
+        this.annotatorInfo.completed_v2 += 1
         batch.update(
           this.annotatorRef,
-          {'completed': this.annotatorInfo.completed}
+          {'completed_v2': this.annotatorInfo.completed_v2}
         )
         batch.update(
           firebase.firestore().collection('USER_APPDATA').doc(this.participantId),
@@ -232,12 +239,13 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
           annotateRoot.populateData(this.participantId, nextStage, annotateRoot.dateString);
         }
       })
+      this.clearRegions();
     }
   }
 
   onBadAudioChange() {
-    // this.formControls.volumeOkay.setValue('n');
-    // this.formControls.continuousAudio.setValue('n');
+    this.formControls.volumeOkay.setValue('n');
+    this.formControls.continuousAudio.setValue('n');
   }
   
   updateAudioProgress() {
@@ -252,9 +260,9 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
 
   populateData(participantId, currentStage, dateString) {
     this.resetForm();
-    // participantId = 'SG95RAgm0wY3bzyIZPPSpHwyYuD3'
+    // participantId = '03TmwzsdEBVEh35MRMbC9d0NnfI3'
     // currentStage = 'breathing-shallow'
-    // dateString = '2020-04-14'
+    // dateString = '2020-04-13'
     this.recordingAudioState = -1;
     firebase.storage().ref(`COLLECT_DATA/${dateString}/${participantId}/${currentStage}.wav`)
       .getDownloadURL().then((url) => {
@@ -263,32 +271,30 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
       this.recordingAudio = new Audio()
       this.recordingAudio.src = url;
       // let audio = new Audio(url)
-
-
       this.playedOnce = 0;
       this.recordingAudioState = 0;
-      // this.waveSurfer.on('ready', () => {
-      //   if (this.waveSurfer.getDuration() == Infinity) {
-      //     this.skipToNextUser('zero_duration')
-      //   } else if (this.waveSurfer.getDuration > 120) {
-      //     this.showSkipOption = true;
-      //   }
-        // this.waveSurfer.play()
+      this.waveSurfer.load(this.recordingAudio)
+      this.waveSurfer.on('ready', () => {
+        if (this.waveSurfer.getDuration() == Infinity) {
+          this.skipToNextUser('zero_duration')
+        } else if (this.waveSurfer.getDuration > 120) {
+          this.showSkipOption = true;
+        }
+        document.getElementById("waves").style.display = '';
+
+        // Draw the waves
+        this.waveSurfer.drawBuffer();
+        // this.waveSurfer.playPause()
+        // this.timeline = WaveSurferTimeline.create({wavesurfer: this.waveSurfer, container: '#wavetimeline'})
         // this.timeline.init({wavesurfer: this.waveSurfer, container: '#wavetimeline'});
-        // //var spectrogramColorMap = colormap({ colormap: magma, nshades: 256, format: 'rgb',alpha: 1});
-        // this.spectrogram.init({
-        //   wavesurfer: this.waveSurfer,
-        //   container: "#spectrogram",
-        //   fftSamples: 512,
-        //   label: true,
-        //   windowFunc: 'bartlett'
-        // });
-        // this.waveSurfer.enableDragSelection({});
-
-        // this.regions_list = this.waveSurfer.regions.list;
+        //var spectrogramColorMap = colormap({ colormap: magma, nshades: 256, format: 'rgb',alpha: 1});
+  
+        this.waveSurfer.enableDragSelection({});
+  
+        this.regions_list = this.waveSurfer.regions.list;
         //regions_list is an object...!!
-
-      // });
+  
+      });
       // this.recordingAudio.addEventListener("loadeddata", () => {
       // this.recordingAudioState = 0;
       // });
@@ -311,13 +317,22 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
         this.skipToNextUser('no_audio');
       }
     })
+
+    firebase.storage().ref(`SPECTROGRAMS/${dateString}/${participantId}/${currentStage}.png`).getDownloadURL().then((url) => {
+      this.spectrogram = url;
+
+    }).catch((error) => {
+      if (error.code === 'storage/object-not-found') {
+        this.spectrogramFlag = true
+      }
+    })
   }
 
   resetForm() {
-    // this.formControls.volumeOkay.setValue('y');
-    // this.formControls.continuousAudio.setValue('y');
-    // this.formControls.audioQuality.setValue('clean_audio');
-    // this.formControls.audioCategory.setValue(this.currentStage);
+    this.formControls.volumeOkay.setValue('y');
+    this.formControls.continuousAudio.setValue('y');
+    this.formControls.audioQuality.setValue('clean_audio');
+    this.formControls.audioCategory.setValue(this.currentStage);
     this.formControls.extraComments.setValue(null);
   }
 
@@ -333,7 +348,7 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
       Promise.all([
         firebase.firestore().runTransaction((transaction) => {
           return transaction.get(userAppDataDoc.ref).then(() => {
-            transaction.update(userAppDataDoc.ref, {'cS': 'verification_in_process', 'aU': annotateRoot.userData.uid})
+            transaction.update(userAppDataDoc.ref, {'cS': 'verification_in_process_v2', 'aU': annotateRoot.userData.uid})
           })
         }),
         firebase.firestore().collection('ANNOTATE_APPDATA')
@@ -390,42 +405,8 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
   }
 
   startPlaying() {
-    this.waveSurfer.load(this.recordingAudio)
-    // this.waveSurfer.backend.ac.resume();
-    this.waveSurfer.on('ready', () => {
-      if (this.waveSurfer.getDuration() == Infinity) {
-        this.skipToNextUser('zero_duration')
-      } else if (this.waveSurfer.getDuration > 120) {
-        this.showSkipOption = true;
-      }
-
-      // WaveSurferSpectrogram.create({ //this.spectrogram = 
-      //   wavesurfer: this.waveSurfer,
-      //   container: "#spectrogram",
-      //   fftSamples: 512,
-      //   label: true,
-      //   windowFunc: 'bartlett'
-      // });
-      // this.spectrogram = Object.create(WaveSurfer.Spectrogram);
-      this.spectrogram.create({
-        wavesurfer: this.waveSurfer,
-        container: "#spectrogram",
-        fftSamples: 512,
-        label: true,
-        windowFunc: 'bartlett'
-      });
-      this.waveSurfer.playPause()
-      // this.timeline = WaveSurferTimeline.create({wavesurfer: this.waveSurfer, container: '#wavetimeline'})
-      // this.timeline.init({wavesurfer: this.waveSurfer, container: '#wavetimeline'});
-      //var spectrogramColorMap = colormap({ colormap: magma, nshades: 256, format: 'rgb',alpha: 1});
-
-      this.waveSurfer.enableDragSelection({});
-
-      this.regions_list = this.waveSurfer.regions.list;
-      //regions_list is an object...!!
-
-    });
-
+    // this.waveSurfer.drawBuffer();
+    this.waveSurfer.playPause();
     this.waveSurfer.on('region-click', function (region, ee) {
       ee.stopPropagation();
       // Play on click, loop on shift click
@@ -460,6 +441,7 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
 
   previousRecording() {
     const currentStageIndex = this.recordStages.indexOf(this.currentStage)
+    this.clearRegions();
     if (currentStageIndex > 0) {
       this.stopPlaying();
       this.annotatedStageLoader = true;
