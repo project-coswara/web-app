@@ -198,8 +198,8 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
       }
       for (let i = 0; i < regions_ids_array.length; i++) {
         let l = i + 1;
-        stageParams["start_" + l] = Number(start_of_region[i]).toFixed(3);
-        stageParams["end_" + l] = Number(end_of_region[i]).toFixed(3);
+        stageParams["start_" + l] = Number(start_of_region[i].toFixed(3));
+        stageParams["end_" + l] = Number(end_of_region[i].toFixed(3));
       }
       if (this.formControls.extraComments.value) {
         stageParams['comments'] = this.formControls.extraComments.value
