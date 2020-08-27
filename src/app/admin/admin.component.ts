@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
+import { HttpClient } from '@angular/common/http';
 
 import * as firebase from 'firebase/app';
 import 'firebase/database';
@@ -24,6 +25,8 @@ export class AdminComponent implements OnInit {
   dateStringList = Array.from(Array(7).keys()).map((index) => {
     return this.getDateStringWithOffset(this.dateString, -1 * index)
   })
+  statsUrl = null;
+  totalStatsData = null;
 
   statsList = [{
     'id': 'total_visits',
@@ -42,7 +45,7 @@ export class AdminComponent implements OnInit {
     'name': 'Daily Completed'
   }]
 
-  constructor(private route: ActivatedRoute, private router: Router, private userDataService: UserDataService) {
+  constructor(private route: ActivatedRoute, private router: Router, private userDataService: UserDataService, private http:HttpClient) {
     let adminRoot = this;
     this.userDataService.getUserData().subscribe((userData) => {
       if (userData) {
@@ -132,5 +135,13 @@ export class AdminComponent implements OnInit {
     }
     this.netStatus = [];
     this.dailyStatus = [];
+  }
+  getTotalStats(){
+    this.statsUrl="https://raw.githubusercontent.com/iiscleap/Coswara-Data/master/status_stats.json"
+    this.http.get(this.statsUrl).subscribe((res => {
+      this.totalStatsData = res
+      // this.totalStatsData = Array.of(this.totalStatsData)
+
+    }))
   }
 }

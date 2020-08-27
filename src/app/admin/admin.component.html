@@ -21,6 +21,24 @@
                 </div>
             </div>
         </div>
+        <br>
+        <div class="stats-container">
+            <h5 class="tab-sub-title"> Total Stats</h5>
+            <br>
+            {{getTotalStats()}}
+            <table class="table totalStats">
+                <tr>
+                    <th>Category</th>
+                    <th>Number</th>
+                </tr>
+                <tr *ngFor="let stats of totalStatsData | keyvalue">
+                    <td fxLayout="row" fxLayoutAlign="start center">
+                        {{stats.key}}
+                    </td>
+                    <td>{{stats.value}}</td>
+                </tr>
+            </table>
+        </div>
     </div>
     <div *ngIf="!adminLoader && !isAdmin">
         <h4 class="page-title">Oops..</h4>
