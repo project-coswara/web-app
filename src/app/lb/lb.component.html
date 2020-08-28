@@ -29,11 +29,11 @@
                 <th>Completed</th>
             </tr>
             <tr *ngFor="let leader of leaderBoardV2List">
-                <td fxLayout="row" fxLayoutAlign="start center">
+                <td fxLayout="row" fxLayoutAlign="start center" *ngIf="leader.value>0">
                     <img class="small-round" [src]="leader.pURL"/>
                     {{leader.name}}
                 </td>
-                <td>{{leader.value}}</td>
+                <td *ngIf="leader.value>0">{{leader.value}}</td>
             </tr>
         </table>
     </div>

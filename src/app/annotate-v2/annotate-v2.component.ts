@@ -91,7 +91,7 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
             }
             if (currentDoc) {
               this.participantId = currentDoc.id;
-              this.currentStage = currentDoc.data()['cS'];
+              this.currentStage = currentDoc.data()['ver'];
               this.dateString = currentDoc.data()['dS'];
               this.populateData(this.participantId, this.currentStage, this.dateString);
               this.annotateLoader = false;
@@ -117,13 +117,14 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    requestAnimationFrame(() => {
     this.waveSurfer = WaveSurfer.create({
       container: '#waves',
       waveColor: '#FF00FF',
       progressColor: 'purple',
       loaderColor: 'purple',
       cursorColor: 'navy',
-      height: 200,
+      height: 100,
       maxCanvasWidth: 7000,
       backend: 'MediaElement',
       minimap: true,
@@ -148,6 +149,7 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
         ]
       }
     });
+  });
     // this.timeline = WaveSurfer.Timeline.init({wavesurfer: this.waveSurfer, container: '#wavetimeline'});
     // //var spectrogramColorMap = colormap({ colormap: magma, nshades: 256, format: 'rgb',alpha: 1});
     // this.timeline = Object.create(WaveSurferTimeline);
@@ -206,13 +208,13 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
       }
       stageParams['annotator_name'] = this.annotatorInfo['n']
       const nextStageIndex = this.recordStages.indexOf(this.currentStage) + 1;
-      const nextStage = nextStageIndex > this.recordStages.length - 1 ? 'verified' : this.recordStages[nextStageIndex]
+      const nextStage = nextStageIndex > this.recordStages.length - 1 ? 'img_uploaded' : this.recordStages[nextStageIndex]
       const batch = firebase.firestore().batch();
       batch.update(
         this.annotatorRef.collection('DATA').doc(this.participantId),
-        {'cS': nextStage, 'fA': nextStage == 'verified'}
+        {'cS': nextStage, 'ver': nextStage, 'fA': nextStage == 'img_uploaded'}
       )
-      if (nextStage == 'verified') {
+      if (nextStage == 'img_uploaded') {
         this.annotatorInfo.completed_v2 += 1
         batch.update(
           this.annotatorRef,
@@ -220,7 +222,7 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
         )
         batch.update(
           firebase.firestore().collection('USER_APPDATA').doc(this.participantId),
-          {'cS': 'verified_v2'}
+          {'ver': 'verified_v2'}
         )
       }
       const jsonBlob = new Blob([JSON.stringify(stageParams, null, 4)], {type: "application/json"})
@@ -229,7 +231,7 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
         firebase.storage().ref('ANNOTATE_DATA').child(this.dateString).child(this.participantId)
           .child(`${this.currentStage}_v2.json`).put(jsonBlob)
       ]).then(() => {
-        if (nextStage == 'verified') {
+        if (nextStage == 'img_uploaded') {
           annotateRoot.annotateLoader = true;
           annotateRoot.setupAnnotation(() => {
             annotateRoot.annotateLoader = false
@@ -260,7 +262,7 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
 
   populateData(participantId, currentStage, dateString) {
     this.resetForm();
-    // participantId = '03TmwzsdEBVEh35MRMbC9d0NnfI3'
+    // participantId = '0zexHIcM7tQDdnFiEj2Eb0v3g212'
     // currentStage = 'breathing-shallow'
     // dateString = '2020-04-13'
     this.recordingAudioState = -1;
@@ -280,10 +282,10 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
         } else if (this.waveSurfer.getDuration > 120) {
           this.showSkipOption = true;
         }
-        document.getElementById("waves").style.display = '';
+        // document.getElementById("waves").style.display = '';
 
         // Draw the waves
-        this.waveSurfer.drawBuffer();
+        // this.waveSurfer.drawBuffer();
         // this.waveSurfer.playPause()
         // this.timeline = WaveSurferTimeline.create({wavesurfer: this.waveSurfer, container: '#wavetimeline'})
         // this.timeline.init({wavesurfer: this.waveSurfer, container: '#wavetimeline'});
@@ -339,24 +341,25 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
   setupAnnotation(callback) {
     const annotateRoot = this;
     firebase.firestore().collection('USER_APPDATA')
-      .where('cS', '==', 'verified')
-      .orderBy('p')
+      .where('ver', '==', 'img_uploaded')
+      // .orderBy('p')
       // .where('dS', '<=', '2020-05-06')
       .limit(1).get().then((snapshot) => {
       const userAppDataDoc = snapshot.docs[0]
-      // console.log(userAppDataDoc.id, userAppDataDoc.data(), userAppDataDoc.ref)
+      console.log(userAppDataDoc.id, userAppDataDoc.data(), userAppDataDoc.ref)
       Promise.all([
         firebase.firestore().runTransaction((transaction) => {
           return transaction.get(userAppDataDoc.ref).then(() => {
-            transaction.update(userAppDataDoc.ref, {'cS': 'verification_in_process_v2', 'aU': annotateRoot.userData.uid})
+            transaction.update(userAppDataDoc.ref, {'ver': 'verification_in_process_v2', 'aU': annotateRoot.userData.uid})
           })
         }),
         firebase.firestore().collection('ANNOTATE_APPDATA')
           .doc(this.userData.uid).collection('DATA')
           .doc(userAppDataDoc.id).set({
-          'cS': annotateRoot.recordStages[0],
+          // 'cS': annotateRoot.recordStages[0],
           'dS': userAppDataDoc.data()['dS'],
-          'fA': false
+          'fA': false,
+          'ver': annotateRoot.recordStages[0]
         })
       ]).then(() => {
         annotateRoot.participantId = userAppDataDoc.id;
