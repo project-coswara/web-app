@@ -13,6 +13,7 @@ import { TermsComponent } from "./terms/terms.component";
 import {AnnotateComponent} from "./annotate/annotate.component";
 import {LBComponent} from "./lb/lb.component";
 import { AnnotateV2Component } from './annotate-v2/annotate-v2.component';
+import { AnnotateV2TestComponent } from './annotate-v2-test/annotate-v2-test.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -26,7 +27,8 @@ const routes: Routes = [
   { path: 'permissions', component: PermissionsComponent },
   { path: 'team', component: TeamComponent },
   { path: 'terms', component: TermsComponent },
-  { path: 'annotate_v2', component:AnnotateV2Component}
+  { path: 'annotate_v2', component:AnnotateV2Component},
+  { path: 'annotate_v2_test', component:AnnotateV2TestComponent}
 ];
 
 @NgModule({
