@@ -1,20 +1,20 @@
 <div class="component-container">
-    <div class="waves">
+    <div *ngIf="!testDone" class="waves">
         <div id = "waves"></div>
     </div>
-    <div id = "wavetimeline" class="wavetimeline"></div>
-    <div class ="spectrogram" fxLayout="column" fxLayoutAlign=start center>
+    <div *ngIf="!testDone" id = "wavetimeline" class="wavetimeline"></div>
+    <div *ngIf="!testDone" class ="spectrogram" fxLayout="column" fxLayoutAlign=start center>
         <!-- <h5 style="text-align: center;" class="tab-sub-title" fxFlex.xs="100">Spectrogram</h5> -->
     <img [src]="spectrogram" class="spectrogram-img"> 
     </div>
     <div *ngIf="annotateLoader && testDone" fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
         <h4 class="sub-title">You have finished the Annotation Test phase. Thank You!</h4>
     </div>
-        <div *ngIf="annotateLoader" fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
+        <div *ngIf="annotateLoader && !testDone" fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
             <mat-progress-spinner [diameter]="50" mode="indeterminate"></mat-progress-spinner>
         </div>
         <div *ngIf="!annotateLoader && isEnoughPermissions" fxLayout="column" >
-            <h4 *ngIf="annotatorInfo.completed_test == 0">Thank you {{annotatorInfo.n.split(' ')[0]}} for being a part of Coswara!</h4>
+            <h4 *ngIf="annotatorInfo.completed_test == 0">Thank you {{annotatorInfo.n.split(' ')[0]}} for being a part of Coswara! Welcome to the Annotation Test tool</h4>
             <h4 *ngIf="annotatorInfo.completed_test > 0">Hurray!! You have annotated {{annotatorInfo.completed_test}} user(s)</h4>
             <div *ngIf="annotatedStageLoader" fxFlex="row" fxLayoutAlign="start center" fxFlexFill>
                 <mat-progress-spinner [diameter]="30" mode="indeterminate"></mat-progress-spinner>

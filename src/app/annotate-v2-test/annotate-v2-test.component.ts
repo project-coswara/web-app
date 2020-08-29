@@ -11,6 +11,7 @@ import * as WaveSurferRegions from 'wavesurfer.js/dist/plugin/wavesurfer.regions
 import * as WaveSurferMinimap from 'wavesurfer.js/dist/plugin/wavesurfer.minimap.js';
 import {UserDataService} from "../user-data.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import { INT_TYPE } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'cs-annotate-v2-test',
@@ -39,6 +40,7 @@ export class AnnotateV2TestComponent implements OnInit, AfterViewInit {
   regions_list = null
   spectrogramFlag = false;
   testDone = false;
+  testIDs =  ['KmMFugVd4Pa4fZW9FqWFcHBVovf2','V2l1rcUUl3VsRmbvIWuaazcBMF12'];
 
   titleDict = {
     'breathing-shallow': 'Breathing (shallow)',
@@ -104,6 +106,10 @@ export class AnnotateV2TestComponent implements OnInit, AfterViewInit {
                 this.testDone = true;
               }
               else{
+              // this.annotatorRef.get().then(function(doc) {
+              //   console.log("Doc data", doc.data()['completed_test'])
+              //   this.comp_test = doc.data()['completed_test'];
+              // });
               this.setupAnnotation(() => {
                 this.annotateLoader = false;
               })
@@ -230,7 +236,9 @@ export class AnnotateV2TestComponent implements OnInit, AfterViewInit {
           {'completed_test': this.annotatorInfo.completed_test}
         )
         batch.update(
-          firebase.firestore().collection('USER_APPDATA').doc(this.participantId),
+          // firebase.firestore().collection('ANNOTATE_APPDATA').child(this.annotatorRef.)doc(this.participantId),
+          // {'ver_test': 'img_uploaded'}
+          this.annotatorRef.collection('DATA').doc(this.participantId),
           {'ver_test': 'verified_test'}
         )
       }
@@ -240,16 +248,18 @@ export class AnnotateV2TestComponent implements OnInit, AfterViewInit {
         firebase.storage().ref('ANNOTATE_TEST_DATA').child('ANNOTATIONS').child(this.participantId)
           .child(`${this.currentStage}_${this.annotatorInfo['n'].split(" ")[0]}.json`).put(jsonBlob)
       ]).then(() => {
+        if (this.annotatorInfo['completed_test'] == 2) {
+          annotateRoot.annotateLoader = true;
+          annotateRoot.testDone = true;
+        }
+        else{
         if (nextStage == 'img_uploaded') {
           annotateRoot.annotateLoader = true;
           annotateRoot.setupAnnotation(() => {
             annotateRoot.annotateLoader = false
           })
-        } else {
-          if (this.annotatorInfo['completed_test'] == 2) {
-            annotateRoot.annotateLoader = true;
-            annotateRoot.testDone = true;
-          }
+        } 
+
           else{
           annotateRoot.currentStage = nextStage;
           annotateRoot.populateData(this.participantId, nextStage, annotateRoot.dateString);
@@ -355,19 +365,26 @@ export class AnnotateV2TestComponent implements OnInit, AfterViewInit {
 
   setupAnnotation(callback) {
     const annotateRoot = this;
+    console.log("TEST COUNT : ",this.annotatorInfo['completed_test'])
+    console.log(this.testIDs[0], this.testIDs[1])
+
     firebase.firestore().collection('USER_APPDATA')
-      .where('ver_test', '==', 'img_uploaded')
+      // .where('ver_test', '==', 'img_uploaded')
+      .doc(this.testIDs[this.annotatorInfo['completed_test']])
       // .orderBy('p')
       // .where('dS', '<=', '2020-05-06')
-      .limit(1).get().then((snapshot) => {
-      const userAppDataDoc = snapshot.docs[0]
+      // .limit(1)
+      .get().then((snapshot) => {
+      // const userAppDataDoc = snapshot.docs[0]
+      const userAppDataDoc = snapshot;
+      console.log(userAppDataDoc)
       console.log(userAppDataDoc.id, userAppDataDoc.data(), userAppDataDoc.ref)
       Promise.all([
-        firebase.firestore().runTransaction((transaction) => {
-          return transaction.get(userAppDataDoc.ref).then(() => {
-            transaction.update(userAppDataDoc.ref, {'ver_test': 'verification_in_process_v2', 'aU': annotateRoot.userData.uid})
-          })
-        }),
+        // firebase.firestore().runTransaction((transaction) => {
+        //   return transaction.get(userAppDataDoc.ref).then(() => {
+        //     transaction.update(userAppDataDoc.ref, {'ver_test': 'verification_in_process_v2', 'aU': annotateRoot.userData.uid})
+        //   })
+        // }),
         firebase.firestore().collection('ANNOTATE_APPDATA')
           .doc(this.userData.uid).collection('DATA')
           .doc(userAppDataDoc.id).set({
@@ -384,6 +401,7 @@ export class AnnotateV2TestComponent implements OnInit, AfterViewInit {
         callback(true)
       });
     })
+  // })
   }
 
   skipToNextUser(comment: string) {
