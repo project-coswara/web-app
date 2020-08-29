@@ -212,7 +212,7 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
       const batch = firebase.firestore().batch();
       batch.update(
         this.annotatorRef.collection('DATA').doc(this.participantId),
-        {'cS': nextStage, 'ver': nextStage, 'fA': nextStage == 'img_uploaded'}
+        {'ver': nextStage, 'fA': nextStage == 'img_uploaded'}
       )
       if (nextStage == 'img_uploaded') {
         this.annotatorInfo.completed_v2 += 1
