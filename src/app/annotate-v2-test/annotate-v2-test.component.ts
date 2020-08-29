@@ -106,10 +106,7 @@ export class AnnotateV2TestComponent implements OnInit, AfterViewInit {
                 this.testDone = true;
               }
               else{
-              // this.annotatorRef.get().then(function(doc) {
-              //   console.log("Doc data", doc.data()['completed_test'])
-              //   this.comp_test = doc.data()['completed_test'];
-              // });
+
               this.setupAnnotation(() => {
                 this.annotateLoader = false;
               })
@@ -365,8 +362,8 @@ export class AnnotateV2TestComponent implements OnInit, AfterViewInit {
 
   setupAnnotation(callback) {
     const annotateRoot = this;
-    console.log("TEST COUNT : ",this.annotatorInfo['completed_test'])
-    console.log(this.testIDs[0], this.testIDs[1])
+    // console.log("TEST COUNT : ",this.annotatorInfo['completed_test'])
+    // console.log(this.testIDs[0], this.testIDs[1])
 
     firebase.firestore().collection('USER_APPDATA')
       // .where('ver_test', '==', 'img_uploaded')
@@ -377,7 +374,7 @@ export class AnnotateV2TestComponent implements OnInit, AfterViewInit {
       .get().then((snapshot) => {
       // const userAppDataDoc = snapshot.docs[0]
       const userAppDataDoc = snapshot;
-      console.log(userAppDataDoc)
+      // console.log(userAppDataDoc)
       console.log(userAppDataDoc.id, userAppDataDoc.data(), userAppDataDoc.ref)
       Promise.all([
         // firebase.firestore().runTransaction((transaction) => {
