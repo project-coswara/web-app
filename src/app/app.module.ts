@@ -34,6 +34,7 @@ import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {LanguageDialogComponent} from "./language-dialog";
 import {AnnotateV2Component} from './annotate-v2/annotate-v2.component';
+import { AnnotateV2TestComponent } from './annotate-v2-test/annotate-v2-test.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -57,7 +58,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     AnnotateComponent,
     LBComponent,
     LanguageDialogComponent,
-    AnnotateV2Component
+    AnnotateV2Component,
+    AnnotateV2TestComponent
   ],
   imports: [
     BrowserAnimationsModule,

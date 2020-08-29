@@ -1,12 +1,16 @@
 
 <div class="component-container">
+    <div *ngIf="annotateLoader && testDone" fxLayoutAlign="center center">
+        <h4 class="sub-title">You have completed the Annotation test phase. Thank you!</h4>
+    </div>
 <div class="waves">
     <div id = "waves"></div>
-</div>
+
 <div id = "wavetimeline" class="wavetimeline"></div>
 <div class ="spectrogram" fxLayout="column" fxLayoutAlign=start center>
     <!-- <h5 style="text-align: center;" class="tab-sub-title" fxFlex.xs="100">Spectrogram</h5> -->
 <img [src]="spectrogram" class="spectrogram-img"> 
+</div>
 </div>
     <div *ngIf="annotateLoader" fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
         <mat-progress-spinner [diameter]="50" mode="indeterminate"></mat-progress-spinner>
