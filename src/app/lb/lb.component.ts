@@ -35,7 +35,7 @@ export class LBComponent implements OnInit {
     .orderBy('completed_v2', 'desc').limit(50).get().then((snapshots) => {
       snapshots.forEach((doc) => {
         const annotateData = doc.data();
-        if (annotateData.completed > 0) {
+        if (annotateData.completed_v2 > 0) {
           this.leaderBoardV2List.push({
             'name': annotateData.n,
             'pURL': annotateData.pURL,
