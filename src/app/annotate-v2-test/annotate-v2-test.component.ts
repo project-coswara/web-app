@@ -106,7 +106,6 @@ export class AnnotateV2TestComponent implements OnInit, AfterViewInit {
                 this.testDone = true;
               }
               else{
-
               this.setupAnnotation(() => {
                 this.annotateLoader = false;
               })
