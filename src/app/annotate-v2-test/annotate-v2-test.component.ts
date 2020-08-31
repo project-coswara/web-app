@@ -11,7 +11,6 @@ import * as WaveSurferRegions from 'wavesurfer.js/dist/plugin/wavesurfer.regions
 import * as WaveSurferMinimap from 'wavesurfer.js/dist/plugin/wavesurfer.minimap.js';
 import {UserDataService} from "../user-data.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import { INT_TYPE } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'cs-annotate-v2-test',
@@ -35,12 +34,12 @@ export class AnnotateV2TestComponent implements OnInit, AfterViewInit {
   timeOutObject = null;
   showSkipOption = false;
   waveSurfer = null
-  timeline = null
   spectrogram = null
   regions_list = null
   spectrogramFlag = false;
   testDone = false;
   testIDs =  ['KmMFugVd4Pa4fZW9FqWFcHBVovf2','V2l1rcUUl3VsRmbvIWuaazcBMF12'];
+  enablePlayButton = false;
 
   titleDict = {
     'breathing-shallow': 'Breathing (shallow)',
@@ -178,6 +177,7 @@ export class AnnotateV2TestComponent implements OnInit, AfterViewInit {
   }
 
   nextRecording() {
+    this.enablePlayButton = false;
     const annotateRoot = this;
     this.stopPlaying();
     this.annotatedStageLoader = true;
@@ -470,8 +470,14 @@ export class AnnotateV2TestComponent implements OnInit, AfterViewInit {
 
     }
   }
+  
+  imgLoaded() {
+    this.enablePlayButton = true;
+  }
+
 
   previousRecording() {
+    this.enablePlayButton = false;
     const currentStageIndex = this.recordStages.indexOf(this.currentStage)
     this.clearRegions();
     if (currentStageIndex > 0) {

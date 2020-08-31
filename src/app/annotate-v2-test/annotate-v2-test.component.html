@@ -5,7 +5,7 @@
     <div *ngIf="!testDone" id = "wavetimeline" class="wavetimeline"></div>
     <div *ngIf="!testDone" class ="spectrogram" fxLayout="column" fxLayoutAlign=start center>
         <!-- <h5 style="text-align: center;" class="tab-sub-title" fxFlex.xs="100">Spectrogram</h5> -->
-    <img [src]="spectrogram" class="spectrogram-img"> 
+    <img [src]="spectrogram" class="spectrogram-img" (load)="imgLoaded()"> 
     </div>
     <div *ngIf="annotateLoader && testDone" fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
         <h4 class="sub-title">You have finished the Annotation Test phase. Thank You!</h4>
@@ -32,7 +32,7 @@
                     </div>
                 </div>
                 <div *ngIf="recordingAudioState >= 0" class="content" fxLayout="column" fxLayoutAlign="start start">
-                    <div class="button-container" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutAlign.xs="start start">
+                    <div *ngIf="enablePlayButton" class="button-container" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutAlign.xs="start start">
                         <div *ngIf="recordingAudioState == 0 || recordingAudioState == 1" class="button" (click)="recordingAudioState=2; startPlaying();">PLAY AUDIO</div>
                         <div *ngIf="recordingAudioState == 2" class="button button-dark" (click)="recordingAudioState=0; stopPlaying();">STOP PLAYING</div>
                         <div *ngIf="recordingAudioState == 2" class="button button-dark" (click)="recordingAudioState=0; clearRegions();">CLEAR REGIONS</div>
@@ -40,7 +40,7 @@
                     <div *ngIf="recordingAudioState >= 0" class="button-container" fxLayout="row">
                         <div *ngIf="recordStages.indexOf(this.currentStage) > 0" class="button" (click)="previousRecording()">PREVIOUS</div>
                         <div fxFlex></div>
-                        <div *ngIf="annotateFormGroup.valid && (playedOnce || timeOut)" class="button" (click)="nextRecording()">NEXT</div>
+                        <!-- <div *ngIf="annotateFormGroup.valid && (playedOnce || timeOut)" class="button" (click)="nextRecording()">NEXT</div> -->
                     </div>
     
     
@@ -109,7 +109,10 @@
                             </mat-form-field>
                         </div>
                     </div>
-                </div>
+                    <div *ngIf="recordingAudioState >= 0" class="button-container" fxLayout="row">
+                        <div *ngIf="annotateFormGroup.valid && (playedOnce || timeOut)" class="button" (click)="nextRecording()">NEXT</div>
+                        </div>
+                    </div>
             </div>
         </div>
         <div *ngIf="!annotateLoader && !isEnoughPermissions">

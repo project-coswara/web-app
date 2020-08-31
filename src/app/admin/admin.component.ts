@@ -137,7 +137,7 @@ export class AdminComponent implements OnInit {
     this.dailyStatus = [];
   }
   getTotalStats(){
-    this.statsUrl="https://raw.githubusercontent.com/iiscleap/Coswara-Data/master/status_stats.json"
+    this.statsUrl="https://raw.githubusercontent.com/iiscleap/Coswara-Exp/master/status_stats.json"
     this.http.get(this.statsUrl).subscribe((res => {
       this.totalStatsData = res
       // this.totalStatsData = Array.of(this.totalStatsData)

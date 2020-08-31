@@ -34,10 +34,11 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
   timeOutObject = null;
   showSkipOption = false;
   waveSurfer = null
-  timeline = null
   spectrogram = null
   regions_list = null
   spectrogramFlag = false;
+  enablePlayButton = true;
+  testDone = false;
 
   titleDict = {
     'breathing-shallow': 'Breathing (shallow)',
@@ -69,6 +70,7 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
   annotatorRef = null;
   annotatorInfo = {
     completed_v2: 0,
+    completed_test: 0,
     n: 'Annotator Master'
   }
   db = firebase.firestore();
@@ -89,6 +91,9 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
               this.annotatorInfo['pURL'] = this.userData.photoURL;
               this.annotatorRef.set(this.annotatorInfo).then();
             }
+            this.checkTestDone();
+            if (this.testDone)
+            {
             if (currentDoc) {
               this.participantId = currentDoc.id;
               this.currentStage = currentDoc.data()['ver'];
@@ -100,6 +105,7 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
                 this.annotateLoader = false;
               })
             }
+          }
           })
         }
       } else {
@@ -167,6 +173,7 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
   }
 
   nextRecording() {
+    this.enablePlayButton = false;
     const annotateRoot = this;
     this.stopPlaying();
     this.annotatedStageLoader = true;
@@ -441,8 +448,18 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
 
     }
   }
+  imgLoaded() {
+    this.enablePlayButton = true;
+  }
+
+  checkTestDone() {
+    if (this.annotatorInfo['completed_test'] == 2) {
+    this.testDone = true;
+    }
+  }
 
   previousRecording() {
+    this.enablePlayButton = false;
     const currentStageIndex = this.recordStages.indexOf(this.currentStage)
     this.clearRegions();
     if (currentStageIndex > 0) {
