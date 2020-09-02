@@ -13,7 +13,7 @@
         <div *ngIf="annotateLoader && !testDone" fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
             <mat-progress-spinner [diameter]="50" mode="indeterminate"></mat-progress-spinner>
         </div>
-        <div *ngIf="!annotateLoader && isEnoughPermissions" fxLayout="column" >
+        <div *ngIf="!annotateLoader && isEnoughPermissions && !testDone" fxLayout="column" >
             <h4 *ngIf="annotatorInfo.completed_test == 0">Thank you {{annotatorInfo.n.split(' ')[0]}} for being a part of Coswara! Welcome to Annotation Test tool</h4>
             <h4 *ngIf="annotatorInfo.completed_test > 0">Hurray!! You have annotated {{annotatorInfo.completed_test}} user(s)</h4>
             <div *ngIf="annotatedStageLoader" fxFlex="row" fxLayoutAlign="start center" fxFlexFill>

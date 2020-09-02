@@ -1,6 +1,6 @@
 
 <div class="component-container">
-    <div *ngIf=!testDone>
+    <div *ngIf="annotatorInfo.completed_test < 2">
         <h4 class="sub-title">Please finish the test phase of Annotation first at the link below before proceeding. Thank You!</h4>
         <h4 class="sub-title" fxLayoutAlign="center"> <a href="https://coswara.iisc.ac.in/annotate_v2_test"> Annotation Test Phase</a></h4> 
     </div>

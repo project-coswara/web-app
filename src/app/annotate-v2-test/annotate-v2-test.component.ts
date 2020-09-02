@@ -93,6 +93,11 @@ export class AnnotateV2TestComponent implements OnInit, AfterViewInit {
               this.annotatorRef.set(this.annotatorInfo).then();
             }
             if (currentDoc) {
+              if (annotatorInfo['completed_test'] == 2)
+              {
+                this.annotateLoader = true;
+                this.testDone = true;
+              }
               this.participantId = currentDoc.id;
               this.currentStage = currentDoc.data()['ver_test'];
               this.dateString = currentDoc.data()['dS'];
