@@ -35,7 +35,7 @@
                     <div *ngIf="enablePlayButton" class="button-container" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutAlign.xs="start start">
                         <div *ngIf="recordingAudioState == 0 || recordingAudioState == 1" class="button" (click)="recordingAudioState=2; startPlaying();">PLAY AUDIO</div>
                         <div *ngIf="recordingAudioState == 2" class="button button-dark" (click)="recordingAudioState=0; stopPlaying();">STOP PLAYING</div>
-                        <div *ngIf="recordingAudioState == 2" class="button button-dark" (click)="recordingAudioState=0; clearRegions();">CLEAR REGIONS</div>
+                        <div *ngIf="recordingAudioState == 1 || recordingAudioState == 2" class="button button-dark" (click)="recordingAudioState=1; clearRegions();">CLEAR REGIONS</div>
                     </div>
                     <div *ngIf="recordingAudioState >= 0" class="button-container" fxLayout="row">
                         <div *ngIf="recordStages.indexOf(this.currentStage) > 0" class="button" (click)="previousRecording()">PREVIOUS</div>
