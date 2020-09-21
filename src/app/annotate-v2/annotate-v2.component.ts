@@ -349,7 +349,7 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
     const annotateRoot = this;
     firebase.firestore().collection('USER_APPDATA')
       .where('ver', '==', 'img_uploaded')
-      // .orderBy('p')
+      .orderBy('dS','desc')
       // .where('dS', '<=', '2020-05-06')
       .limit(1).get().then((snapshot) => {
       const userAppDataDoc = snapshot.docs[0]
