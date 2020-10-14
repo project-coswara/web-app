@@ -135,7 +135,7 @@
                     </div>
                     <div *ngIf="formControls.covidTestStatus.value==='n'">
                         <mat-radio-group class="radio-group" fxLayout="column" fxLayoutAlign="start start" [formControl]="formControls.currentStatus" required>
-                            <mat-radio-button class="tab-check-box" [value]="recovered_full" fxFlex="100"> {{ 'forms.option.recovered_neg_test' | translate }}</mat-radio-button>
+                            <mat-radio-button class="tab-check-box" [value]="optionList.currentStatusList[3]" fxFlex="100"> {{ 'forms.option.recovered_neg_test' | translate }}</mat-radio-button>
                             <mat-radio-button class="tab-check-box"
                                               [value]="hs"
                                               *ngFor="let hs of optionList.currentStatusList.slice(4,end)"
