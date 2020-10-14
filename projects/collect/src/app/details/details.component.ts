@@ -19,6 +19,7 @@ export class DetailsComponent implements OnInit {
   disableMetaData: boolean = true;
   finishedMetaData: boolean = false;
   submitLoader: boolean = false;
+  covidTest: boolean;
   userData = null;
   formControls = {
     age: new FormControl(null, [Validators.required, Validators.min(0), Validators.max(140)]),
@@ -29,6 +30,7 @@ export class DetailsComponent implements OnInit {
     country: new FormControl(null, [Validators.required]),
     state: new FormControl(null, [Validators.required]),
     locality: new FormControl(null),
+    covidTestStatus: new FormControl(null, [Validators.required]),
     currentStatus: new FormControl(null, [Validators.required]),
     conditionStatus: new FormControl(null, [Validators.required]),
     cold: new FormControl(false),
@@ -42,6 +44,7 @@ export class DetailsComponent implements OnInit {
     ht: new FormControl(false),
     ihd: new FormControl(false),
     diabetes: new FormControl(false),
+    diarrhoea: new FormControl(false),
     bd: new FormControl(false),
     st: new FormControl(false),
     mp: new FormControl(false),
@@ -60,6 +63,7 @@ export class DetailsComponent implements OnInit {
     }),
     healthStatus: new FormGroup({
       currentStatus: this.formControls.currentStatus,
+      covidTestStatus: this.formControls.covidTestStatus,
       conditionStatus: this.formControls.conditionStatus,
       cold: this.formControls.cold,
       cough: this.formControls.cough,
@@ -72,6 +76,7 @@ export class DetailsComponent implements OnInit {
       ht: this.formControls.ht,
       ihd: this.formControls.ihd,
       diabetes: this.formControls.diabetes,
+      diarrhoea: this.formControls.diarrhoea,
       bd: this.formControls.bd,
       st: this.formControls.st,
       mp: this.formControls.mp,
@@ -154,6 +159,7 @@ export class DetailsComponent implements OnInit {
         'rU': this.formControls.returningUser.value,
         'l_c': this.formControls.country.value,
         'l_s': this.formControls.state.value,
+        'test_status': this.formControls.covidTestStatus.value,
         'covid_status': this.formControls.currentStatus.value
       };
 

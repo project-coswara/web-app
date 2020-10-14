@@ -114,17 +114,49 @@
         </mat-tab>
         <mat-tab *ngIf="!finishedMetaData"  [disabled]="!formGroups.metadata.valid" label="{{'metadata.tabs.health_status' | translate}}">
             <div class="form" fxLayout="row wrap" fxLayoutAlign="start center">
+                <h5 class="tab-sub-title" fxFlex="100">{{ 'forms.label.taken_test' | translate}} <span>*</span></h5>
+                <div class="covid-test-status" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex="100">
+                    <mat-radio-group class="radio-group" fxLayout="column" fxLayoutAlign="start start" [formControl]="formControls.covidTestStatus" required>
+                        <mat-radio-button class="tab-check-box" value="p" fxFlex="13" fxFlex.xs="25"> {{ 'forms.option.pos_test' | translate }} </mat-radio-button>
+                        <mat-radio-button class="tab-check-box" value="n" fxFlex="13" fxFlex.xs="25"> {{ 'forms.option.neg_test' | translate }} </mat-radio-button>
+                        <mat-radio-button class="tab-check-box" value="na" fxFlex="13" fxFlex.xs="25"> {{ 'forms.option.no_test' | translate }} </mat-radio-button>
+                    </mat-radio-group>
                 <h5 class="tab-sub-title" fxFlex="100">{{'forms.label.current_status' | translate}} <span>*</span></h5>
                 <div class="current-status" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex="100">
+                    <div *ngIf="formControls.covidTestStatus.value==='p'">
                     <mat-radio-group class="radio-group" fxLayout="column" fxLayoutAlign="start start" [formControl]="formControls.currentStatus" required>
                         <mat-radio-button class="tab-check-box"
                                           [value]="hs"
-                                          *ngFor="let hs of optionList.currentStatusList"
+                                          *ngFor="let hs of optionList.currentStatusList.slice(0,4)"
                                           fxFlex="100">
                             {{'forms.option.' + hs | translate}}
                         </mat-radio-button>
                     </mat-radio-group>
+                    </div>
+                    <div *ngIf="formControls.covidTestStatus.value==='n'">
+                        <mat-radio-group class="radio-group" fxLayout="column" fxLayoutAlign="start start" [formControl]="formControls.currentStatus" required>
+                            <mat-radio-button class="tab-check-box" [value]="recoverd_full" fxFlex="100"> {{ 'forms.option.recovered_neg_test' | translate }}</mat-radio-button>
+                            <mat-radio-button class="tab-check-box"
+                                              [value]="hs"
+                                              *ngFor="let hs of optionList.currentStatusList.slice(4,end)"
+                                              fxFlex="100">
+                                {{'forms.option.' + hs | translate}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <div *ngIf="formControls.covidTestStatus.value==='na'">
+                        <mat-radio-group class="radio-group" fxLayout="column" fxLayoutAlign="start start" [formControl]="formControls.currentStatus" required>
+                            <mat-radio-button class="tab-check-box"
+                                              [value]="hs"
+                                              *ngFor="let hs of optionList.currentStatusList.slice(4,end)"
+                                              fxFlex="100">
+                                {{'forms.option.' + hs | translate}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
                 </div>
+
+            </div>
                 <div class="tab-content-spacer" fxFlex="100"></div>
                 <h5 class="tab-sub-title" fxFlex="100">{{'forms.label.health_conditions' | translate}} <span>*</span></h5>
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="100">

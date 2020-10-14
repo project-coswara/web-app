@@ -269,9 +269,9 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
 
   populateData(participantId, currentStage, dateString) {
     this.resetForm();
-    // participantId = '0zexHIcM7tQDdnFiEj2Eb0v3g212'
-    // currentStage = 'breathing-shallow'
-    // dateString = '2020-04-13'
+    // participantId = 'R9EJURFbJjRNEl9lmQZw1gfs08J3'
+    // currentStage = 'vowel-e'
+    // dateString = '2020-10-02'
     this.recordingAudioState = -1;
     firebase.storage().ref(`COLLECT_DATA/${dateString}/${participantId}/${currentStage}.wav`)
       .getDownloadURL().then((url) => {
