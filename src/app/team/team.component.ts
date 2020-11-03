@@ -32,7 +32,13 @@ export class TeamComponent implements OnInit {
     'designation': 'ra',
     'institution': 'iisc',
     'image': 'ananya.jpeg'
-  }, {
+  },{
+    'id': 'lancelot',
+    'name': 'Dr. Lancelot Mark Pinto',
+    'designation': 'resp',
+    'institution': 'hinduja',
+    'image': 'lancelot.jpg'
+  },{
     'id': 'neeraj',
     'name': 'Dr. Neeraj Sharma',
     'designation': 'post_doc',
@@ -50,12 +56,6 @@ export class TeamComponent implements OnInit {
     'designation': 'mo',
     'institution': 'iisc',
     'image': 'nirmala.jpg'
-  }, {
-    'id': 'raksheet',
-    'name': 'Raksheet Bhat',
-    'designation': 'sde',
-    'institution': 'upgrad',
-    'image': 'raksheet.jpg'
   }, {
     'id': 'rohit',
     'name': 'Rohit Kumar',
