@@ -26,12 +26,12 @@ export class TeamComponent implements OnInit {
     'designation': 'mtech_ai',
     'institution': 'iisc',
     'image': 'anand.png'
-  }, {
-    'id': 'anuroop',
-    'name': 'Anuroop Iyengar',
-    'designation': 'ceo',
-    'institution': 'cogknit',
-    'image': 'anuroop.jpg'
+  },{
+    'id':'ananya',
+    'name':'Ananya Muguli',
+    'designation': 'ra',
+    'institution': 'iisc',
+    'image': 'ananya.jpeg'
   }, {
     'id': 'neeraj',
     'name': 'Dr. Neeraj Sharma',
@@ -57,11 +57,11 @@ export class TeamComponent implements OnInit {
     'institution': 'upgrad',
     'image': 'raksheet.jpg'
   }, {
-    'id': 'shahbaz',
-    'name': 'Shahbaz Sultan',
-    'designation': 'sde',
-    'institution': 'cogknit',
-    'image': 'shahbaz.jpg'
+    'id': 'rohit',
+    'name': 'Rohit Kumar',
+    'designation': 'mtech_sp',
+    'institution': 'iisc',
+    'image': 'rohit.jpeg'
   }, {
     'id': 'shreyas',
     'name': 'Shreyas Ramoji',
