@@ -60,17 +60,19 @@ export class AnnotateV2TestComponent implements OnInit, AfterViewInit {
     audioQuality: new FormControl('clean_audio', [Validators.required]),
     audioCategory: new FormControl(this.recordStages[0], [Validators.required]),
     extraComments: new FormControl(null),
+    count: new FormControl(0)
   }
   annotateFormGroup = new FormGroup({
     volumeOkay: this.formControls.volumeOkay,
     continuousAudio: this.formControls.continuousAudio,
     audioQuality: this.formControls.audioQuality,
     audioCategory: this.formControls.audioCategory,
-    extraComments: this.formControls.extraComments
+    extraComments: this.formControls.extraComments,
+    count: this.formControls.count
   })
   annotatorRef = null;
   annotatorInfo = {
-    completed_test: 0,
+    completed_test:0,
     completed_v2:0,
     n: 'Annotator Master'
   }
@@ -93,6 +95,7 @@ export class AnnotateV2TestComponent implements OnInit, AfterViewInit {
               this.annotatorRef.set(this.annotatorInfo).then();
             }
             if (currentDoc) {
+              console.log(annotatorInfo)
               if (annotatorInfo['completed_test'] == 2)
               {
                 this.annotateLoader = true;
@@ -104,6 +107,7 @@ export class AnnotateV2TestComponent implements OnInit, AfterViewInit {
               this.populateData(this.participantId, this.currentStage, this.dateString);
               this.annotateLoader = false;
             } else {
+              console.log(annotatorInfo)
               if (annotatorInfo['completed_test'] == 2)
               {
                 this.annotateLoader = true;
@@ -211,8 +215,14 @@ export class AnnotateV2TestComponent implements OnInit, AfterViewInit {
         'cont': this.formControls.continuousAudio.value,
         'quality': this.formControls.audioQuality.value,
         'stage': this.formControls.audioCategory.value,
+        'count': this.formControls.count.value
         // 'regions_ids_array_keys':Object.keys(this.regions_list),
         // 'regions_ids_array_values':Object.values(this.regions_list)
+      }
+      // console.log(this.recordStages.indexOf(this.currentStage))
+      if(this.recordStages.indexOf(this.currentStage)>3)
+      {
+        stageParams['count'] = 0;
       }
       for (let i = 0; i < regions_ids_array.length; i++) {
         let l = i + 1;

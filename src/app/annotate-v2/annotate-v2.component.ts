@@ -59,13 +59,15 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
     audioQuality: new FormControl('clean_audio', [Validators.required]),
     audioCategory: new FormControl(this.recordStages[0], [Validators.required]),
     extraComments: new FormControl(null),
+    count: new FormControl(0)
   }
   annotateFormGroup = new FormGroup({
     volumeOkay: this.formControls.volumeOkay,
     continuousAudio: this.formControls.continuousAudio,
     audioQuality: this.formControls.audioQuality,
     audioCategory: this.formControls.audioCategory,
-    extraComments: this.formControls.extraComments
+    extraComments: this.formControls.extraComments,
+    count: this.formControls.count,
   })
   annotatorRef = null;
   annotatorInfo = {
@@ -202,8 +204,13 @@ export class AnnotateV2Component implements OnInit, AfterViewInit {
         'cont': this.formControls.continuousAudio.value,
         'quality': this.formControls.audioQuality.value,
         'stage': this.formControls.audioCategory.value,
+        'count': this.formControls.count.value,
         // 'regions_ids_array_keys':Object.keys(this.regions_list),
         // 'regions_ids_array_values':Object.values(this.regions_list)
+      }
+      if(this.recordStages.indexOf(this.currentStage)>3)
+      {
+        stageParams['count'] = 0;
       }
       for (let i = 0; i < regions_ids_array.length; i++) {
         let l = i + 1;

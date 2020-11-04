@@ -102,6 +102,14 @@
                                                   *ngFor="let rS of recordStages">{{titleDict[rS]}}</mat-radio-button>
                             </mat-radio-group>
                         </div>
+                        <div *ngIf="currentStage === 'breathing-shallow' || currentStage === 'breathing-deep' || currentStage === 'cough-shallow' || currentStage === 'cough-heavy'" class="tab-group" fxLayout="column" fxLayoutAlign="start start" fxFlex="100">
+                            <h6 *ngIf="currentStage === 'breathing-shallow' || currentStage === 'breathing-deep'" class="tab-sub-title" fxFlex.xs="100">No. of cycles (inhale+exhale) for {{titleDict[currentStage]}}?</h6>
+                            <h6 *ngIf="currentStage === 'cough-shallow' || currentStage === 'cough-heavy'" class="tab-sub-title" fxFlex.xs="100">No. of coughs for {{titleDict[currentStage]}}?</h6>
+                            <mat-form-field fxFlex="10" fxFlex.xs="27">
+                                <!-- <mat-label>Count</mat-label> -->
+                                <input type="number" [formControl]="formControls.count" matInput>
+                            </mat-form-field>
+                        </div>
                         <div class="tab-group" fxLayout="column" fxLayoutAlign="start start" fxFlex="100">
                             <mat-form-field class="full-width" appearance="outline">
                                 <mat-label>Comments</mat-label>
