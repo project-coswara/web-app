@@ -46,7 +46,7 @@ export class AppComponent implements OnInit {
       this.locale = queryParams.locale || this.locale;
       translateService.use(this.locale);
       this.infoDialog.closeAll();
-      if (false && !queryParams.locale) {
+      if (!queryParams.locale) {
         this.infoDialog.open(LanguageDialogComponent).afterClosed().subscribe((locale) => {
           if (locale) {
             this.router.navigate([], {

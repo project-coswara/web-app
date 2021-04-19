@@ -32,6 +32,9 @@ export class LanguageDialogComponent {
   }, {
     name: 'telugu',
     locale: 'te-IN'
+  }, {
+    name: 'spanish',
+    locale: 'es-US'
   }]
 
   locale = null;

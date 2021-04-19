@@ -1,4 +1,13 @@
-{
+{	
+    "language.english":"English",
+    "language.hindi":"हिन्दी",
+    "language.tamil":"தமிழ்",
+    "language.kannada":"ಕನ್ನಡ",
+    "language.marathi":"मराठी",
+    "language.malayalam":"മലയാളം",
+    "language.telugu":"తెలుగు",
+    "language.bengali":"বাংলা",
+    "language.spanish": "Español",
     "app.title": "coswara",
     "metadata.title.no_metadata": "రికార్డింగ్ ప్రక్రియ కొనసాగించడానికి క్రింది వివరాలు తెలియజేయండి!",
     "metadata.tabs.disclaimer": "తెలుసుకోండి",
