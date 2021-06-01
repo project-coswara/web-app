@@ -169,7 +169,8 @@ export class RecordComponent implements AfterViewInit, OnInit {
                 const updateAppData = {
                   'cS': stageId,
                   'cSD': new Date().toISOString(),
-                  'lV': environment.version
+                  'lV': environment.version,
+                  'pred': stageId
                 }
                 db.collection('USER_APPDATA')
                     .doc(recordRoot.userData.uid)
@@ -182,6 +183,7 @@ export class RecordComponent implements AfterViewInit, OnInit {
                 if (recordRoot.recordStages[recordRoot.recordStages.length - 2] == stageId) {
                   recordRoot.stepLoader = true;
                   updateAppData['cS'] = 'done';
+                  updateAppData['pred'] = 'in_process';
                   const batch = db.batch();
                   batch.update(
                       db.collection('USER_APPDATA')
