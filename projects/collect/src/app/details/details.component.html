@@ -36,20 +36,7 @@
                     <mat-error *ngIf="formControls.gender.hasError('required')">{{'forms.errors.required' | translate}}</mat-error>
                 </mat-form-field>
             </div>
-            <div class="tab-content-spacer" fxFlex></div>
-            <div class="tab-group" fxLayout="row wrap" fxLayoutAlign="start center" fxFlex>
-                <h5 class="tab-sub-title" fxFlex.xs="100">{{'forms.label.using_mask' | translate}} <span>*</span></h5>
-                <div fxFlex="5" fxHide.xs></div>
-                <mat-radio-group class="radio-group lang"
-                                 fxLayout="row wrap"
-                                 fxLayoutAlign="start center"
-                                 fxLayoutGap="10px" fxFlex
-                                 fxFlex.xs="100"
-                                 [formControl]="formControls.usingMask">
-                    <mat-radio-button class="tab-check-box" value="y" fxFlex="13" fxFlex.xs="25">{{'forms.options.yes' | translate}}</mat-radio-button>
-                    <mat-radio-button class="tab-check-box" value="n" fxFlex="13" fxFlex.xs="25">{{'forms.options.no' | translate}}</mat-radio-button>
-                </mat-radio-group>
-            </div>
+
             <div class="tab-content-spacer" fxFlex></div>
             <div class="tab-group" fxLayout="row wrap" fxLayoutAlign="start center" fxFlex>
                 <h5 class="tab-sub-title" fxFlex.xs="100">{{'forms.label.english_proficient' | translate}} <span>*</span></h5>
@@ -76,6 +63,49 @@
                                  [formControl]="formControls.returningUser">
                     <mat-radio-button class="tab-check-box" value="y" fxFlex="13" fxFlex.xs="25">{{'forms.options.yes' | translate}}</mat-radio-button>
                     <mat-radio-button class="tab-check-box" value="n" fxFlex="13" fxFlex.xs="25">{{'forms.options.no' | translate}}</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="tab-content-spacer" fxFlex></div>
+            <div class="tab-group" fxLayout="row wrap" fxLayoutAlign="start center" fxFlex>
+                <h5 class="tab-sub-title" fxFlex.xs="100">{{'forms.label.using_mask' | translate}} <span>*</span></h5>
+                <div fxFlex="5" fxHide.xs></div>
+                <mat-radio-group class="radio-group lang"
+                                 fxLayout="row wrap"
+                                 fxLayoutAlign="start center"
+                                 fxLayoutGap="10px" fxFlex
+                                 fxFlex.xs="100"
+                                 [formControl]="formControls.usingMask">
+                    <mat-radio-button class="tab-check-box" value="y" fxFlex="13" fxFlex.xs="25">{{'forms.options.yes' | translate}}</mat-radio-button>
+                    <mat-radio-button class="tab-check-box" value="n" fxFlex="13" fxFlex.xs="25">{{'forms.options.no' | translate}}</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="tab-content-spacer" fxFlex></div>
+            <div class="tab-group" fxLayout="row wrap" fxLayoutAlign="start center" fxFlex>
+                <h5 class="tab-sub-title" fxFlex.xs="100">{{'forms.label.smoking_habits' | translate}}<span>*</span></h5>
+                <div fxFlex="5" fxHide.xs></div>
+                <mat-radio-group class="radio-group lang"
+                                 fxLayout="row wrap"
+                                 fxLayoutAlign="start center"
+                                 fxLayoutGap="10px" fxFlex
+                                 fxFlex.xs="100"
+                                 [formControl]="formControls.smoker">
+                    <mat-radio-button class="tab-check-box" value="y" fxFlex="13" fxFlex.xs="25">{{'forms.options.yes' | translate}}</mat-radio-button>
+                    <mat-radio-button class="tab-check-box" value="n" fxFlex="13" fxFlex.xs="25">{{'forms.options.no' | translate}}</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="tab-content-spacer" fxFlex></div>
+            <div class="tab-group" fxLayout="row wrap" fxLayoutAlign="start center" fxFlex>
+                <h5 class="tab-sub-title" fxFlex.xs="100">{{'forms.label.vacc_status' | translate}} <span>*</span></h5>
+                <div fxFlex="5" fxHide.xs></div>
+                <mat-radio-group class="radio-group lang"
+                                 fxLayout="row wrap"
+                                 fxLayoutAlign="start center"
+                                 fxLayoutGap="10px" fxFlex
+                                 fxFlex.xs="100"
+                                 [formControl]="formControls.vaccinated">
+                    <mat-radio-button class="tab-check-box" value="y" fxFlex="15" fxFlex.xs="25">{{'forms.options.both_doses' | translate}} </mat-radio-button>
+                    <mat-radio-button class="tab-check-box" value="p" fxFlex="15" fxFlex.xs="25">{{'forms.options.one_dose' | translate}} </mat-radio-button>
+                    <mat-radio-button class="tab-check-box" value="n" fxFlex="15" fxFlex.xs="25">{{'forms.options.no_doses' | translate}} </mat-radio-button>
                 </mat-radio-group>
             </div>
             <div class="tab-content-spacer" fxFlex></div>
@@ -113,6 +143,55 @@
             </div>
         </mat-tab>
         <mat-tab *ngIf="!finishedMetaData"  [disabled]="!formGroups.metadata.valid" label="{{'metadata.tabs.health_status' | translate}}">
+            <div class="tab-content-spacer" fxFlex="100"></div>
+            <h5 class="tab-sub-title" fxFlex="100">{{'forms.label.symptoms' | translate}} <span>*</span></h5>
+            <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="100">
+                <div class="tab-check-box" *ngFor="let cb of optionList.currentHealthConditions1" fxFlex="32" fxFlex.xs="100">
+                    <mat-checkbox [formControl]="formControls[cb]" (change)="setValidityHC1()">{{'forms.option.' + cb | translate}}</mat-checkbox>
+                </div>
+                <div class="tab-check-box" fxFlex="32" fxFlex.xs="100">
+                    <mat-checkbox [formControl]="formControls.none_1" (change)="resetHealthConditions1Status()">{{'forms.option.none_of_the_above' | translate}}</mat-checkbox>
+                </div>
+            </div>   
+            <div class="tab-content-spacer" fxFlex="100"></div>
+            <h5 class="tab-sub-title" fxFlex="100">{{'forms.label.conditions' | translate}} <span>*</span></h5>
+            <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="100">
+                <div class="tab-check-box" *ngFor="let cb of optionList.currentHealthConditions2" fxFlex="32" fxFlex.xs="100">
+                    <mat-checkbox [formControl]="formControls[cb]" (change)="setValidityHC2()">{{'forms.option.' + cb | translate}}</mat-checkbox>
+                </div>
+                <div class="tab-check-box" fxFlex="32" fxFlex.xs="100">
+                    <mat-checkbox [formControl]="formControls.none_2" (change)="resetHealthConditions2Status()">{{'forms.option.none_of_the_above' | translate}}</mat-checkbox>
+                </div>
+            </div>
+            <div class="tab-content-spacer" fxFlex="100"></div>
+            <h5 class="tab-sub-title" fxFlex="100">{{'forms.label.resp_ail' | translate}} <span>*</span></h5>
+            <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="100">
+                <div class="tab-check-box" *ngFor="let cb of optionList.respAilments" fxFlex="32" fxFlex.xs="100">
+                    <mat-checkbox [formControl]="formControls[cb]" (change)="setValidityRA()">{{'forms.option.' + cb | translate}}</mat-checkbox>
+                </div>
+                <div class="tab-check-box" fxFlex="32" fxFlex.xs="100">
+                    <mat-checkbox [formControl]="formControls.none_3" (change)="resetRespAilStatus()">{{'forms.option.none_of_the_above' | translate}}</mat-checkbox>
+                </div>
+            </div>  
+            <div class="tab-content-spacer" fxFlex="100"></div>
+            <h5 class="tab-sub-title" fxFlex="100">{{'forms.label.pre_exist' | translate}} <span>*</span></h5>
+            <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="100">
+                <div class="tab-check-box" *ngFor="let cb of optionList.preexistingConditions" fxFlex="32" fxFlex.xs="100">
+                    <mat-checkbox [formControl]="formControls[cb]" (change)="setValidityPE()">{{'forms.option.' + cb | translate}}</mat-checkbox>
+                </div>
+                <div class="tab-check-box" fxFlex="32" fxFlex.xs="100">
+                    <mat-checkbox [formControl]="formControls.none_4" (change)="resetPreexistingStatus()">{{'forms.option.none_of_the_above' | translate}}</mat-checkbox>
+                </div>
+            </div>
+            
+            <div class="tab-footer" fxLayout="row" fxLayoutAlign="end center">
+                <div class="button" (click)="selectedIndex = selectedIndex - 1">{{'metadata.buttons.previous' | translate}}</div>
+                <div fxFlex></div>
+                <div *ngIf="formGroups.healthStatus.valid" class="button button-dark" (click)="formGroups.healthStatus.valid && (selectedIndex = selectedIndex + 1)">{{'metadata.buttons.next' | translate}}</div>
+            </div>
+        </mat-tab>
+
+        <mat-tab *ngIf="!finishedMetaData"  [disabled]="!formGroups.healthStatus.valid" label="COVID Test Status">
             <div class="form" fxLayout="row wrap" fxLayoutAlign="start center">
                 <h5 class="tab-sub-title" fxFlex="100">{{ 'forms.label.taken_test' | translate}} <span>*</span></h5>
                 <div class="covid-test-status" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex="100">
@@ -121,7 +200,46 @@
                         <mat-radio-button class="tab-check-box" value="n" fxFlex="13" fxFlex.xs="25"> {{ 'forms.option.neg_test' | translate }} </mat-radio-button>
                         <mat-radio-button class="tab-check-box" value="na" fxFlex="13" fxFlex.xs="25"> {{ 'forms.option.no_test' | translate }} </mat-radio-button>
                     </mat-radio-group>
-                <h5 class="tab-sub-title" fxFlex="100">{{'forms.label.current_status' | translate}} <span>*</span></h5>
+                </div>
+            </div>
+            <div class="form" *ngIf="formControls.covidTestStatus.value==='p' || formControls.covidTestStatus.value==='n'" fxLayout="row wrap" fxLayoutAlign="start center">
+                <h5 class="tab-sub-title" fxFlex="100">{{'forms.label.test_type' | translate}} <span>*</span></h5>
+                <div class="covid-test-status" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex="100">
+                    <mat-radio-group class="radio-group"
+                        fxLayout="row wrap"
+                        fxLayoutAlign="start center"
+                        fxLayoutGap="10px" fxFlex
+                        fxFlex.xs="100"
+                        [formControl]="formControls.testType">
+                        <mat-radio-button class="tab-check-box" value="rtpcr" fxFlex="15" fxFlex.xs="25">{{'forms.option.rtpcr' | translate}} </mat-radio-button>
+                        <mat-radio-button class="tab-check-box" value="rat" fxFlex="15" fxFlex.xs="25">{{'forms.option.rat' | translate}} </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+
+            <!-- <div class="tab-content-spacer" fxFlex="100"></div> -->
+            <div fxFlex="3" fxFlex.xs="5"></div>
+            <div class="form"  *ngIf="formControls.covidTestStatus.value==='p' || formControls.covidTestStatus.value==='n'" fxLayout="row wrap" fxLayoutAlign="start center">
+                <h5 class="tab-sub-title" fxFlex="100">{{'forms.label.when_test' | translate}}<span>*</span></h5>
+                <mat-form-field class="example-full-width" appearance="fill" fxFlex="15" fxFlex.xs="27" >
+                    <mat-label >{{'forms.label.test_date' | translate}} </mat-label>
+                    <input matInput [min]= "formControls.minTestDate.value" [max]="formControls.maxTestDate.value" [matDatepicker]="picker"  [(ngModel)]="formControls.testDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+            </div>
+            <!-- (dateInput)="handleTestDate($event)" -->
+            <div class="form" *ngIf="formControls.covidTestStatus.value==='n'" fxLayout="row wrap" fxLayoutAlign="start center">
+                <h5 class="tab-sub-title" fxFlex="100">{{'forms.label.prior_status' | translate}} <span>*</span></h5>
+                <div class="covid-test-status" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex="100">
+                    <mat-radio-group class="radio-group" fxLayout="column" fxLayoutAlign="start start" [formControl]="formControls.prior_status">
+                        <mat-radio-button class="tab-check-box" value="p" fxFlex="15" fxFlex.xs="25">{{'forms.option.prev_pos' | translate}} </mat-radio-button>
+                        <mat-radio-button class="tab-check-box" value="np" fxFlex="15" fxFlex.xs="25">{{'forms.option.never_pos' | translate}} </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+            <div class="form" fxLayout="row wrap" fxLayoutAlign="start center">
+             <h5 class="tab-sub-title" fxFlex="100">{{'forms.label.current_status' | translate}} <span>*</span></h5>
                 <div class="current-status" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex="100">
                     <div *ngIf="formControls.covidTestStatus.value==='p'">
                     <mat-radio-group class="radio-group" fxLayout="column" fxLayoutAlign="start start" [formControl]="formControls.currentStatus" required>
@@ -135,38 +253,65 @@
                     </div>
                     <div *ngIf="formControls.covidTestStatus.value==='n'">
                         <mat-radio-group class="radio-group" fxLayout="column" fxLayoutAlign="start start" [formControl]="formControls.currentStatus" required>
-                            <mat-radio-button class="tab-check-box" [value]="optionList.currentStatusList[3]" fxFlex="100"> {{ 'forms.option.recovered_neg_test' | translate }}</mat-radio-button>
-                            <mat-radio-button class="tab-check-box"
+                            <mat-radio-button class="tab-check-box" [value]="optionList.currentStatusList[5]" fxFlex="100"> {{ 'forms.option.no_resp_illness_exposed' | translate }}</mat-radio-button>
+                            <mat-radio-button class="tab-check-box" [value]="optionList.currentStatusList[6]" fxFlex="100"> {{ 'forms.option.not_exposed' | translate }}</mat-radio-button>
+                            <!-- <mat-radio-button class="tab-check-box"
                                               [value]="hs"
                                               *ngFor="let hs of optionList.currentStatusList.slice(4,7)"
                                               fxFlex="100">
                                 {{'forms.option.' + hs | translate}}
-                            </mat-radio-button>
+                            </mat-radio-button> -->
                         </mat-radio-group>
                     </div>
                     <div *ngIf="formControls.covidTestStatus.value==='na'">
                         <mat-radio-group class="radio-group" fxLayout="column" fxLayoutAlign="start start" [formControl]="formControls.currentStatus" required>
-                            <mat-radio-button class="tab-check-box"
+                            <mat-radio-button class="tab-check-box" [value]="optionList.currentStatusList[5]" fxFlex="100"> {{ 'forms.option.no_resp_illness_exposed' | translate }}</mat-radio-button>
+                            <mat-radio-button class="tab-check-box" [value]="optionList.currentStatusList[6]" fxFlex="100"> {{ 'forms.option.not_exposed' | translate }}</mat-radio-button>
+                            <!-- <mat-radio-button class="tab-check-box"
                                               [value]="hs"
                                               *ngFor="let hs of optionList.currentStatusList.slice(4,7)"
                                               fxFlex="100">
                                 {{'forms.option.' + hs | translate}}
-                            </mat-radio-button>
+                            </mat-radio-button> -->
                         </mat-radio-group>
+                    </div>
                     </div>
                 </div>
 
-            </div>
-                <div class="tab-content-spacer" fxFlex="100"></div>
-                <h5 class="tab-sub-title" fxFlex="100">{{'forms.label.health_conditions' | translate}} <span>*</span></h5>
-                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="100">
-                    <div class="tab-check-box" *ngFor="let cb of optionList.healthConditionList" fxFlex="32" fxFlex.xs="100">
-                        <mat-checkbox [formControl]="formControls[cb]" (change)="setValidity()">{{'forms.option.' + cb | translate}}</mat-checkbox>
-                    </div>
-                    <div class="tab-check-box" fxFlex="32" fxFlex.xs="100">
-                        <mat-checkbox [formControl]="formControls.none" (change)="resetStatus()">{{'forms.option.none_of_the_above' | translate}}</mat-checkbox>
-                    </div>
+                <div class="form" fxLayout="row wrap" fxLayoutAlign="start center" fxFlex>
+                    <h5 class="tab-sub-title" fxFlex="100">{{'forms.label.ct_scan' | translate}} <span>*</span></h5>
+                    <mat-radio-group class="radio-group"
+                                        fxLayout="row wrap"
+                                        fxLayoutAlign="start start"
+                                        fxLayoutGap="20px" fxFlex
+                                        fxFlex.xs="100"
+                                        [formControl]="formControls.ctScan">
+                        <mat-radio-button class="tab-check-box" value="y" fxFlex="15" fxFlex.xs="25">{{'forms.options.yes' | translate}}</mat-radio-button>
+                        <mat-radio-button class="tab-check-box" value="n" fxFlex="15" fxFlex.xs="25">{{'forms.options.no' | translate}}</mat-radio-button>
+                    </mat-radio-group>
                 </div>
+                <!-- <span>*</span> -->
+                <div class="form" *ngIf="formControls.ctScan.value==='y'" fxLayout="row wrap" fxLayoutAlign="start center">
+                    <h5 class="tab-sub-title" fxFlex.xs="100" fxLayout="row wrap" fxFlex="20">{{'forms.label.ct_score' | translate}}</h5>
+                    <mat-form-field fxFlex="10" fxFlex.xs="27" >
+                        <mat-label>{{'forms.label.ct_score_field' | translate}} </mat-label>
+                        <input type="number" [formControl]="formControls.ctScore" matInput required>
+                        <mat-error *ngIf="formControls.ctScore.hasError('min') || formControls.ctScore.hasError('max')">{{'forms.errors.ct_score.valid' | translate}} </mat-error>
+                    </mat-form-field>
+                </div>
+                
+                <div class="form"  *ngIf="formControls.ctScan.value==='y'" fxLayout="row wrap" fxLayoutAlign="start center">
+                    <h5 class="tab-sub-title" fxFlex="100" fxLayout="row wrap">{{'forms.label.ct_scan_date' | translate}} <span>*</span></h5>
+                    <mat-form-field class="example-full-width" appearance="fill" fxFlex="15" fxFlex.xs="27" >
+                        <mat-label >{{'forms.label.test_date' | translate}} </mat-label>
+                        <input matInput [min]= "formControls.minTestDate.value" [max]="formControls.maxTestDate.value" [matDatepicker]="picker" [(ngModel)]="formControls.ctDate">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                <!-- </div> -->
+            
+            <!-- </div> -->
+
                 <div fxLayout="row" fxLayoutAlign="end center" fxFlexFill>
                     <span class="smaller-text">{{'forms.errors.field_required' | translate}}</span>
                 </div>
@@ -175,7 +320,7 @@
                 <div *ngIf="!submitLoader" fxFlex="row" fxLayoutAlign="end center" fxFlexFill>
                     <div class="button" (click)="selectedIndex = selectedIndex - 1">{{'metadata.buttons.previous' | translate}}</div>
                     <div fxFlex></div>
-                    <div *ngIf="formGroups.metadata.valid && formGroups.healthStatus.valid"
+                    <div *ngIf="formGroups.metadata.valid && formGroups.healthStatus.valid && formGroups.covidStatus.valid"
                          class="button button-dark"
                          (click)="submitData()">
                         {{'metadata.buttons.submit' | translate}}

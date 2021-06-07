@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { TestAppRoutingModule } from './test-app-routing.module';
 import { TestAppComponent } from './test-app.component';
 import { AppModule } from "../../../../src/app/app.module";
+import {MAT_DATE_LOCALE} from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,7 @@ import { AppModule } from "../../../../src/app/app.module";
     BrowserModule,
     TestAppRoutingModule
   ],
-  providers: [],
+  providers: [{provide: MAT_DATE_LOCALE, useValue: 'en-GB'},],
   bootstrap: [TestAppComponent]
 })
 export class TestAppModule { }

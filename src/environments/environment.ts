@@ -27,5 +27,9 @@ export const general_option_list = {
 
 export const health_option_list = {
   current_status: ['positive_mild', 'positive_moderate', 'positive_asymp', 'recovered_full', 'resp_illness_not_identified', 'no_resp_illness_exposed', 'healthy'],
+  current_health_conditions_1: ['cold','cough','fever','diarrhoea','st'],
+  current_health_conditions_2: ['loss_of_smell', 'mp', 'ftg','bd'],
+  resp_ailments:['pneumonia','asthma', 'cld', 'others_resp'],
+  preexisting_conditions:['ht', 'ihd', 'diabetes','others_preexist'],
   conditions: ['cold', 'cough', 'fever', 'bd', 'st', 'mp', 'ftg', 'pneumonia', 'loss_of_smell', 'smoker', 'asthma', 'cld', 'ht', 'ihd', 'diabetes', 'diarrhoea'],
 };

@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
-
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
+import {formatDate} from '@angular/common';
 
 import {environment, general_option_list, health_option_list} from "../../../../../src/environments/environment";
 import {UserDataService} from "../../../../../src/app/user-data.service";
+import { CursorError } from '@angular/compiler/src/ml_parser/lexer';
 
 @Component({
   selector: 'cs-collect-details',
@@ -24,7 +25,7 @@ export class DetailsComponent implements OnInit {
   formControls = {
     age: new FormControl(null, [Validators.required, Validators.min(0), Validators.max(140)]),
     gender: new FormControl(null, [Validators.required]),
-    usingMask: new FormControl('n', [Validators.required]),
+    usingMask: new FormControl(null, [Validators.required]),
     englishProficient: new FormControl('y', [Validators.required]),
     returningUser: new FormControl('n'),
     country: new FormControl(null, [Validators.required]),
@@ -32,7 +33,19 @@ export class DetailsComponent implements OnInit {
     locality: new FormControl(null),
     covidTestStatus: new FormControl(null, [Validators.required]),
     currentStatus: new FormControl(null, [Validators.required]),
-    conditionStatus: new FormControl(null, [Validators.required]),
+    testDate: new FormControl(null),
+    minTestDate: new FormControl(new Date()),
+    maxTestDate: new FormControl(new Date()),
+    testType: new FormControl(false),
+    ctScan: new FormControl('n', [Validators.required]),
+    vaccinated: new FormControl(null, [Validators.required]),
+    ctScore: new FormControl(null,[Validators.min(0), Validators.max(25)]),
+    ctDate: new FormControl(null),
+    conditionStatus: new FormControl(null),
+    conditionStatus_1: new FormControl(null, [Validators.required]),
+    conditionStatus_2: new FormControl(null, [Validators.required]),
+    conditionStatus_3: new FormControl(null, [Validators.required]),
+    conditionStatus_4: new FormControl(null, [Validators.required]),
     cold: new FormControl(false),
     cough: new FormControl(false),
     fever: new FormControl(false),
@@ -49,28 +62,45 @@ export class DetailsComponent implements OnInit {
     st: new FormControl(false),
     mp: new FormControl(false),
     ftg: new FormControl(false),
-    none: new FormControl(false)
+    others_resp: new FormControl(false),
+    others_preexist: new FormControl(false),
+    none: new FormControl(false),
+    none_1: new FormControl(false),
+    none_2: new FormControl(false),
+    none_3: new FormControl(false),
+    none_4: new FormControl(false),
+    prior_status: new FormControl(false)
+
   };
   formGroups = {
     metadata: new FormGroup({
       age: this.formControls.age,
       gender: this.formControls.gender,
+      usingMask: this.formControls.usingMask,
       englishProficient: this.formControls.englishProficient,
       returningUser: this.formControls.returningUser,
+      vaccinated: this.formControls.vaccinated,
+      smoker: this.formControls.smoker,
       country: this.formControls.country,
       state: this.formControls.state,
       locality: this.formControls.locality
     }),
     healthStatus: new FormGroup({
-      currentStatus: this.formControls.currentStatus,
-      covidTestStatus: this.formControls.covidTestStatus,
-      conditionStatus: this.formControls.conditionStatus,
+      // currentStatus: this.formControls.currentStatus,
+      // covidTestStatus: this.formControls.covidTestStatus,
+      // testDate: this.formControls.testDate,
+      // rtpcr: this.formControls.rtpcr,
+      // ctScan: this.formControls.ctScan,
+      // conditionStatus: this.formControls.conditionStatus,
+      conditionStatus_1: this.formControls.conditionStatus_1,
+      conditionStatus_2: this.formControls.conditionStatus_2,
+      conditionStatus_3: this.formControls.conditionStatus_3,
+      conditionStatus_4: this.formControls.conditionStatus_4,
       cold: this.formControls.cold,
       cough: this.formControls.cough,
       fever: this.formControls.fever,
       pneumonia: this.formControls.pneumonia,
       loss_of_smell: this.formControls.loss_of_smell,
-      smoker: this.formControls.smoker,
       asthma: this.formControls.asthma,
       cld: this.formControls.cld,
       ht: this.formControls.ht,
@@ -81,7 +111,15 @@ export class DetailsComponent implements OnInit {
       st: this.formControls.st,
       mp: this.formControls.mp,
       ftg: this.formControls.ftg,
-    })
+      others_resp: this.formControls.others_resp,
+      others_preexist: this.formControls.others_preexist,
+    }),
+    covidStatus: new FormGroup({
+      currentStatus: this.formControls.currentStatus,
+      covidTestStatus: this.formControls.covidTestStatus, 
+      ctScan: this.formControls.ctScan,
+      testDate: this.formControls.testDate
+     })
   };
   optionList = {
     genderList: general_option_list.gender,
@@ -89,6 +127,10 @@ export class DetailsComponent implements OnInit {
     stateList: general_option_list.states,
     selectedStateList: [],
     currentStatusList: health_option_list.current_status,
+    currentHealthConditions1: health_option_list.current_health_conditions_1,
+    currentHealthConditions2: health_option_list.current_health_conditions_2,
+    respAilments: health_option_list.resp_ailments,
+    preexistingConditions: health_option_list.preexisting_conditions,
     healthConditionList: health_option_list.conditions
   };
 
@@ -115,6 +157,9 @@ export class DetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    let cur_date = new Date();
+    cur_date.setDate(cur_date.getDate()-180);
+    this.formControls.minTestDate.setValue(cur_date)
   }
 
   goToRecordPage() {
@@ -125,18 +170,85 @@ export class DetailsComponent implements OnInit {
     this.router.navigate(['thank-you'], {queryParamsHandling: 'merge'}).then();
   }
 
-  setValidity() {
-    this.formControls.conditionStatus.setValue(null);
+  // setValidity() {
+  //   this.formControls.conditionStatus.setValue(null);
+  //   let currentConditionStatus = false;
+  //   const detailsRoot = this;
+  //   this.optionList.healthConditionList.forEach(function (item) {
+  //     currentConditionStatus = currentConditionStatus || detailsRoot.formControls[item].value
+  //   })
+  //   currentConditionStatus = currentConditionStatus || this.formControls.none.value
+  //   if (currentConditionStatus) {
+  //     this.formControls.conditionStatus.setValue(true)
+  //   }
+  // }
+
+  setValidityHC1() {
+    this.formControls.conditionStatus_1.setValue(null);
     let currentConditionStatus = false;
     const detailsRoot = this;
-    this.optionList.healthConditionList.forEach(function (item) {
+    this.optionList.currentHealthConditions1.forEach(function (item) {
       currentConditionStatus = currentConditionStatus || detailsRoot.formControls[item].value
     })
-    currentConditionStatus = currentConditionStatus || this.formControls.none.value
+    currentConditionStatus = currentConditionStatus || this.formControls.none_1.value
     if (currentConditionStatus) {
-      this.formControls.conditionStatus.setValue(true)
+      this.formControls.conditionStatus_1.setValue(true)
     }
   }
+  setValidityHC2() {
+    this.formControls.conditionStatus_2.setValue(null);
+    let currentConditionStatus = false;
+    const detailsRoot = this;
+    this.optionList.currentHealthConditions2.forEach(function (item) {
+      currentConditionStatus = currentConditionStatus || detailsRoot.formControls[item].value
+    })
+    currentConditionStatus = currentConditionStatus || this.formControls.none_2.value
+    if (currentConditionStatus) {
+      this.formControls.conditionStatus_2.setValue(true)
+    }
+  }
+  setValidityRA() {
+    this.formControls.conditionStatus_3.setValue(null);
+    let currentConditionStatus = false;
+    const detailsRoot = this;
+    this.optionList.respAilments.forEach(function (item) {
+      currentConditionStatus = currentConditionStatus || detailsRoot.formControls[item].value
+    })
+    currentConditionStatus = currentConditionStatus || this.formControls.none_3.value
+    if (currentConditionStatus) {
+      this.formControls.conditionStatus_3.setValue(true)
+    }
+  }
+
+  setValidityPE() {
+    this.formControls.conditionStatus_4.setValue(null);
+    let currentConditionStatus = false;
+    const detailsRoot = this;
+    this.optionList.preexistingConditions.forEach(function (item) {
+      currentConditionStatus = currentConditionStatus || detailsRoot.formControls[item].value
+    })
+    currentConditionStatus = currentConditionStatus || this.formControls.none_4.value
+    if (currentConditionStatus) {
+      this.formControls.conditionStatus_4.setValue(true)
+    }
+  }
+
+  // handleTestDate(event) {
+  //   let date = event.value;
+  //   let new_date = new Date(String(date));
+  //   console.log(formatDate(new_date, 'yyyy-MM-dd','en-GB'))
+  //   console.log("Current date : ",this.formControls.testDate.value);
+  //   // this.formControls['testDate'] =  
+  //   this.formControls.testDate.setValue(formatDate(new_date, 'yyyy-MM-dd','en-GB'));
+  //   // this.formControls.testDate.updateValueAndValidity();
+  // } 
+
+  // handleCTDate(event) {
+  //   let date = event.value;
+  //   let new_date = new Date(String(date));
+  //   this.formControls.ctDate.setValue(formatDate(new_date, 'yyyy-MM-dd','en-GB'));
+  // } 
+
 
   startOver() {
     this.submitLoader = true;
@@ -145,7 +257,7 @@ export class DetailsComponent implements OnInit {
 
   submitData() {
     let detailsRoot = this;
-    if (this.userData && this.formGroups.metadata.valid && this.formGroups.healthStatus.valid) {
+    if (this.userData && this.formGroups.metadata.valid && this.formGroups.healthStatus.valid && this.formGroups.covidStatus.valid) {
       this.submitLoader = true;
       const updateDate = new Date().toISOString();
       const dateString = updateDate.substring(0, 10)
@@ -160,15 +272,85 @@ export class DetailsComponent implements OnInit {
         'l_c': this.formControls.country.value,
         'l_s': this.formControls.state.value,
         'test_status': this.formControls.covidTestStatus.value,
-        'covid_status': this.formControls.currentStatus.value
+        'covid_status': this.formControls.currentStatus.value,
+        'vacc': this.formControls.vaccinated.value,
+        'smoker': this.formControls.smoker.value,
+        'ctScan': this.formControls.ctScan.value
       };
 
       if (detailsRoot.formControls.locality.value) {
         userMetaData['l_l'] = detailsRoot.formControls.locality.value;
       }
 
-      if (!this.formControls.none.value) {
-        this.optionList.healthConditionList.forEach(function (item) {
+      if (detailsRoot.formControls.covidTestStatus.value !='na') {
+        userMetaData['testType'] = detailsRoot.formControls.testType.value;
+        let new_date = new Date(String(detailsRoot.formControls.testDate));
+        userMetaData['test_date'] = formatDate(new_date, 'yyyy-MM-dd','en-GB');
+      }
+
+      if (detailsRoot.formControls.ctScan.value == 'y') {
+        let new_date = new Date(String(detailsRoot.formControls.ctDate));
+        userMetaData['ctDate'] = formatDate(new_date, 'yyyy-MM-dd','en-GB');
+        userMetaData['ctScore'] = detailsRoot.formControls.ctScore.value;
+      }
+
+      // if (!this.formControls.none.value) {
+      //   this.optionList.healthConditionList.forEach(function (item) {
+      //     if (detailsRoot.formControls[item].value) {
+      //       userMetaData[item] = true;
+      //     }
+      //   })
+      // }
+
+
+      if (detailsRoot.formControls.covidTestStatus.value == 'n') {
+        if (detailsRoot.optionList.currentStatusList.indexOf(detailsRoot.formControls.currentStatus.value)==5) {
+          userMetaData['covid_status'] = 'no_resp_illness_exposed';
+        }
+        else {
+          if (detailsRoot.formControls.prior_status.value == 'p') {
+            userMetaData['covid_status'] = 'recovered_full';
+          }
+          else {
+            userMetaData['covid_status'] = 'healthy';
+          }
+        }
+      }
+
+      if (userMetaData['covid_status'] == 'healthy')
+      {
+        if (!this.formControls.none_3.value) {
+          console.log("Inside resp illness")
+          userMetaData['covid_status'] = 'resp_illness_not_identified';
+        }
+      }
+
+      if (!this.formControls.none_1.value) {
+        this.optionList.currentHealthConditions1.forEach(function (item) {
+          if (detailsRoot.formControls[item].value) {
+            userMetaData[item] = true;
+          }
+        })
+      }
+
+      if (!this.formControls.none_2.value) {
+        this.optionList.currentHealthConditions2.forEach(function (item) {
+          if (detailsRoot.formControls[item].value) {
+            userMetaData[item] = true;
+          }
+        })
+      }
+
+      if (!this.formControls.none_3.value) {
+        this.optionList.respAilments.forEach(function (item) {
+          if (detailsRoot.formControls[item].value) {
+            userMetaData[item] = true;
+          }
+        })
+      }
+
+      if (!this.formControls.none_4.value) {
+        this.optionList.preexistingConditions.forEach(function (item) {
           if (detailsRoot.formControls[item].value) {
             userMetaData[item] = true;
           }
@@ -208,19 +390,81 @@ export class DetailsComponent implements OnInit {
       ];
   };
 
-  resetStatus() {
+  // resetStatus() {
+  //   const detailsRoot = this;
+  //   if (this.formControls.none.value) {
+  //     this.optionList.healthConditionList.forEach(function (item) {
+  //       detailsRoot.formControls[item].disable();
+  //       detailsRoot.formControls[item].setValue(false);
+  //     })
+  //     this.formControls.conditionStatus.setValue(true)
+  //   } else {
+  //     this.optionList.healthConditionList.forEach(function (item) {
+  //       detailsRoot.formControls[item].enable();
+  //     })
+  //     this.formControls.conditionStatus.setValue(null)
+  //   }
+  // }
+
+  resetHealthConditions1Status() {
     const detailsRoot = this;
-    if (this.formControls.none.value) {
-      this.optionList.healthConditionList.forEach(function (item) {
+    if (this.formControls.none_1.value) {
+      this.optionList.currentHealthConditions1.forEach(function (item) {
         detailsRoot.formControls[item].disable();
         detailsRoot.formControls[item].setValue(false);
       })
-      this.formControls.conditionStatus.setValue(true)
+      this.formControls.conditionStatus_1.setValue(true)
     } else {
-      this.optionList.healthConditionList.forEach(function (item) {
+      this.optionList.currentHealthConditions1.forEach(function (item) {
         detailsRoot.formControls[item].enable();
       })
-      this.formControls.conditionStatus.setValue(null)
+      this.formControls.conditionStatus_1.setValue(null)
+    }
+  }
+
+  resetHealthConditions2Status() {
+    const detailsRoot = this;
+    if (this.formControls.none_2.value) {
+      this.optionList.currentHealthConditions2.forEach(function (item) {
+        detailsRoot.formControls[item].disable();
+        detailsRoot.formControls[item].setValue(false);
+      })
+      this.formControls.conditionStatus_2.setValue(true)
+    } else {
+      this.optionList.currentHealthConditions2.forEach(function (item) {
+        detailsRoot.formControls[item].enable();
+      })
+      this.formControls.conditionStatus_2.setValue(null)
+    }
+  }
+  resetRespAilStatus() {
+    const detailsRoot = this;
+    if (this.formControls.none_3.value) {
+      this.optionList.respAilments.forEach(function (item) {
+        detailsRoot.formControls[item].disable();
+        detailsRoot.formControls[item].setValue(false);
+      })
+      this.formControls.conditionStatus_3.setValue(true)
+    } else {
+      this.optionList.respAilments.forEach(function (item) {
+        detailsRoot.formControls[item].enable();
+      })
+      this.formControls.conditionStatus_3.setValue(null)
+    }
+  }
+  resetPreexistingStatus() {
+    const detailsRoot = this;
+    if (this.formControls.none_4.value) {
+      this.optionList.preexistingConditions.forEach(function (item) {
+        detailsRoot.formControls[item].disable();
+        detailsRoot.formControls[item].setValue(false);
+      })
+      this.formControls.conditionStatus_4.setValue(true)
+    } else {
+      this.optionList.preexistingConditions.forEach(function (item) {
+        detailsRoot.formControls[item].enable();
+      })
+      this.formControls.conditionStatus_4.setValue(null)
     }
   }
 }

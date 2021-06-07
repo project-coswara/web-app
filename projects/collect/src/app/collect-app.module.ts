@@ -26,6 +26,7 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {LanguageDialogComponent} from "./language-dialog";
+import { MAT_DATE_LOCALE } from '@angular/material';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -71,7 +72,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         })
     ],
   entryComponents: [LanguageDialogComponent],
-  providers: [],
+  providers: [{provide: MAT_DATE_LOCALE, useValue: 'en-GB'},],
   bootstrap: [CollectAppComponent]
 })
 export class CollectAppModule { }
