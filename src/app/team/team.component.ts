@@ -33,6 +33,12 @@ export class TeamComponent implements OnInit {
     'institution': 'iisc',
     'image': 'ananya.jpeg'
   },{
+    'id':'chandrakiran',
+    'name': 'Dr. Chandrakiran C',
+    'designation': 'ent',
+    'institution': 'msrmc',
+    'image': 'chandrakiran.jpeg'
+  },{
     'id': 'lancelot',
     'name': 'Dr. Lancelot Mark Pinto',
     'designation': 'resp',

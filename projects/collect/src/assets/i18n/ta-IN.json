@@ -140,6 +140,8 @@
  "forms.label.using_mask": "நீங்கள் இப்பொழுது முகமூடி அணிந்திருக்கிறீர்களா??",
 	"forms.option.bd": "சுவாச சிரமங்கள்",
 	"forms.option.st": "தொண்டை வலி",
+    "forms.option.ftg":"களைப்ப",
+    "forms.option.mp":"தசை வலி",
     "forms.options.both_doses": "2 அளவுகள்",
     "forms.options.one_dose": "1 டோஸ்",
     "forms.options.no_doses": "முடிக்கவில்லை",
@@ -147,7 +149,6 @@
     "forms.option.rat": "RAT",
     "forms.option.prev_pos": "முன்பு நேர்மறை சோதனை, ஆனால் இப்போது எதிர்மறை சோதனை",
     "forms.option.never_pos": "நேர்மறையை ஒருபோதும் சோதிக்கவில்லை",
-
     "forms.option.others_resp": "மற்றவைகள்",
     "forms.option.others_preexist": "மற்றவைகள்"
 }

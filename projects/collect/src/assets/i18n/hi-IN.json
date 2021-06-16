@@ -141,6 +141,8 @@
  "forms.label.using_mask": "क्या आपने अभी मास्क पहना है?",
     "forms.option.bd": "साँस की तकलीफे",
     "forms.option.st": "गले में खराश",
+	"forms.option.ftg": "थकान",
+	"forms.option.mp":"मांसपेशियों में दर्द",
 	"forms.options.both_doses": "2 खुराक",
 	"forms.options.one_dose": "1 खुराक",
 	"forms.options.no_doses": "नहीं किया",
@@ -148,7 +150,6 @@
 	"forms.option.rat": "RAT",
 	"forms.option.prev_pos": "पहले सकारात्मक परीक्षण किया गया था, लेकिन अब नकारात्मक परीक्षण किया गया है",
 	"forms.option.never_pos": "कभी सकारात्मक परीक्षण नहीं किया",
-
 	"forms.option.others_resp": "अन्य",
 	"forms.option.others_preexist": "अन्य"
 }

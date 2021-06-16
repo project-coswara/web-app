@@ -144,6 +144,8 @@
  "forms.label.using_mask": "നിങ്ങൾ ഇപ്പോൾ മാസ്ക് ധരിക്കുന്നുണ്ടോ?",
     "forms.option.bd": "ശ്വസിക്കാനുള്ള ബുദ്ധിമുട്ടുകൾ",
     "forms.option.st": "തൊണ്ടവേദന",
+    "forms.option.ftg": "ക്ഷീണം",
+    "forms.option.mp": "പേശി വേദന",
     "forms.options.both_doses": "2 ഡോസുകൾ",
     "forms.options.one_dose": "1 ഡോസ്",
     "forms.options.no_doses": "ചെയ്തിട്ടില്ല",
@@ -151,7 +153,6 @@
     "forms.option.rat": "RAT",
     "forms.option.prev_pos": "മുമ്പ് പോസിറ്റീവ് പരീക്ഷിച്ചു, പക്ഷേ ഇപ്പോൾ നെഗറ്റീവ് പരീക്ഷിച്ചു",
     "forms.option.never_pos": "ഒരിക്കലും പോസിറ്റീവ് പരീക്ഷിച്ചിട്ടില്ല",
-
     "forms.option.others_resp": "മറ്റുള്ളവർ",
     "forms.option.others_preexist": "മറ്റുള്ളവർ"
 }

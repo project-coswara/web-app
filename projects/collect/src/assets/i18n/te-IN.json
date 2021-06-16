@@ -126,6 +126,8 @@
     "forms.label.using_mask": "మీరు ఇప్పుడు ముసుగు ధరించారా?",
     "forms.option.bd": "శ్వాస తీసుకోవడంలో ఇబ్బందులు",
     "forms.option.st": "గొంతు మంట",
+    "forms.option.ftg": "అలసట",
+    "forms.option.mp": "కండరాల నొప్పి",
     "forms.label.smoking_habits": "మీకు ధూమపాన అలవాటు ఉందా?",
     "forms.label.vacc_status": "టీకా స్థితి?",
     "forms.label.symptoms": "మీకు ఈ లక్షణాలు ఏమైనా ఉన్నాయా?",
