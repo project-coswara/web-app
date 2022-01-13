@@ -1,5 +1,18 @@
 @import "../../styles";
-
+.score {
+  border: @border_line;
+  width: 100%;
+  padding: 10px;
+}
+.score-loader-content { padding-left: 15px }
+.score-loader-content .main { margin: 0 }
+.score-value { margin-right: 20px }
+.score-value-box {
+  padding: 20px 15px;
+  background: @color_dark;
+  color: @color_lighter;
+  font-size: @text_bigger_size;
+}
 .user-id {
   margin: 25px auto;
   width: 100%;
@@ -28,4 +41,5 @@
 @media(max-width: 768px) {
   .feedback { width: 100%; }
   .warning-box .material-icons { margin-right: 10px; }
+  .score-value { margin: 10px 0 15px; }
 }

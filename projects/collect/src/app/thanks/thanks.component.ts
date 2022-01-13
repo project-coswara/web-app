@@ -21,6 +21,9 @@ export class ThanksComponent implements OnInit {
   userAppData = null;
   isOkay = true;
   showMainLoader = true;
+  scoreData  = null
+  viewScore = false
+  db = firebase.firestore();
 
   recordStages = ['breathing-shallow', 'breathing-deep', 'cough-shallow', 'cough-heavy', 'vowel-a', 'vowel-e', 'vowel-o',
     'counting-normal', 'counting-fast'];
@@ -32,6 +35,18 @@ export class ThanksComponent implements OnInit {
       this.userData = userData;
       this.userDataService.getAppData().subscribe(userAppData => {
         this.userAppData = userAppData;
+
+        const scoreDataRef = this.db.collection('SCORE_DATA').doc(this.userData.uid)
+        scoreDataRef.onSnapshot(doc  => {
+          if(!doc.exists) {
+            scoreDataRef.set({
+              'dS': this.userAppData.dS,
+              'm':  'Initializing'
+            }).then()
+          }
+          this.scoreData = doc.data()
+        })
+
         let isOkay = 0
         let promises = []
         let isCompleted = this.userAppData && (this.recordStages.indexOf(this.userAppData.cS)  < 0)

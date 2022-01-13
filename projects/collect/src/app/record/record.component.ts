@@ -197,6 +197,14 @@ export class RecordComponent implements AfterViewInit, OnInit {
                           .doc(recordRoot.userData.uid),
                       {'iF': true}
                   );
+                  batch.set(
+                      db.collection('SCORE_DATA')
+                          .doc(recordRoot.userData.uid),
+                      {
+                        'dS': recordRoot.userAppData.dS,
+                        'm': 'Initializing'
+                      }
+                  )
                   batch.commit().then(() => {
                     recordRoot.userAppData = Object.assign(recordRoot.userAppData, updateAppData)
                     recordRoot.userDataService.sendAppData(recordRoot.userAppData);

@@ -35,6 +35,9 @@ export class LanguageDialogComponent {
   }, {
     name: 'spanish',
     locale: 'es-US'
+  }, {
+    name: 'oriya',
+    locale: 'or-IN'
   }]
 
   locale = null;

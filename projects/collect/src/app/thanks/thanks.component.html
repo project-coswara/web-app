@@ -8,6 +8,45 @@
         <div class="box">{{userData.uid}}</div>
         <div *ngIf="!isOkay" class="color-red small-text">There is some issue with your recordings</div>
     </div>
+    <div class="score" fxLayout="row" fxLayoutAlign="start center">
+        <div *ngIf="!viewScore">
+	    This testing tool for COVID-19 diagnosis is not yet approved by regulatory authorities.<br>
+	    The Project COSWARA team is not liable for any actions taken based on the score outputs.<br><br>
+	    A high score does not necessarily imply a COVID-19 positive result and similarly, a low score does not necessarily imply a COVID-19 negative result.<br>
+	    All state, central as well as local administration rules must be followed for COVID-19 testing.<br><br>
+            <button (click)="viewScore = true">Agree and view score</button>
+        </div>
+        <div *ngIf="viewScore && scoreData && !scoreData.score" class="score-loader" fxLayout="row" fxLayoutAlign="center center">
+            <mat-progress-spinner [diameter]="60" mode="indeterminate"></mat-progress-spinner>
+            <div class="score-loader-content">
+                <h5 class="main">Computing your score</h5>
+                <div class="small-text">{{scoreData.m}}</div>
+            </div>
+        </div>
+        <div *ngIf="viewScore && scoreData.score" class="score-view" fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign="center center">
+            <div class="score-value" fxLayout="row" fxLayoutAlign="center center">
+	    <!--
+                <h5 class="main">Covid 19 probability score  :</h5>
+	    -->
+                <div class="score-value-box">Covid-19 probability score : {{scoreData.score.toFixed(2)}}</div>
+            </div>
+	    <!--
+            <div class="score-desc" fxFlex>
+                <div *ngIf="scoreData.score < 0.4" class="score-legend">
+		    You have a low chance of having Covid'19.
+                </div>
+                <div *ngIf="scoreData.score >= 0.4 && scoreData.score < 0.6" class="score-legend">
+		    You have a moderate chance of having Covid'19.
+                </div>
+                <div *ngIf="scoreData.score >= 0.6 && scoreData.score < 0.8" class="score-legend">
+		    You have a high chance of having Covid'19.
+                </div>
+                <div *ngIf="scoreData.score >= 0.8" class="score-legend">
+		    You have a extremely high chance of having Covid'19.
+                </div>
+            </div> -->
+        </div>
+    </div>
     <div class="thank-you-footer">
         <div *ngIf="!signOutLoader" class="button" (click)="startSession()">{{'thanks.button.start_new_session' | translate}}</div>
         <mat-progress-spinner *ngIf="signOutLoader" [diameter]="30" mode="indeterminate"></mat-progress-spinner>
