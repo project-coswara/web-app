@@ -9,14 +9,18 @@
         <div *ngIf="!isOkay" class="color-red small-text">There is some issue with your recordings</div>
     </div>
     <div class="score" fxLayout="row" fxLayoutAlign="start center">
-        <div *ngIf="scoreData && !scoreData.score" class="score-loader" fxLayout="row" fxLayoutAlign="center center">
+        <div *ngIf="!viewScore">
+            Do the declaration here!
+            <button (click)="viewScore = true">Agree</button>
+        </div>
+        <div *ngIf="viewScore && scoreData && !scoreData.score" class="score-loader" fxLayout="row" fxLayoutAlign="center center">
             <mat-progress-spinner [diameter]="60" mode="indeterminate"></mat-progress-spinner>
             <div class="score-loader-content">
                 <h5 class="main">Computing your score</h5>
                 <div class="small-text">{{scoreData.m}}</div>
             </div>
         </div>
-        <div *ngIf="scoreData.score" class="score-view" fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign="center center">
+        <div *ngIf="viewScore && scoreData.score" class="score-view" fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign="center center">
             <div class="score-value" fxLayout="row" fxLayoutAlign="center center">
                 <div class="score-value-box">{{scoreData.score}}</div>
             </div>
