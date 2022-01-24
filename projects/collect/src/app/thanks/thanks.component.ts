@@ -22,6 +22,7 @@ export class ThanksComponent implements OnInit {
   isOkay = true;
   showMainLoader = true;
   scoreData  = null
+  viewScore = false
   db = firebase.firestore();
 
   recordStages = ['breathing-shallow', 'breathing-deep', 'cough-shallow', 'cough-heavy', 'vowel-a', 'vowel-e', 'vowel-o',
