@@ -196,13 +196,14 @@
                 <h5 class="tab-sub-title" fxFlex="100">{{ 'forms.label.taken_test' | translate}} <span>*</span></h5>
                 <div class="covid-test-status" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex="100">
                     <mat-radio-group class="radio-group" fxLayout="column" fxLayoutAlign="start start" [formControl]="formControls.covidTestStatus" required>
+                        <mat-radio-button class="tab-check-box" value="ut" fxFlex="13" fxFlex.xs="25"> {{ 'forms.option.under_test' | translate }} </mat-radio-button>
                         <mat-radio-button class="tab-check-box" value="p" fxFlex="13" fxFlex.xs="25"> {{ 'forms.option.pos_test' | translate }} </mat-radio-button>
                         <mat-radio-button class="tab-check-box" value="n" fxFlex="13" fxFlex.xs="25"> {{ 'forms.option.neg_test' | translate }} </mat-radio-button>
                         <mat-radio-button class="tab-check-box" value="na" fxFlex="13" fxFlex.xs="25"> {{ 'forms.option.no_test' | translate }} </mat-radio-button>
                     </mat-radio-group>
                 </div>
             </div>
-            <div class="form" *ngIf="formControls.covidTestStatus.value==='p' || formControls.covidTestStatus.value==='n'" fxLayout="row wrap" fxLayoutAlign="start center">
+            <div class="form" *ngIf="formControls.covidTestStatus.value==='p' || formControls.covidTestStatus.value==='n' || formControls.covidTestStatus.value==='ut'" fxLayout="row wrap" fxLayoutAlign="start center">
                 <h5 class="tab-sub-title" fxFlex="100">{{'forms.label.test_type' | translate}} <span>*</span></h5>
                 <div class="covid-test-status" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex="100">
                     <mat-radio-group class="radio-group"
@@ -219,7 +220,7 @@
 
             <!-- <div class="tab-content-spacer" fxFlex="100"></div> -->
             <div fxFlex="3" fxFlex.xs="5"></div>
-            <div class="form"  *ngIf="formControls.covidTestStatus.value==='p' || formControls.covidTestStatus.value==='n'" fxLayout="row wrap" fxLayoutAlign="start center">
+            <div class="form"  *ngIf="formControls.covidTestStatus.value==='p' || formControls.covidTestStatus.value==='n' || formControls.covidTestStatus.value==='ut'" fxLayout="row wrap" fxLayoutAlign="start center">
                 <h5 class="tab-sub-title" fxFlex="100">{{'forms.label.when_test' | translate}}<span>*</span></h5>
                 <mat-form-field class="example-full-width" appearance="fill" fxFlex="15" fxFlex.xs="27" >
                     <mat-label >{{'forms.label.test_date' | translate}} </mat-label>
@@ -229,12 +230,29 @@
                     </mat-form-field>
             </div>
             <!-- (dateInput)="handleTestDate($event)" -->
+            <div fxFlex="3" fxFlex.xs="5"></div>
+            <div class="form"  *ngIf="formControls.covidTestStatus.value==='ut'" fxLayout="row wrap" fxLayoutAlign="start center">
+                <h5 class="tab-sub-title" fxFlex="100">{{'forms.label.srf_id' | translate}}<span>*</span></h5>
+            	<mat-form-field fxFlex="30" fxFlex.xs>
+            	    <mat-label>{{'forms.label.enter_srf_id' | translate}}</mat-label>
+            	    <input type="text" [formControl]="formControls.srf_id" matInput>
+            	</mat-form-field>
+            </div>
             <div class="form" *ngIf="formControls.covidTestStatus.value==='n'" fxLayout="row wrap" fxLayoutAlign="start center">
                 <h5 class="tab-sub-title" fxFlex="100">{{'forms.label.prior_status' | translate}} <span>*</span></h5>
                 <div class="covid-test-status" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex="100">
                     <mat-radio-group class="radio-group" fxLayout="column" fxLayoutAlign="start start" [formControl]="formControls.prior_status">
                         <mat-radio-button class="tab-check-box" value="p" fxFlex="15" fxFlex.xs="25">{{'forms.option.prev_pos' | translate}} </mat-radio-button>
                         <mat-radio-button class="tab-check-box" value="np" fxFlex="15" fxFlex.xs="25">{{'forms.option.never_pos' | translate}} </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+            <div class="form" *ngIf="formControls.covidTestStatus.value==='ut'" fxLayout="row wrap" fxLayoutAlign="start center">
+                <h5 class="tab-sub-title" fxFlex="100">{{'forms.label.prior_status' | translate}} <span>*</span></h5>
+                <div class="covid-test-status" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex="100">
+                    <mat-radio-group class="radio-group" fxLayout="column" fxLayoutAlign="start start" [formControl]="formControls.prior_status">
+                        <mat-radio-button class="tab-check-box" value="p" fxFlex="15" fxFlex.xs="25">{{'forms.option.ut_prev_pos' | translate}} </mat-radio-button>
+                        <mat-radio-button class="tab-check-box" value="np" fxFlex="15" fxFlex.xs="25">{{'forms.option.ut_never_pos' | translate}} </mat-radio-button>
                     </mat-radio-group>
                 </div>
             </div>
@@ -251,7 +269,7 @@
                         </mat-radio-button>
                     </mat-radio-group>
                     </div>
-                    <div *ngIf="formControls.covidTestStatus.value==='n'">
+                    <div *ngIf="formControls.covidTestStatus.value==='n' || formControls.covidTestStatus.value==='ut'">
                         <mat-radio-group class="radio-group" fxLayout="column" fxLayoutAlign="start start" [formControl]="formControls.currentStatus" required>
                             <mat-radio-button class="tab-check-box" [value]="optionList.currentStatusList[5]" fxFlex="100"> {{ 'forms.option.no_resp_illness_exposed' | translate }}</mat-radio-button>
                             <mat-radio-button class="tab-check-box" [value]="optionList.currentStatusList[6]" fxFlex="100"> {{ 'forms.option.not_exposed' | translate }}</mat-radio-button>

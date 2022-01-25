@@ -33,6 +33,7 @@ export class DetailsComponent implements OnInit {
     locality: new FormControl(null),
     covidTestStatus: new FormControl(null, [Validators.required]),
     currentStatus: new FormControl(null, [Validators.required]),
+    srf_id: new FormControl(null),
     testDate: new FormControl(null),
     minTestDate: new FormControl(new Date()),
     maxTestDate: new FormControl(new Date()),
@@ -118,7 +119,8 @@ export class DetailsComponent implements OnInit {
       currentStatus: this.formControls.currentStatus,
       covidTestStatus: this.formControls.covidTestStatus, 
       ctScan: this.formControls.ctScan,
-      testDate: this.formControls.testDate
+      testDate: this.formControls.testDate,
+      srf_id: this.formControls.srf_id
      })
   };
   optionList = {
@@ -153,6 +155,10 @@ export class DetailsComponent implements OnInit {
 
     this.route.queryParams.subscribe(queryParams => {
       this.formControls.locality.setValue(queryParams.l_l || '')
+    })
+
+    this.route.queryParams.subscribe(queryParams => {
+      this.formControls.srf_id.setValue(queryParams.srf_id || '')
     })
   }
 
@@ -280,6 +286,10 @@ export class DetailsComponent implements OnInit {
 
       if (detailsRoot.formControls.locality.value) {
         userMetaData['l_l'] = detailsRoot.formControls.locality.value;
+      }
+
+      if (detailsRoot.formControls.srf_id.value) {
+        userMetaData['srf_id'] = detailsRoot.formControls.srf_id.value;
       }
 
       if (detailsRoot.formControls.covidTestStatus.value !='na') {
