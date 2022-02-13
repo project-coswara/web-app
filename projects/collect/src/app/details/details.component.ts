@@ -7,7 +7,7 @@ import {formatDate} from '@angular/common';
 
 import {environment, general_option_list, health_option_list} from "../../../../../src/environments/environment";
 import {UserDataService} from "../../../../../src/app/user-data.service";
-import { CursorError } from '@angular/compiler/src/ml_parser/lexer';
+
 
 @Component({
   selector: 'cs-collect-details',
@@ -33,7 +33,7 @@ export class DetailsComponent implements OnInit {
     locality: new FormControl(null),
     covidTestStatus: new FormControl(null, [Validators.required]),
     currentStatus: new FormControl(null, [Validators.required]),
-    srf_id: new FormControl(null),
+    srf_id: new FormControl(null, [this.srfIdValidator]),
     testDate: new FormControl(null),
     minTestDate: new FormControl(new Date()),
     maxTestDate: new FormControl(new Date()),
@@ -87,12 +87,6 @@ export class DetailsComponent implements OnInit {
       locality: this.formControls.locality
     }),
     healthStatus: new FormGroup({
-      // currentStatus: this.formControls.currentStatus,
-      // covidTestStatus: this.formControls.covidTestStatus,
-      // testDate: this.formControls.testDate,
-      // rtpcr: this.formControls.rtpcr,
-      // ctScan: this.formControls.ctScan,
-      // conditionStatus: this.formControls.conditionStatus,
       conditionStatus_1: this.formControls.conditionStatus_1,
       conditionStatus_2: this.formControls.conditionStatus_2,
       conditionStatus_3: this.formControls.conditionStatus_3,
@@ -176,18 +170,12 @@ export class DetailsComponent implements OnInit {
     this.router.navigate(['thank-you'], {queryParamsHandling: 'merge'}).then();
   }
 
-  // setValidity() {
-  //   this.formControls.conditionStatus.setValue(null);
-  //   let currentConditionStatus = false;
-  //   const detailsRoot = this;
-  //   this.optionList.healthConditionList.forEach(function (item) {
-  //     currentConditionStatus = currentConditionStatus || detailsRoot.formControls[item].value
-  //   })
-  //   currentConditionStatus = currentConditionStatus || this.formControls.none.value
-  //   if (currentConditionStatus) {
-  //     this.formControls.conditionStatus.setValue(true)
-  //   }
-  // }
+  srfIdValidator(control: FormControl) {
+    if (control.parent && control.parent.controls["covidTestStatus"].value && control.parent.controls["covidTestStatus"].value == "ut") {
+      return control.value ? null : {'required': true}
+    }
+    return null
+  }
 
   setValidityHC1() {
     this.formControls.conditionStatus_1.setValue(null);
@@ -201,6 +189,7 @@ export class DetailsComponent implements OnInit {
       this.formControls.conditionStatus_1.setValue(true)
     }
   }
+
   setValidityHC2() {
     this.formControls.conditionStatus_2.setValue(null);
     let currentConditionStatus = false;
@@ -238,23 +227,6 @@ export class DetailsComponent implements OnInit {
       this.formControls.conditionStatus_4.setValue(true)
     }
   }
-
-  // handleTestDate(event) {
-  //   let date = event.value;
-  //   let new_date = new Date(String(date));
-  //   console.log(formatDate(new_date, 'yyyy-MM-dd','en-GB'))
-  //   console.log("Current date : ",this.formControls.testDate.value);
-  //   // this.formControls['testDate'] =  
-  //   this.formControls.testDate.setValue(formatDate(new_date, 'yyyy-MM-dd','en-GB'));
-  //   // this.formControls.testDate.updateValueAndValidity();
-  // } 
-
-  // handleCTDate(event) {
-  //   let date = event.value;
-  //   let new_date = new Date(String(date));
-  //   this.formControls.ctDate.setValue(formatDate(new_date, 'yyyy-MM-dd','en-GB'));
-  // } 
-
 
   startOver() {
     this.submitLoader = true;
@@ -303,15 +275,6 @@ export class DetailsComponent implements OnInit {
         userMetaData['ctDate'] = formatDate(new_date, 'yyyy-MM-dd','en-GB');
         userMetaData['ctScore'] = detailsRoot.formControls.ctScore.value;
       }
-
-      // if (!this.formControls.none.value) {
-      //   this.optionList.healthConditionList.forEach(function (item) {
-      //     if (detailsRoot.formControls[item].value) {
-      //       userMetaData[item] = true;
-      //     }
-      //   })
-      // }
-
 
       if (detailsRoot.formControls.covidTestStatus.value == 'n') {
         if (detailsRoot.optionList.currentStatusList.indexOf(detailsRoot.formControls.currentStatus.value)==5) {
@@ -400,22 +363,6 @@ export class DetailsComponent implements OnInit {
       ];
   };
 
-  // resetStatus() {
-  //   const detailsRoot = this;
-  //   if (this.formControls.none.value) {
-  //     this.optionList.healthConditionList.forEach(function (item) {
-  //       detailsRoot.formControls[item].disable();
-  //       detailsRoot.formControls[item].setValue(false);
-  //     })
-  //     this.formControls.conditionStatus.setValue(true)
-  //   } else {
-  //     this.optionList.healthConditionList.forEach(function (item) {
-  //       detailsRoot.formControls[item].enable();
-  //     })
-  //     this.formControls.conditionStatus.setValue(null)
-  //   }
-  // }
-
   resetHealthConditions1Status() {
     const detailsRoot = this;
     if (this.formControls.none_1.value) {
@@ -447,6 +394,7 @@ export class DetailsComponent implements OnInit {
       this.formControls.conditionStatus_2.setValue(null)
     }
   }
+
   resetRespAilStatus() {
     const detailsRoot = this;
     if (this.formControls.none_3.value) {
@@ -462,6 +410,7 @@ export class DetailsComponent implements OnInit {
       this.formControls.conditionStatus_3.setValue(null)
     }
   }
+
   resetPreexistingStatus() {
     const detailsRoot = this;
     if (this.formControls.none_4.value) {

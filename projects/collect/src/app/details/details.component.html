@@ -236,6 +236,7 @@
             	<mat-form-field fxFlex="30" fxFlex.xs>
             	    <mat-label>{{'forms.label.enter_srf_id' | translate}}</mat-label>
             	    <input type="text" [formControl]="formControls.srf_id" matInput>
+                    <mat-error *ngIf="formControls.srf_id.hasError('required')">{{'forms.errors.required' | translate}}</mat-error>
             	</mat-form-field>
             </div>
             <div class="form" *ngIf="formControls.covidTestStatus.value==='n'" fxLayout="row wrap" fxLayoutAlign="start center">
@@ -327,7 +328,7 @@
                         <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
                 <!-- </div> -->
-            
+
             <!-- </div> -->
 
                 <div fxLayout="row" fxLayoutAlign="end center" fxFlexFill>
