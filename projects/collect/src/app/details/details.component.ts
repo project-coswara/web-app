@@ -34,10 +34,10 @@ export class DetailsComponent implements OnInit {
     covidTestStatus: new FormControl(null, [Validators.required]),
     currentStatus: new FormControl(null, [Validators.required]),
     srf_id: new FormControl(null, [this.srfIdValidator]),
-    testDate: new FormControl(null),
+    testDate: new FormControl(null, [Validators.required]),
     minTestDate: new FormControl(new Date()),
     maxTestDate: new FormControl(new Date()),
-    testType: new FormControl(false),
+    testType: new FormControl(null, [Validators.required]),
     ctScan: new FormControl('n', [Validators.required]),
     vaccinated: new FormControl(null, [Validators.required]),
     ctScore: new FormControl(null,[Validators.min(0), Validators.max(25)]),
@@ -70,7 +70,7 @@ export class DetailsComponent implements OnInit {
     none_2: new FormControl(false),
     none_3: new FormControl(false),
     none_4: new FormControl(false),
-    prior_status: new FormControl(false)
+    prior_status: new FormControl(null, [Validators.required])
 
   };
   formGroups = {
@@ -113,8 +113,10 @@ export class DetailsComponent implements OnInit {
       currentStatus: this.formControls.currentStatus,
       covidTestStatus: this.formControls.covidTestStatus, 
       ctScan: this.formControls.ctScan,
+      testType: this.formControls.testType,
       testDate: this.formControls.testDate,
-      srf_id: this.formControls.srf_id
+      srf_id: this.formControls.srf_id,
+      prior_status: this.formControls.prior_status
      })
   };
   optionList = {
@@ -171,10 +173,12 @@ export class DetailsComponent implements OnInit {
   }
 
   srfIdValidator(control: FormControl) {
-    if (control.parent && control.parent.controls["covidTestStatus"].value && control.parent.controls["covidTestStatus"].value == "ut") {
-      return control.value ? null : {'required': true}
+    if (control.parent && control.parent.controls['covidTestStatus'].value && control.parent.controls['covidTestStatus'].value == "ut") {
+      let srfid = control.parent.controls['srf_id'].value;
+
+      return (srfid.toString().length == 13) ? null : {'required': true}
     }
-    return null
+    return null;
   }
 
   setValidityHC1() {
@@ -276,6 +280,10 @@ export class DetailsComponent implements OnInit {
         userMetaData['ctScore'] = detailsRoot.formControls.ctScore.value;
       }
 
+      if (detailsRoot.formControls.covidTestStatus.value == 'ut') {
+          userMetaData['covid_status'] = 'under_validation';
+      }
+
       if (detailsRoot.formControls.covidTestStatus.value == 'n') {
         if (detailsRoot.optionList.currentStatusList.indexOf(detailsRoot.formControls.currentStatus.value)==5) {
           userMetaData['covid_status'] = 'no_resp_illness_exposed';
@@ -362,6 +370,33 @@ export class DetailsComponent implements OnInit {
         .replace(')', '')
       ];
   };
+
+  resetCovidTestStatus() {
+    this.formControls.currentStatus.reset();
+
+    if (this.formControls.covidTestStatus.value !='ut') {
+      this.formControls.srf_id.disable();
+    } 
+    else {
+      this.formControls.srf_id.enable();
+    }
+
+    if (this.formControls.covidTestStatus.value =='na') {
+      this.formControls.testType.disable();
+      this.formControls.testDate.disable();
+    } 
+    else {
+      this.formControls.testType.enable();
+      this.formControls.testDate.enable();
+    }
+
+    if (this.formControls.covidTestStatus.value =='na' || this.formControls.covidTestStatus.value =='p') {
+      this.formControls.prior_status.disable();
+    }
+    else {
+      this.formControls.prior_status.enable();
+    }
+  }
 
   resetHealthConditions1Status() {
     const detailsRoot = this;
