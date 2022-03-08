@@ -26,7 +26,7 @@
         </div>
         <div *ngIf="viewScore && scoreData.score" class="score-view" fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign="center center">
             <div class="score-value" fxLayout="row" fxLayoutAlign="center center">
-                <div class="score-value-box">{{scoreData.score.toFixed(2)}}</div>
+                <div class="score-value-box">{{scoreData.score.toFixed(4)*100}}%</div>
             </div>
             <div class="score-desc" fxFlex>
 		    <!-- <h5>You have a {{scoreData.score * 100}}% chance of having COVID '19.</h5> -->
