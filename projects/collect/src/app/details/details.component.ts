@@ -176,7 +176,7 @@ export class DetailsComponent implements OnInit {
     if (control.parent && control.parent.controls['covidTestStatus'].value && control.parent.controls['covidTestStatus'].value == "ut") {
       let srfid = control.parent.controls['srf_id'].value;
 
-      return (srfid.toString().length == 13) ? null : {'required': true}
+      return (srfid && srfid.toString().length == 13) ? null : {'required': true}
     }
     return null;
   }
@@ -270,7 +270,7 @@ export class DetailsComponent implements OnInit {
 
       if (detailsRoot.formControls.covidTestStatus.value !='na') {
         userMetaData['testType'] = detailsRoot.formControls.testType.value;
-        let new_date = new Date(String(detailsRoot.formControls.testDate));
+        let new_date = new Date(String(detailsRoot.formControls.testDate.value));
         userMetaData['test_date'] = formatDate(new_date, 'yyyy-MM-dd','en-GB');
       }
 
@@ -301,7 +301,6 @@ export class DetailsComponent implements OnInit {
       if (userMetaData['covid_status'] == 'healthy')
       {
         if (!this.formControls.none_3.value) {
-          console.log("Inside resp illness")
           userMetaData['covid_status'] = 'resp_illness_not_identified';
         }
       }

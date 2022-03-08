@@ -10,8 +10,12 @@
     </div>
     <div class="score" fxLayout="row" fxLayoutAlign="start center">
         <div *ngIf="!viewScore">
-            Do the declaration here!
-            <button (click)="viewScore = true">Agree</button>
+	    We don't recommend to take any actions based on this result.<br>
+	    Please follow the recommendation of ICMR for covid testing.<br>
+	    Development of this covid detection algorithm is in progress.<br><br>
+	    If you agree with above disclaimer,<br>
+	    click "I Agree" to see the prediction result.<br><br>
+            <button (click)="viewScore = true">I Agree</button>
         </div>
         <div *ngIf="viewScore && scoreData && !scoreData.score" class="score-loader" fxLayout="row" fxLayoutAlign="center center">
             <mat-progress-spinner [diameter]="60" mode="indeterminate"></mat-progress-spinner>
@@ -22,12 +26,21 @@
         </div>
         <div *ngIf="viewScore && scoreData.score" class="score-view" fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign="center center">
             <div class="score-value" fxLayout="row" fxLayoutAlign="center center">
-                <div class="score-value-box">{{scoreData.score}}</div>
+                <div class="score-value-box">{{scoreData.score.toFixed(2)}}</div>
             </div>
             <div class="score-desc" fxFlex>
-                <h5>You have a {{scoreData.score * 100}}% chance of having COVID '19.</h5>
-                <div class="score-legend">
-                    Add legend and other info here
+		    <!-- <h5>You have a {{scoreData.score * 100}}% chance of having COVID '19.</h5> -->
+                <div *ngIf="scoreData.score < 0.4" class="score-legend">
+		    You have a low chance of having Covid'19.
+                </div>
+                <div *ngIf="scoreData.score >= 0.4 && scoreData.score < 0.6" class="score-legend">
+		    You have a moderate chance of having Covid'19.
+                </div>
+                <div *ngIf="scoreData.score >= 0.6 && scoreData.score < 0.8" class="score-legend">
+		    You have a high chance of having Covid'19.
+                </div>
+                <div *ngIf="scoreData.score >= 0.8" class="score-legend">
+		    You have a extremely high chance of having Covid'19.
                 </div>
             </div>
         </div>
