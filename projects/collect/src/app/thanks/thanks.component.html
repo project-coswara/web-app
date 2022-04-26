@@ -28,8 +28,8 @@
             <div class="score-value" fxLayout="row" fxLayoutAlign="center center">
                 <div class="score-value-box">{{scoreData.score.toFixed(4)*100}}%</div>
             </div>
+	    <!--
             <div class="score-desc" fxFlex>
-		    <!-- <h5>You have a {{scoreData.score * 100}}% chance of having COVID '19.</h5> -->
                 <div *ngIf="scoreData.score < 0.4" class="score-legend">
 		    You have a low chance of having Covid'19.
                 </div>
@@ -42,7 +42,7 @@
                 <div *ngIf="scoreData.score >= 0.8" class="score-legend">
 		    You have a extremely high chance of having Covid'19.
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="thank-you-footer">
