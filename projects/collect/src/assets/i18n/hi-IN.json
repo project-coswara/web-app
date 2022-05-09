@@ -8,6 +8,7 @@
 	"language.telugu":"తెలుగు",
 	"language.bengali":"বাংলা",
 	"language.spanish": "Español",
+        "language.oriya": "ଓଡ଼ିଆ ",
 "app.title": "coswara",
 "metadata.title.no_metadata": "हमें कुछ जानकारी चाहिए !",
 "metadata.tabs.disclaimer": "अस्वीकरण",
@@ -45,6 +46,8 @@
  "forms.label.test_type": "आपने कौन सी परीक्षा ली है?",
  "forms.label.when_test": "आपने परीक्षा कब दी?",
  "forms.label.test_date": "परीक्षा की तारीख",
+ "forms.label.srf_id": "अपना SRF-ID दर्ज करें",
+ "forms.label.enter_srf_id": "13 अंकों का SRF-ID",
  "forms.label.ct_scan": "क्या आपने सीटी-स्कैन लिया है?",
  "forms.label.ct_score": "अपना सीटी-स्कोर दर्ज करें",
  "forms.label.ct_score_field": "सीटी-स्कोर",
@@ -59,6 +62,7 @@
 	"forms.options.other": "अन्य",
 	"forms.options.yes": "हाँ",
 	"forms.options.no": "नहीं",
+        "forms.option.under_test" : "सैंपल जांच के लिए दिया गया है, रिपोर्ट का इंतजार",
 	"forms.option.pos_test": "मेरा आखिरी परीक्षा में परीक्षण किया गया सकारात्मक",
 	"forms.option.neg_test": "मेरा आखिरी परीक्षा में परीक्षण किया गया नकारात्मक",
 	"forms.option.no_test": "कभी टेस्ट नहीं लिया",
@@ -150,6 +154,8 @@
 	"forms.option.rat": "RAT",
 	"forms.option.prev_pos": "पहले सकारात्मक परीक्षण किया गया था, लेकिन अब नकारात्मक परीक्षण किया गया है",
 	"forms.option.never_pos": "कभी सकारात्मक परीक्षण नहीं किया",
+        "forms.option.ut_prev_pos": "पहले परीक्षण सकारात्मक",
+        "forms.option.ut_never_pos": "पहले कभी सकारात्मक परीक्षण नहीं किया गया",
 	"forms.option.others_resp": "अन्य",
 	"forms.option.others_preexist": "अन्य"
 }

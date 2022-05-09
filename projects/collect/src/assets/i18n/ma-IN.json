@@ -8,6 +8,7 @@
     "language.telugu":"తెలుగు",
     "language.bengali":"বাংলা",
     "language.spanish": "Español",
+    "language.oriya": "ଓଡ଼ିଆ ",
     "app.title": "coswara",
     "metadata.title.no_metadata": "सुरू ठेवण्यासाठी आम्हाला काही माहिती हवी आहे!",
     "metadata.tabs.disclaimer": "ओळख",
@@ -45,6 +46,8 @@
  "forms.label.test_type": "आपण कोणती परीक्षा दिली आहे?",
  "forms.label.when_test": "आपण कधी परीक्षा दिली?",
  "forms.label.test_date": "चाचणी तारीख",
+ "forms.label.srf_id": "तुमचा SRF-ID एंटर करा",
+ "forms.label.enter_srf_id": "१३ अंकी SRF-ID",
  "forms.label.ct_scan": "आपण सीटी-स्कॅन घेतला आहे का?",
  "forms.label.ct_score": "आपला सीटी-स्कोअर प्रविष्ट करा",
  "forms.label.ct_score_field": "सीटी-स्कोअर",
@@ -59,6 +62,7 @@
     "forms.options.other": "इतर",
     "forms.options.yes": "होय",
     "forms.options.no": "नाही",
+    "forms.option.under_test" : "नमुना चाचणीसाठी दिला आहे, अहवालाची प्रतीक्षा आहे",
     "forms.option.pos_test": "माझ्या शेवटच्या कसोटी चाचणी सकारात्मक",
     "forms.option.neg_test": "माझ्या शेवटच्या कसोटी चाचणी नकारात्मक",
     "forms.option.no_test": "एक चाचणी घेतली कधीही",
@@ -149,6 +153,8 @@
     "forms.option.rat": "रॅट",
     "forms.option.prev_pos": "पूर्वी सकारात्मक चाचणी केली होती, परंतु आता नकारात्मक चाचणी केली आहे",
     "forms.option.never_pos": "कधीही सकारात्मक चाचणी केली गेली नाही",
+    "forms.option.ut_prev_pos": "यापूर्वी चाचणी पॉझिटिव्ह आली होती",
+    "forms.option.ut_never_pos": "यापूर्वी कधीही चाचणी पॉझिटिव्ह आली नाही",
     "forms.option.others_resp": "इतर",
     "forms.option.others_preexist": "इतर"
 }

@@ -8,6 +8,7 @@
     "language.telugu":"తెలుగు",
     "language.bengali":"বাংলা",
     "language.spanish": "Español",
+    "language.oriya": "ଓଡ଼ିଆ ",
 	"app.title": "coswara",
 	"metadata.title.no_metadata": "நாம் தொடர சில தகவல்கள் தேவை!",
  "metadata.tabs.disclaimer": "மறுப்பு",
@@ -45,6 +46,8 @@
  "forms.label.test_type": "நீங்கள் எந்த சோதனை எடுத்துள்ளீர்கள்?",
  "forms.label.when_test": "நீங்கள் எப்போது சோதனை எடுத்தீர்கள்?",
  "forms.label.test_date": "சோதனை தேதி",
+ "forms.label.srf_id": "உங்கள் SRF-ID ஐ உள்ளிடவும்",
+ "forms.label.enter_srf_id": "13 இலக்க SRF-ID",
  "forms.label.ct_scan": "நீங்கள் சி.டி-ஸ்கேன் எடுத்துள்ளீர்களா?",
  "forms.label.ct_score": "உங்கள் CT- மதிப்பெண்ணை உள்ளிடவும்",
  "forms.label.ct_score_field": "சி.டி-ஸ்கோர்",
@@ -59,6 +62,7 @@
  "forms.options.other": "மற்ற",
  "forms.options.yes": "ஆம்",
  "forms.options.no": "இல்லை",
+ "forms.option.under_test" : "மாதிரி சோதனைக்காக கொடுக்கப்பட்டுள்ளது, அறிக்கைக்காக காத்திருக்கிறது",
  "forms.option.pos_test": "என் கடந்த சோதனை சோதிக்கப்பட்டது நேர்மறை",
  "forms.option.neg_test": "என் கடந்த சோதனை சோதிக்கப்பட்டது எதிர்மறை",
  "forms.option.no_test": "ஒருபோதும் சோதனை எடுத்ததில்லை",
@@ -149,6 +153,8 @@
     "forms.option.rat": "RAT",
     "forms.option.prev_pos": "முன்பு நேர்மறை சோதனை, ஆனால் இப்போது எதிர்மறை சோதனை",
     "forms.option.never_pos": "நேர்மறையை ஒருபோதும் சோதிக்கவில்லை",
+    "forms.option.ut_prev_pos": "முன்பு நேர்மறை சோதனை செய்யப்பட்டது",
+    "forms.option.ut_never_pos": "இதற்கு முன்பு நேர்மறை சோதனை செய்யப்படவில்லை",
     "forms.option.others_resp": "மற்றவைகள்",
     "forms.option.others_preexist": "மற்றவைகள்"
 }

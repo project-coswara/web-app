@@ -8,6 +8,7 @@
     "language.telugu":"తెలుగు",
     "language.bengali":"বাংলা",
     "language.spanish": "Español",
+    "language.oriya": "ଓଡ଼ିଆ ",
     "app.title": "coswara",
     "metadata.title.no_metadata": "আমরা চালিয়ে করতে কিছু তথ্য দরকার!",
     "metadata.tabs.disclaimer": "দাবি পরিত্যাগী",
@@ -45,6 +46,8 @@
  "forms.label.test_type": "আপনি কোন পরীক্ষা দিয়েছেন?",
  "forms.label.when_test": "আপনি কখন পরীক্ষা দিয়েছেন?",
  "forms.label.test_date": "পরীক্ষার তারিখ",
+ "forms.label.srf_id": "আপনার SRF-ID লিখুন",
+ "forms.label.enter_srf_id": "13 সংখ্যার SRF-ID",
  "forms.label.ct_scan": "আপনি কি সিটি-স্ক্যান নিয়েছেন?",
  "forms.label.ct_score": "আপনার সিটি-স্কোর লিখুন",
  "forms.label.ct_score_field": "সিটি-স্কোর",
@@ -59,6 +62,7 @@
     "forms.options.other": "অন্যান্য",
     "forms.options.yes": "হ্যাঁ",
     "forms.options.no": "না",
+    "forms.option.under_test" : "পরীক্ষার জন্য নমুনা দেওয়া হয়েছে, রিপোর্টের অপেক্ষায়",
     "forms.option.pos_test": "আমার শেষ পরীক্ষা পরিক্ষিত ইতিবাচক",
     "forms.option.neg_test": "আমার শেষ পরীক্ষা পরিক্ষিত নেতিবাচক",
     "forms.option.no_test": "কখনও একটি পরীক্ষা নেয়া",
@@ -153,6 +157,8 @@
     "forms.option.rat": "ইঁদুর",
     "forms.option.prev_pos": "পূর্বে ইতিবাচক পরীক্ষা করা হলেও এখন নেতিবাচক পরীক্ষা করেছেন tested",
     "forms.option.never_pos": "ইতিবাচক পরীক্ষা করা হয়নি",
+    "forms.option.ut_prev_pos": "আগে পজিটিভ পরীক্ষিত হয়েছি",
+    "forms.option.ut_never_pos": "আগে কখনো পজিটিভ পরীক্ষিত হয়নি",
     "forms.option.others_resp": "অন্যান্য",
     "forms.option.others_preexist": "অন্যান্য"
 }

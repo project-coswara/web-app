@@ -8,6 +8,7 @@
     "language.telugu":"తెలుగు",
     "language.bengali":"বাংলা",
     "language.spanish": "Español",
+    "language.oriya": "ଓଡ଼ିଆ ",
     "app.title": "coswara",
     "metadata.title.no_metadata": "రికార్డింగ్ ప్రక్రియ కొనసాగించడానికి క్రింది వివరాలు తెలియజేయండి!",
     "metadata.tabs.disclaimer": "తెలుసుకోండి",
@@ -45,6 +46,7 @@
     "forms.options.other": "ఇతర",
     "forms.options.yes": "అవును",
     "forms.options.no": "కాదు",
+    "forms.option.under_test" : "పరీక్ష కోసం నమూనా ఇవ్వబడింది, నివేదిక కోసం వేచి ఉంది",
     "forms.option.pos_test": "నా గత పరీక్షలో పరీక్షించబడింది సానుకూల",
     "forms.option.neg_test": "నా గత పరీక్షలో పరీక్షించబడింది ప్రతికూల",
     "forms.option.no_test": "ఒక పరీక్ష తీసుకున్న ఎప్పుడూ",
@@ -137,6 +139,8 @@
     "forms.label.test_type": "మీరు ఏ పరీక్ష తీసుకున్నారు?",
     "forms.label.when_test": "మీరు ఎప్పుడు పరీక్ష తీసుకున్నారు?",
     "forms.label.test_date": "పరీక్ష తేదీ",
+    "forms.label.srf_id": "మీ SRF-IDని నమోదు చేయండి",
+    "forms.label.enter_srf_id": "13 అంకెల SRF-ID",
     "forms.label.ct_scan": "మీరు CT- స్కాన్ తీసుకున్నారా?",
     "forms.label.ct_score": "మీ CT- స్కోర్ cను నమోదు చేయండి",
     "forms.label.ct_score_field": "CT- స్కోరు",
@@ -149,6 +153,8 @@
     "forms.option.rat": "RAT",
     "forms.option.prev_pos": "గతంలో పాజిటివ్ పరీక్షించారు, కానీ ఇప్పుడు నెగటివ్ పరీక్షించారు",
     "forms.option.never_pos": "పాజిటివ్\u200cను ఎప్పుడూ పరీక్షించలేదు",
+    "forms.option.ut_prev_pos": "గతంలో పాజిటివ్ అని తేలింది",
+    "forms.option.ut_never_pos": "గతంలో ఎన్నడూ పాజిటివ్‌ రాలేదు",
     "forms.option.others_resp": "ఇతరులు",
     "forms.option.others_preexist": "ఇతరులు"
 }

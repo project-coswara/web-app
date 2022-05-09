@@ -7,6 +7,7 @@
 	"language.telugu": "తెలుగు",
 	"language.bengali": "বাংলা",
 	"language.spanish": "Español",
+        "language.oriya": "ଓଡ଼ିଆ ",
 	"app.title": "coswara",
 	"metadata.title.no_metadata": "¡Necesitamos información para continuar!",
 	"metadata.tabs.disclaimer": "Descargo de responsabilidad",
@@ -44,6 +45,8 @@
  "forms.label.test_type": "¿Qué prueba has realizado?",
  "forms.label.when_test": "¿Cuándo hiciste el examen?",
  "forms.label.test_date": "Fecha de la prueba",
+ "forms.label.srf_id": "Ingrese su SRF-ID",
+ "forms.label.enter_srf_id": "SRF-ID de 13 dígitos",
  "forms.label.ct_scan": "¿Ha realizado una tomografía computarizada?",
  "forms.label.ct_score": "Ingrese su CT-Score",
  "forms.label.ct_score_field": "Puntuación CT",
@@ -58,6 +61,7 @@
 	"forms.options.other": "Otro",
 	"forms.options.yes": "sí",
 	"forms.options.no": "No",
+        "forms.option.under_test" : "La muestra se ha entregado para la prueba, esperando el informe",
 	"forms.option.pos_test": "Dio positivo en mi última prueba",
 	"forms.option.neg_test": "Resultó negativo en mi última prueba",
 	"forms.option.no_test": "Nunca tomé una prueba",
@@ -148,6 +152,8 @@
  "forms.option.rat": "RATA",
  "forms.option.prev_pos": "Anteriormente dio positivo, pero ahora dio negativo.",
  "forms.option.never_pos": "Nunca dio positivo",
+ "forms.option.ut_prev_pos": "Previamente dio positivo",
+ "forms.option.ut_never_pos": "Anteriormente nunca dio positivo",
 
  "forms.option.others_resp": "Otros",
  "forms.option.others_preexist": "Otros"

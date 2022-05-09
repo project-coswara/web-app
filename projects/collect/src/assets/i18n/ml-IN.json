@@ -8,6 +8,7 @@
     "language.telugu":"తెలుగు",
     "language.bengali":"বাংলা",
     "language.spanish": "Español",
+    "language.oriya": "ଓଡ଼ିଆ ",
     "app.title": "ചൊസ്വര",
  "metadata.title.no_metadata": "നാം തുടരുന്നതിന് ചില വിവരങ്ങൾ കൂടി ആവശ്യമാണ്!",
  "metadata.tabs.disclaimer": "നിരാകരണം",
@@ -45,6 +46,8 @@
  "forms.label.test_type": "ഏത് പരിശോധനയാണ് നിങ്ങൾ നടത്തിയത്?",
  "forms.label.when_test": "എപ്പോഴാണ് നിങ്ങൾ പരിശോധന നടത്തിയത്?",
  "forms.label.test_date": "പരിശോധന തീയതി",
+ "forms.label.srf_id": "നിങ്ങളുടെ SRF-ID നൽകുക",
+ "forms.label.enter_srf_id": "13 അക്ക SRF-ID",
  "forms.label.ct_scan": "നിങ്ങൾ ഒരു സിടി സ്കാൻ എടുത്തിട്ടുണ്ടോ?",
  "forms.label.ct_score": "നിങ്ങളുടെ CT- സ്കോർ നൽകുക",
  "forms.label.ct_score_field": "സിടി-സ്കോർ",
@@ -59,6 +62,7 @@
  "forms.options.other": "മറ്റു",
  "forms.options.yes": "സമ്മതം",
  "forms.options.no": "ഇല്ല",
+ "forms.option.under_test" : "സാമ്പിൾ പരിശോധനയ്ക്കായി നൽകി, റിപ്പോർട്ടിനായി കാത്തിരിക്കുന്നു",
  "forms.option.pos_test": "എന്റെ അവസാന ടെസ്റ്റിൽ പരീക്ഷിച്ചു നല്ല",
  "forms.option.neg_test": "എന്റെ അവസാന ടെസ്റ്റിൽ പരീക്ഷിച്ചു നെഗറ്റീവ്",
  "forms.option.no_test": "ഒരു ടെസ്റ്റ് എടുത്ത ഒരിക്കലും",
@@ -153,6 +157,8 @@
     "forms.option.rat": "RAT",
     "forms.option.prev_pos": "മുമ്പ് പോസിറ്റീവ് പരീക്ഷിച്ചു, പക്ഷേ ഇപ്പോൾ നെഗറ്റീവ് പരീക്ഷിച്ചു",
     "forms.option.never_pos": "ഒരിക്കലും പോസിറ്റീവ് പരീക്ഷിച്ചിട്ടില്ല",
+    "forms.option.ut_prev_pos": "നേരത്തെ പോസിറ്റീവായിരുന്നു",
+    "forms.option.ut_never_pos": "മുമ്പ് പോസിറ്റീവായിരുന്നില്ല",
     "forms.option.others_resp": "മറ്റുള്ളവർ",
     "forms.option.others_preexist": "മറ്റുള്ളവർ"
 }
